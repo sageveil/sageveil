@@ -2,5 +2,30 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./packages/palette"
+    },
+    {
+      "path": "./packages/templater"
+    },
+    {
+      "path": "./packages/ports/alacritty"
+    },
+    {
+      "path": "./packages/ports/nvim"
+    },
+    {
+      "path": "./packages/ports/tmux"
+    },
+    {
+      "path": "./packages/ports/fzf"
+    },
+    {
+      "path": "./packages/ports/k9s"
+    },
+    {
+      "path": "./packages/ports/bat"
+    }
+  ]
 }
