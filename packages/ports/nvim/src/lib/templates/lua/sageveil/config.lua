@@ -8,6 +8,8 @@ local config = {}
 config.options = {
 	---@type table<string, Highlight>
 	overrides = {},
+	bold = true,
+	italics = true,
 }
 
 ---@param options Options | nil
