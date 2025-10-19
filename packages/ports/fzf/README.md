@@ -1,11 +1,60 @@
-# fzf
+<p align="center">
+    <img src="../../../assets/sageveil-logo.png" width="80" />
+    <h2 align="center">@sageveil/fzf</h2>
+</p>
 
-This library was generated with [Nx](https://nx.dev).
+<p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
-## Running unit tests
+# @sageveil/fzf
 
-Run `nx test fzf` to execute the unit tests via [Vitest](https://vitest.dev/).
+## Overview
 
-## TODO
+The Sageveil fzf port provides shell-specific snippets that configure `FZF_DEFAULT_OPTS` with Sageveil colors.
+Pick the script that matches your shell and source it during startup to keep fuzzy finder popups aligned with the rest of the palette.
 
-[ ] fix multiselection (marker?)
+## Build from the monorepo
+
+1. Install dependencies once: `pnpm install`
+2. Render the snippets: `pnpm nx run fzf:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
+3. The files land in `dist/ports/fzf/<version>/`
+
+Each build also writes a manifest containing SHA-256 hashes.
+
+## Generated files
+
+- `sageveil.sh` – POSIX shell snippet (bash, zsh, etc.)
+- `sageveil.fish` – fish universal variable configuration
+- `sageveil.ps1` – PowerShell profile snippet
+- `sageveil.nix` – helper for home-manager or NixOS modules
+
+## Apply Sageveil
+
+Choose the snippet that matches your environment:
+
+- **POSIX shells**: source the script in your shell rc.
+
+  ```bash
+  source /path/to/sageveil.sh
+  ```
+
+- **fish**: import the universal variable once.
+
+  ```fish
+  source /path/to/sageveil.fish
+  ```
+
+- **PowerShell**: dot source the profile helper.
+
+  ```powershell
+  . $PSScriptRoot/sageveil.ps1
+  ```
+
+- **Nix**: include `sageveil.nix` inside your module and merge the returned options into `programs.fzf` or your own output derivation.
+
+Reload your shell afterwards and confirm `echo $FZF_DEFAULT_OPTS` (or the platform equivalent) shows Sageveil colors.
+
+## Development
+
+[sageveil/sageveil](https://github.com/sageveil/sageveil) is the main project monorepo. All development happens there.
+
+[sageveil/fzf](https://github.com/sageveil/fzf) is used only for easy distribution of the ready-to-use fzf colorscheme plugin.
