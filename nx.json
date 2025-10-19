@@ -18,21 +18,31 @@
     ]
   },
   "release": {
+    "releaseTagPattern": "{projectName}@{version}",
+    "version": {
+      "conventionalCommits": true
+    },
     "projects": [
+      "packages/palette",
+      "packages/templater",
       "packages/ports/*"
     ],
     "projectsRelationship": "independent",
     "changelog": {
-      "workspaceChangelog": false,
       "projectChangelogs": {
-        "file": "{projectRoot}/CHANGELOG.md",
-        "entryWhenNoChanges": false
+        "file": false,
+        "createRelease": "github",
+        "renderOptions": {
+          "authors": false,
+          "commitReferences": true,
+          "versionTitleDate": true
+        }
       }
     },
     "git": {
       "commit": true,
       "tag": true,
-      "push": false
+      "push": true
     }
   },
   "plugins": [
