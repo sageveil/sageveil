@@ -1,17 +1,18 @@
 <p align="center">
     <img src="assets/sageveil-logo.png" width="80" />
-    <h2 align="center">Sageveil</h2>
+    <h2 align="center">sageveil</h2>
 </p>
 
 <p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
 ## Ports
 
-- `packages/ports/alacritty`
-- `packages/ports/fzf`
-- `packages/ports/k9s`
-- `packages/ports/nvim`
-- `packages/ports/tmux` – full configuration reference lives in its README.
+- [alacritty](/packages/ports/alacritty/README.md)
+- [nvim](/packages/ports/nvim/README.md)
+- [tmux](/packages/ports/tmux/README.md)
+- [fzf](/packages/ports/fzf/README.md)
+- [k9s](/packages/ports/k9s/README.md)
+- [text-mate](/packages/ports/text-mate/README.md)
 
 Each port renders assets from the shared palette in `packages/palette`. Documentation for additional ports will grow as they stabilize.
 
@@ -27,10 +28,8 @@ Every port will also be published in a dedicated repository with ready-to-use as
 
 ## Contributing
 
-Sageveil is still under active development, so expect changes. If you want to help:
+sageveil is still under active development, so expect changes.
 
-- Run `pnpm test <port>` to execute a port's Vitest suite.
-- Use `pnpm nx run <port>:clean` before regenerating artefacts when testing changes.
-- Check the port README for any additional setup notes.
+TBD
 
 Thanks for growing the garden 🌱

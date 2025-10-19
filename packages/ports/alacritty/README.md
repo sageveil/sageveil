@@ -21,7 +21,7 @@ All sageveil ports will be distributed in their dedicated repos (comming soon). 
 
 Each build includes a manifest with SHA-256 hashes you can use to verify downloads.
 
-## Apply Sageveil
+## Apply sageveil
 
 1. Copy `sageveil.toml` into your Alacritty config directory (for example `~/.config/alacritty/themes/sageveil.toml`).
 2. Reference it from your main `alacritty.toml`:

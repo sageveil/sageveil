@@ -21,7 +21,7 @@ All sageveil ports will be distributed in their dedicated repos (comming soon). 
 
 Each build writes a manifest that lists SHA-256 hashes for every output.
 
-## Apply Sageveil
+## Apply sageveil
 
 If you use a plugin manager, point it at the dist directory. Example for [lazy.nvim](https://github.com/folke/lazy.nvim):
 

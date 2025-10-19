@@ -9,7 +9,7 @@
 
 ## Overview
 
-The Sageveil fzf port provides shell-specific snippets that configure `FZF_DEFAULT_OPTS` with Sageveil colors.
+The sageveil fzf port provides shell-specific snippets that configure `FZF_DEFAULT_OPTS` with sageveil colors.
 Pick the script that matches your shell and source it during startup to keep fuzzy finder popups aligned with the rest of the palette.
 
 ## Build from the monorepo
@@ -27,7 +27,7 @@ Each build also writes a manifest containing SHA-256 hashes.
 - `sageveil.ps1` – PowerShell profile snippet
 - `sageveil.nix` – helper for home-manager or NixOS modules
 
-## Apply Sageveil
+## Apply sageveil
 
 Choose the snippet that matches your environment:
 
@@ -51,7 +51,7 @@ Choose the snippet that matches your environment:
 
 - **Nix**: include `sageveil.nix` inside your module and merge the returned options into `programs.fzf` or your own output derivation.
 
-Reload your shell afterwards and confirm `echo $FZF_DEFAULT_OPTS` (or the platform equivalent) shows Sageveil colors.
+Reload your shell afterwards and confirm `echo $FZF_DEFAULT_OPTS` (or the platform equivalent) shows sageveil colors.
 
 ## Development
 

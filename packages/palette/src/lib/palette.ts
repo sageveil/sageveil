@@ -22,4 +22,4 @@ export const sageveil = {
     cursor_text: base.black,
   },
 } as const;
-export type SageVeil = typeof sageveil;
+export type Sageveil = typeof sageveil;
