@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
-# SageVeil - tmux theme
+# sageveil - tmux theme
+#
+# Inspired by rose-pine/tmux
 
-get_tmux_option() {
+read_tmux_setting() {
     local option value default
     option="$1"
     default="$2"
@@ -15,22 +17,35 @@ get_tmux_option() {
     fi
 }
 
-set() {
+queue_global_option() {
     local option=$1
     local value=$2
-    tmux_commands+=(set-option -gq "$option" "$value" ";")
+    command_queue+=(set-option -gq "$option" "$value" ";")
 }
 
-setw() {
+queue_window_option() {
     local option=$1
     local value=$2
-    tmux_commands+=(set-window-option -gq "$option" "$value" ";")
+    command_queue+=(set-window-option -gq "$option" "$value" ";")
 }
 
-unset_option() {
+queue_unset_option() {
     local option=$1
-    local value=$2
-    tmux_commands+=(set-option -gu "$option" ";")
+    command_queue+=(set-option -gu "$option" ";")
+}
+
+join_segments() {
+    local glue=$1
+    shift
+    local chunk result=""
+    for chunk in "$@"; do
+        [[ -z "$chunk" ]] && continue
+        if [[ -n "$result" && -n "$glue" ]]; then
+            result+="$glue"
+        fi
+        result+="$chunk"
+    done
+    printf '%s' "$result"
 }
 
 main() {
@@ -44,345 +59,284 @@ main() {
     sageveil_cyan="<%= it.ansi.base.cyan %>"
     sageveil_magenta="<%= it.ansi.base.magenta %>"
     sageveil_border="<%= it.extras.border %>"
+    sageveil_blue="<%= it.ansi.base.blue %>"
+    sageveil_bblue="<%= it.ansi.bright.blue %>"
+    sageveil_bcyan="<%= it.ansi.bright.cyan %>"
+    sageveil_bmagenta="<%= it.ansi.bright.magenta %>"
+    sageveil_bgreen="<%= it.ansi.bright.green %>"
+    sageveil_bred="<%= it.ansi.bright.red %>"
+    sageveil_surface="<%= it.extras.surface %>"
+    sageveil_overlay="<%= it.extras.overlay %>"
+    sageveil_highlight="<%= it.extras.highlight %>"
+    sageveil_dim="<%= it.extras.dim %>"
 
-    # Aggregating all commands into a single array
-    local tmux_commands=()
+    local command_queue=()
 
-    # Status bar
-    set "status" "on"
-    set status-style "fg=$sageveil_green,bg=$sageveil_bg"
-    # set monitor-activity "on"
-    # Leave justify option to user
-    # set status-justify "left"
-    set status-left-length "200"
-    set status-right-length "200"
+    queue_global_option "status" "on"
+    queue_global_option status-style "fg=$sageveil_bgreen,bg=$sageveil_bg"
+    queue_global_option status-left-length "200"
+    queue_global_option status-right-length "200"
 
-    # Theoretically messages (need to figure out color placement)
-    set message-style "fg=$sageveil_muted_fg,bg=$sageveil_bg"
-    set message-command-style "fg=$sageveil_bg,bg=$sageveil_dyellow"
+    queue_global_option message-style "fg=$sageveil_fg,bg=$sageveil_overlay"
+    queue_global_option message-command-style "fg=$sageveil_surface,bg=$sageveil_bred"
 
-    # Pane styling
-    set pane-border-style "fg=$sageveil_border"
-    set pane-active-border-style "fg=$sageveil_dyellow"
-    set display-panes-active-colour "${sageveil_fg}"
-    set display-panes-colour "${sageveil_dyellow}"
+    queue_global_option pane-border-style "fg=$sageveil_border"
+    queue_global_option pane-active-border-style "fg=$sageveil_highlight"
+    queue_global_option display-panes-active-colour "${sageveil_bblue}"
+    queue_global_option display-panes-colour "${sageveil_bmagenta}"
 
-    # Windows
-    setw window-status-style "fg=${sageveil_magenta},bg=${sageveil_bg}"
-    setw window-status-activity-style "fg=${sageveil_bg},bg=${sageveil_byellow}"
-    setw window-status-current-style "fg=${sageveil_dyellow},bg=${sageveil_bg}"
+    queue_window_option window-status-style "fg=${sageveil_blue},bg=${sageveil_bg}"
+    queue_window_option window-status-activity-style "fg=${sageveil_surface},bg=${sageveil_bcyan}"
+    queue_window_option window-status-current-style "fg=${sageveil_byellow},bg=${sageveil_bg}"
 
-    # Statusline base command configuration: No need to touch anything here
-    # Placement is handled below
+    # Shows tmux session name
+    local show_session
+    show_session="$(read_tmux_setting "@sv_show_session" "on")"
+    readonly show_session
 
     # Shows username of the user the tmux session is run by
-    local user
-    user="$(get_tmux_option "@sageveil_user" "")"
-    readonly user
+    local show_user
+    show_user="$(read_tmux_setting "@sv_show_user" "")"
+    readonly show_user
 
     # Shows hostname of the computer the tmux session is run on
-    local host
-    host="$(get_tmux_option "@sageveil_host" "")"
-    readonly host
+    local show_host
+    show_host="$(read_tmux_setting "@sv_host" "")"
+    readonly show_host
 
-    # Date and time command: follows the date UNIX command structure
-    local date_time
-    date_time="$(get_tmux_option "@sageveil_date_time" "")"
-    readonly date_time
+    # Date and time
+    local show_date_time
+    show_date_time="$(read_tmux_setting "@sv_show_date_time" "")"
+    readonly show_date_time
+
+    # Date and time format
+    local date_time_format
+    date_time_format="$(read_tmux_setting "@sv_date_time_format" "%H:%M %d %b")"
+    readonly date_time_format
 
     # Shows truncated current working directory
-    local directory
-    directory="$(get_tmux_option "@sageveil_directory" "")"
+    local show_directory
+    show_directory="$(read_tmux_setting "@sv_show_directory" "")"
 
-    local disable_active_window_menu
-    disable_active_window_menu="$(get_tmux_option "@sageveil_disable_active_window_menu" "")"
+    # Show icon then prefix is active
+    local show_prefix_indicator
+    show_prefix_indicator="$(read_tmux_setting "@sv_show_prefix_indicator" "on")"
+    readonly show_prefix_indicator
 
-    local show_current_program
-    show_current_program="$(get_tmux_option "@sageveil_show_current_program" "")"
-    readonly show_current_program
+    # Show icon when pane is zoomed in (prefix + z)
+    local show_zoom_indicator
+    show_zoom_indicator="$(read_tmux_setting "@sv_show_zoom_indicator" "on")"
+    readonly show_zoom_indicator
 
-    local window_directory
-    window_directory="$(get_tmux_option "@sageveil_show_pane_directory" "")"
-    readonly window_directory
+    # Show number of active sessions
+    local show_session_count
+    show_session_count="$(read_tmux_setting "@sv_show_session_count" "")"
+    readonly show_session_count
 
-    local window_separator
-    window_separator="$(get_tmux_option "@sageveil_window_separator" "")"
-    readonly window_separator
+    # Displays current directory as window name
+    local use_window_directory_as_window_name
+    use_window_directory_as_window_name="$(read_tmux_setting "@sv_directory_as_window_name" "")"
+    readonly use_window_directory_as_window_name
 
-    local default_window_behavior
-    default_window_behavior="$(get_tmux_option "@sageveil_default_window_behavior" "")"
-    readonly default_window_behavior
-
-    # Changes the background color for the current active window
-    # TODO: Together with line 251-269, end development for this feature
-    # local active_window_color
-    # active_window_color="$(get_tmux_option "@sageveil_active_window_color" "")"
-    # readonly active_window_color
-
-    # Transparency enabling for status bar
-    local bar_bg_disable
-    bar_bg_disable="$(get_tmux_option "@sageveil_bar_bg_disable" "")"
-    readonly bar_bg_disable
-
-    # Transparent option for status bar
-    local bar_bg_disabled_color_option
-    bar_bg_disabled_color_option="$(get_tmux_option "@sageveil_bar_bg_disabled_color_option" "0")"
-    readonly bar_bg_disabled_color_option
-
-    # Shows hostname of the computer the tmux session is run on
+    # Only windows mode, disables other segments
     local only_windows
-    only_windows="$(get_tmux_option "@sageveil_only_windows" "")"
+    only_windows="$(read_tmux_setting "@sv_only_windows" "")"
     readonly only_windows
 
     # Allows user to set a few custom sections (for integration with other plugins)
     # Before the plugin's left section
     local status_left_prepend_section
-    status_left_prepend_section="$(get_tmux_option "@sageveil_status_left_prepend_section" "")"
+    status_left_prepend_section="$(read_tmux_setting "@sv_status_left_prepend_section" "")"
     readonly status_left_prepend_section
     #
     # after the plugin's left section
     local status_left_append_section
-    status_left_append_section="$(get_tmux_option "@sageveil_status_left_append_section" "")"
+    status_left_append_section="$(read_tmux_setting "@sv_status_left_append_section" "")"
     readonly status_left_append_section
     # Before the plugin's right section
     local status_right_prepend_section
-    status_right_prepend_section="$(get_tmux_option "@sageveil_status_right_prepend_section" "")"
+    status_right_prepend_section="$(read_tmux_setting "@sv_status_right_prepend_section" "")"
     readonly status_right_prepend_section
     #
     # after the plugin's right section
     local status_right_append_section
-    status_right_append_section="$(get_tmux_option "@sageveil_status_right_append_section" "")"
+    status_right_append_section="$(read_tmux_setting "@sv_status_right_append_section" "")"
     readonly status_right_append_section
 
-    # Settings that allow user to choose their own icons and status bar behaviour
-    # START
-    local current_window_icon
-    current_window_icon="$(get_tmux_option "@sageveil_current_window_icon" "")"
-    readonly current_window_icon
-
+    # Icons
     local current_session_icon
-    current_session_icon="$(get_tmux_option "@sageveil_session_icon" "")"
+    current_session_icon="$(read_tmux_setting "@sv_session_icon" "󰕰")"
     readonly current_session_icon
 
     local username_icon
-    username_icon="$(get_tmux_option "@sageveil_username_icon" "")"
+    username_icon="$(read_tmux_setting "@sv_username_icon" "")"
     readonly username_icon
 
     local hostname_icon
-    hostname_icon="$(get_tmux_option "@sageveil_hostname_icon" "󰒋")"
+    hostname_icon="$(read_tmux_setting "@sv_hostname_icon" "󰒋")"
     readonly hostname_icon
 
     local date_time_icon
-    date_time_icon="$(get_tmux_option "@sageveil_date_time_icon" "󰃰")"
+    date_time_icon="$(read_tmux_setting "@sv_date_time_icon" "󰃰")"
     readonly date_time_icon
 
     local current_folder_icon
-    current_folder_icon="$(get_tmux_option "@sageveil_folder_icon" "")"
+    current_folder_icon="$(read_tmux_setting "@sv_folder_icon" "")"
     readonly current_folder_icon
 
-    # Changes the icon / character that goes between each window's name in the bar
-    local window_status_separator
-    window_status_separator="$(get_tmux_option "@sageveil_window_status_separator" "  ")"
+    local prefix_icon
+    prefix_icon="$(read_tmux_setting "@sv_prefix_icon" "󰘳")"
+    readonly prefix_icon
 
-    # This setting does nothing by itself, it enables the 2 below it to toggle the simplified bar
-    local prioritize_windows
-    prioritize_windows="$(get_tmux_option "@sageveil_prioritize_windows" "")"
+    local zoom_icon
+    zoom_icon="$(read_tmux_setting "@sv_zoom_icon" "󰁌")"
+    readonly zoom_icon
 
-    # Allows the user to set a min width at which most of the bar elements hide, or
-    local user_window_width
-    user_window_width="$(get_tmux_option "@sageveil_width_to_hide" "")"
+    local session_count_icon
+    session_count_icon="$(read_tmux_setting "@sv_window_count_icon" "󰕢")"
+    readonly session_count_icon
 
-    # A number of windows, when over it, the bar gets simplified
-    local user_window_count
-    user_window_count="$(get_tmux_option "@sageveil_window_count" "")"
+    # Custom separator between window index and name, replacing ':', e.g. " → "
+    local window_idx_name_separator
+    window_idx_name_separator="$(read_tmux_setting "@sv_window_idx_name_separator" " · ")"
+    readonly window_idx_name_separator
+
+    # Custom separator that goes between each window's segment
+    local window_segments_separator
+    window_segments_separator="$(read_tmux_setting "@sv_window_segments_separator" "  ")"
+
+    local default_separator=" "
+    # Custom separator for right section, e.g. "  "
+    local right_separator
+    right_separator="$(read_tmux_setting "@sv_right_separator" "$default_separator")"
+
+    # Custom separator for left section, e.g. "  "
+    local left_separator
+    left_separator="$(read_tmux_setting "@sv_left_separator" "$default_separator")"
+
+    local session_segment
+    readonly session_segment=" #[fg=$sageveil_magenta]$current_session_icon #[fg=$sageveil_magenta]#S "
+
+    local session_count_segment
+    readonly session_count_segment=" #[fg=$sageveil_cyan]$session_count_icon #[fg=$sageveil_cyan]#{server_sessions}$default_separator"
+
+    local user_segment
+    readonly user_segment="#[fg=$sageveil_cyan]#(whoami)#[fg=$sageveil_blue]$right_separator#[fg=$sageveil_blue]$username_icon"
+
+    local host_segment
+    readonly host_segment="$default_separator#[fg=$sageveil_cyan]#H#[fg=$sageveil_blue]$right_separator#[fg=$sageveil_blue]$hostname_icon"
+
+    local date_time_segment
+    readonly date_time_segment=" #[fg=$sageveil_cyan]$date_time_format#[fg=$sageveil_blue]$right_separator#[fg=$sageveil_blue]$date_time_icon "
+
+    local directory_segment
+    readonly directory_segment="$default_separator#[fg=$sageveil_dyellow]$current_folder_icon #[fg=$sageveil_dyellow]#{b:pane_current_path} "
+
+    local prefix_indicator_segment
+    readonly prefix_indicator_segment="#{?client_prefix,#[fg=$sageveil_bred]$prefix_icon$default_separator,}"
+
+    local zoom_indicator_segment
+    readonly zoom_indicator_segment="#{?window_zoomed_flag,#[fg=$sageveil_bgreen]$zoom_icon$default_separator,}"
+
+    ### WINDOW STATUS
+    local win_sep=":"
+    if [[ -n "$window_idx_name_separator" ]]; then
+        win_sep="$window_idx_name_separator"
+    elif [[ "$left_separator" != "$default_separator" ]]; then
+        win_sep="$left_separator"
+    fi
+
+    local win_name="W"
+    if [[ "$use_window_directory_as_window_name" == "on" ]]; then
+        win_name="{b:pane_current_path}"
+    fi
 
     # Custom window status that goes between the number and the window name
-    local custom_window_sep="#[fg=$sageveil_magenta]#I#[fg=$sageveil_magenta,]$window_separator#[fg=$sageveil_magenta]#W"
-    local custom_window_sep_current="#I#[fg=$sageveil_dyellow,bg=""]$window_separator#[fg=$sageveil_dyellow,bg=""]#W"
+    local window_segment_format="#[fg=$sageveil_blue]#I#[fg=$sageveil_blue]$win_sep#[fg=$sageveil_blue]#$win_name"
+    local current_window_segment_format="#I#[fg=$sageveil_byellow]$win_sep#[fg=$sageveil_byellow]#$win_name"
 
-    local right_separator
-    right_separator="$(get_tmux_option "@sageveil_right_separator" "  ")"
+    # Left status segments (order-sensitive)
+    local -a left_segments=()
 
-    local left_separator
-    left_separator="$(get_tmux_option "@sageveil_left_separator" "  ")"
+    # Right status segments (order-sensitive)
+    local -a right_segments=()
 
-    local field_separator
-    # NOTE: Don't remove
-    field_separator="$(get_tmux_option "@sageveil_field_separator" " | ")"
-
-    # END
-
-    local spacer
-    spacer=" "
-    # I know, stupid, right? For some reason, spaces aren't consistent
-
-    # These variables are the defaults so that the setw and set calls are easier to parse
-
-    local show_window
-    readonly show_window=" #[fg=$sageveil_green]$current_window_icon #[fg=$sageveil_byellow]#W$spacer"
-
-    local show_window_in_window_status
-    show_window_in_window_status="#[fg=$sageveil_magenta]#I#[fg=$sageveil_magenta,]$left_separator#[fg=$sageveil_magenta]#W"
-
-    local show_window_in_window_status_current
-    show_window_in_window_status_current="#I#[fg=$sageveil_dyellow,bg=""]$left_separator#[fg=$sageveil_dyellow,bg=""]#W"
-
-    local show_session
-    readonly show_session=" #[fg=$sageveil_fg]$current_session_icon #[fg=$sageveil_fg]#S "
-
-    local show_user
-    readonly show_user="#[fg=$sageveil_magenta]#(whoami)#[fg=$sageveil_green]$right_separator#[fg=$sageveil_green]$username_icon"
-
-    local show_host
-    readonly show_host="$spacer#[fg=$sageveil_fg]#H#[fg=$sageveil_green]$right_separator#[fg=$sageveil_green]$hostname_icon"
-
-    local show_date_time
-    readonly show_date_time=" #[fg=$sageveil_cyan]$date_time#[fg=$sageveil_green]$right_separator#[fg=$sageveil_green]$date_time_icon "
-
-    local show_directory
-    readonly show_directory="$spacer#[fg=$sageveil_green]$current_folder_icon #[fg=$sageveil_byellow]#{b:pane_current_path} "
-
-    local show_directory_in_window_status
-    # BUG: It doesn't let the user pass through a custom window name
-    show_directory_in_window_status="#I$left_separator#[fg=$sageveil_dyellow,bg=""]#{b:pane_current_path}"
-
-    local show_directory_in_window_status_current
-    show_directory_in_window_status_current="#I$left_separator#[fg=$sageveil_dyellow,bg=""]#{b:pane_current_path}"
-
-    # Left status: Now moved to a variable called left_column
-    # (we can append / prepend things to it)
-    local left_column
-
-    # Right status and organization:
-    # Right status shows nothing by default
-    local right_column
-
-    # This if statement allows the bg colors to be null if the user decides so
-    # It sets the base colors for active / inactive, no matter the window appearence switcher choice
-    # TEST: This needs to be tested further
-    if [[ "$bar_bg_disable" == "on" ]]; then
-        set status-style "fg=$sageveil_green,bg=$bar_bg_disabled_color_option"
-        show_window_in_window_status="#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]#I#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]#W"
-        show_window_in_window_status_current="#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]#I#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]#W"
-        show_directory_in_window_status="#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]#I#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option]#{b:pane_current_path}"
-        show_directory_in_window_status_current="#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]#I#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option]#{b:pane_current_path}"
-        set window-status-style "fg=$sageveil_magenta,bg=$bar_bg_disabled_color_option"
-        set window-status-current-style "fg=$sageveil_dyellow,bg=$bar_bg_disabled_color_option"
-        set window-status-activity-style "fg=$sageveil_byellow,bg=$bar_bg_disabled_color_option"
-        set message-style "fg=$sageveil_muted_fg,bg=$bar_bg_disabled_color_option"
-    fi
-
-    # Window appearence switcher: 3 options for the user
-    if [[ "$window_separator" != "" ]]; then
-        window_status_format=$custom_window_sep
-        window_status_current_format=$custom_window_sep_current
-        setw window-status-format "$window_status_format"
-        setw window-status-current-format "$window_status_current_format"
-
-    elif [[ "$show_current_program" == "on" ]]; then
-        window_status_format=$show_window_in_window_status
-        window_status_current_format=$show_window_in_window_status_current
-        setw window-status-format "$window_status_format"
-        setw window-status-current-format "$window_status_current_format"
-    # See line 268
-    elif [[ "$window_directory" ]]; then
-        local window_status_format=$show_directory_in_window_status
-        local window_status_current_format=$show_directory_in_window_status_current
-        setw window-status-format "$window_status_format"
-        setw window-status-current-format "$window_status_current_format"
-        #
-    # Base behaviour, but whit cool colors
-    elif [[ "$default_window_behavior" == "on" || "$default_window_behavior" == "" ]]; then
-        unset_option window-status-format
-        unset_option window-status-current-format
-    fi
-
-    if [[ "$user" == "on" ]]; then
-        right_column=$right_column$show_user
-    fi
-
-    if [[ "$host" == "on" ]]; then
-        right_column=$right_column$show_host
-    fi
-
-    if [[ "$date_time" != "" ]]; then
-        right_column=$right_column$show_date_time
-    fi
-
-    if [[ "$directory" == "on" ]]; then
-        right_column=$right_column$show_directory
-    fi
+    queue_window_option window-status-format "$window_segment_format"
+    queue_window_option window-status-current-format "$current_window_segment_format"
 
     # The append and prepend sections are for inter-plugin compatibility
     # and extension
-    if [[ "$disable_active_window_menu" == "on" ]]; then
-        left_column=$show_session
-    else
-        left_column=$show_session$show_window
-    fi
-    #
-    # Appending / Prepending custom user sections to
     if [[ "$status_left_prepend_section" != "" ]]; then
-        left_column=$status_left_prepend_section$left_column
+        left_segments+=("$status_left_prepend_section")
     fi
+
+    if [[ "$show_session" = "on" ]]; then
+        left_segments+=("$session_segment")
+    fi
+
+    if [[ "$show_session_count" == "on" ]]; then
+        left_segments+=("$session_count_segment")
+    fi
+
     if [[ "$status_left_append_section" != "" ]]; then
-        left_column=$left_column$status_left_append_section$spacer
+        left_segments+=("$status_left_append_section$default_separator")
     fi
+
     if [[ "$status_right_prepend_section" != "" ]]; then
-        right_column=$status_right_prepend_section$right_column
+        right_segments+=("$status_right_prepend_section")
     fi
+
+    if [[ "$show_prefix_indicator" == "on" ]]; then
+        right_segments+=("$prefix_indicator_segment")
+    fi
+
+    if [[ "$show_zoom_indicator" == "on" ]]; then
+        right_segments+=("$zoom_indicator_segment")
+    fi
+
+    if [[ "$show_user" == "on" ]]; then
+        right_segments+=("$user_segment")
+    fi
+
+    if [[ "$show_host" == "on" ]]; then
+        right_segments+=("$host_segment")
+    fi
+
+    if [[ "$show_directory" == "on" ]]; then
+        right_segments+=("$directory_segment")
+    fi
+
+    if [[ "$show_date_time" == "on" ]]; then
+        right_segments+=("$date_time_segment")
+    fi
+
     if [[ "$status_right_append_section" != "" ]]; then
-        right_column=$right_column$status_right_append_section
+        right_segments+=("$status_right_append_section")
     fi
 
-    # We set the sections
-    set status-left "$left_column"
-    set status-right "$right_column"
+    local base_left_line
+    base_left_line="$(join_segments "" "${left_segments[@]}")"
 
-    # Variable logic for the window prioritization
-    local current_window_count
-    local current_window_width
+    local base_right_line
+    base_right_line="$(join_segments "" "${right_segments[@]}")"
 
-    current_window_count=$(tmux list-windows | wc -l)
-    current_window_width=$(tmux display -p "#{window_width}")
+    local final_left="$base_left_line"
+    local final_right="$base_right_line"
 
-    # NOTE: Can possibly integrate the $only_windows mode into this
-    if [[ "$prioritize_windows" == "on" ]]; then
-        if [[ "$current_window_count" -gt "$user_window_count" || "$current_window_width" -lt "$user_window_width" ]]; then
-            set status-left "$left_column$show_directory"
-            # set status-right "$show_directory"
-            set status-right ""
-        fi
-    else
-        set status-right "$right_column"
-    fi
+    queue_window_option window-status-separator "$window_segments_separator"
 
-    # Defaults to a NerdFont icon, user can change through an option
-    if [[ "$window_status_separator" != "  " ]]; then
-        setw window-status-separator "$window_status_separator"
-    else
-        setw window-status-separator "  "
-    fi
-
-    # Leaves only the window list on the left side
     if [[ "$only_windows" == "on" ]]; then
-        set status-left ""
-        set status-right ""
+        final_left=""
+        final_right=""
     fi
 
-    # NOTE: Dont remove this, it can be useful for references
-    # setw window-status-format "$window_status_format"
-    # setw window-status-current-format "$window_status_current_format"
+    queue_global_option status-left "$final_left"
+    queue_global_option status-right "$final_right"
 
-    # tmux integrated modes
+    queue_window_option clock-mode-colour "${sageveil_red}"
+    queue_window_option mode-style "fg=${sageveil_dyellow}"
 
-    setw clock-mode-colour "${sageveil_red}"
-    setw mode-style "fg=${sageveil_dyellow}"
-
-    # Call everything to action
-
-    tmux "${tmux_commands[@]}"
-
+    tmux "${command_queue[@]}"
 }
 
 main "$@"
