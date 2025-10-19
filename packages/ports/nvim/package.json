@@ -22,19 +22,16 @@
       "generate": {
         "executor": "nx:run-commands",
         "options": {
-          "command": "tsx {projectRoot}/src/index.ts",
-          "env": {
-            "OUTPUT_DIR": "{workspaceRoot}/dist/{projectRoot}"
-          }
+          "command": "node tools/scripts/build-port.mjs {projectRoot}"
         },
         "outputs": [
-          "{workspaceRoot}/dist/{projectRoot}"
+          "{workspaceRoot}/dist/ports"
         ]
       },
       "clean": {
         "executor": "nx:run-commands",
         "options": {
-          "command": "rm -rf {projectRoot}/dist"
+          "command": "node tools/scripts/clean-port.mjs {projectRoot}"
         }
       }
     }
