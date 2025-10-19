@@ -1,33 +1,47 @@
-# Sageveil tmux port
+<p align="center">
+    <img src="../../../assets/sageveil-logo.png" width="80" />
+    <h2 align="center">@sageveil/tmux</h2>
+</p>
 
-Sageveil's tmux port renders a themed status line that matches the rest of the palette. It is distributed as a plain tmux config file so you can source it from any existing `tmux.conf`. You can either build it from this monorepo or consume a prebuilt artifact published in the port's standalone repository (link TBD).
+<p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
-## Get the theme
+# @sageveil/tmux
 
-### Option 1: Use prebuilt artifacts
+## Overview
 
-- Clone or download the dedicated tmux port repository (link TBD).
-- Copy the published `sageveil.tmux` (and optional manifest) into your preferred tmux config directory, e.g. `~/.config/tmux/`.
+Sageveil’s tmux port renders a status line that matches the palette used across the rest of the ecosystem. It ships as a standalone tmux script, so you can source it from any existing `tmux.conf` without bringing in extra plugins.
 
-### Option 2: Build from the Sageveil monorepo
+## Build from the monorepo
 
-- Install dependencies once with `pnpm install` in the repo root.
-- Render the status line with `pnpm nx run tmux:generate`. The build script writes the theme and a manifest to `dist/ports/tmux/<version>/`.
-- Add `-- --skip-archive` if you do not need the generated tarball.
+All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
 
+1. Install dependencies once: `pnpm install`
+2. Render the theme: `pnpm nx run tmux:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
+3. Grab the assets from `dist/ports/tmux/<version>/`
 
-## Use inside tmux
+The build also writes a manifest with SHA-256 hashes for each output.
 
-```tmux
-# Set any overrides before sourcing the theme
-set -g @sv_show_user "on"
-set -g @sv_window_idx_name_separator " • "
+## Apply Sageveil
 
-# Source the generated status line
-source-file "/path/to/sageveil.tmux"
-```
+### Prebuilt artifacts (coming soon)
 
-Most people copy or symlink the generated file into `~/.config/tmux/sageveil.tmux`, then source it from their main config. Reload tmux with `tmux source-file ~/.tmux.conf` after changes.
+Links to published releases will be added once the standalone tmux repository goes live.
+
+### Build locally
+
+1. Copy or symlink `sageveil.tmux` into your tmux config directory (for example `~/.config/tmux/sageveil.tmux`).
+2. Source it from your main config:
+
+   ```tmux
+   # Set any overrides before sourcing the theme
+   set -g @sv_show_user "on"
+   set -g @sv_window_idx_name_separator " • "
+
+   # Source the generated status line
+   source-file "~/.config/tmux/sageveil.tmux"
+   ```
+
+3. Reload tmux with `tmux source-file ~/.tmux.conf` to apply the changes.
 
 ## Configuration reference
 
@@ -82,3 +96,8 @@ These defaults assume a Nerd Font. Override any entry if your terminal font maps
 | `@sv_prefix_icon` | `󰘳` | Prefix active indicator. |
 | `@sv_zoom_icon` | `󰁌` | Zoomed pane indicator. |
 
+## Development
+
+[sageveil/sageveil](https://github.com/sageveil/sageveil) is the main project monorepo. All development happens there.
+
+[sageveil/tmux](https://github.com/sageveil/tmux) is used only for easy distribution of the ready-to-use tmux colorscheme plugin.
