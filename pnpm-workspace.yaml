@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - 'packages/ports/*'
 ignoreWorkspaceRootCheck: true
+minimumReleaseAge: 10080
