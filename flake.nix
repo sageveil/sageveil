@@ -27,7 +27,7 @@
         name = "sageveil-sh";
         packages = with pkgs; [
           nodejs_24
-          pnpm
+          (pnpm.override {nodejs = nodejs_24;})
           typescript
           vtsls
           vscode-langservers-extracted
