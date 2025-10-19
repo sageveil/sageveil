@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>SageVeil</string>
+  <key>author</key>
+  <string>SageVeil Contributors</string>
+  <key>uuid</key>
+  <string>5d0f78aa-44ae-4b6e-8e7a-2aa2de93bc44</string>
+  <key>semanticClass</key>
+  <string>theme.dark.sageveil</string>
+  <key>colorSpaceName</key>
+  <string>sRGB</string>
+  <key>gutterSettings</key>
+  <dict>
+    <key>background</key>
+    <string><%= it.extras.surface %></string>
+    <key>divider</key>
+    <string><%= it.extras.border %></string>
+    <key>foreground</key>
+    <string><%= it.extras.dim %></string>
+    <key>selectionBackground</key>
+    <string><%= it.extras.overlay %></string>
+    <key>selectionForeground</key>
+    <string><%= it.ansi.base.white %></string>
+  </dict>
+  <key>settings</key>
+  <array>
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>background</key>
+        <string><%= it.extras.surface %></string>
+        <key>caret</key>
+        <string><%= it.extras.cursor %></string>
+        <key>findHighlight</key>
+        <string><%= it.ansi.bright.magenta %></string>
+        <key>findHighlightForeground</key>
+        <string><%= it.ansi.base.black %></string>
+        <key>foreground</key>
+        <string><%= it.ansi.base.white %></string>
+        <key>guide</key>
+        <string><%= it.extras.overlay %></string>
+        <key>inactiveSelection</key>
+        <string><%= it.extras.overlay %></string>
+        <key>invisibles</key>
+        <string><%= it.extras.dim %></string>
+        <key>lineHighlight</key>
+        <string><%= it.extras.overlay %></string>
+        <key>selection</key>
+        <string><%= it.extras.highlight %></string>
+        <key>shadow</key>
+        <string>#00000000</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Comment</string>
+      <key>scope</key>
+      <string>comment, punctuation.definition.comment</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.extras.dim %></string>
+        <key>fontStyle</key>
+        <string>italic</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Annotation</string>
+      <key>scope</key>
+      <string>storage.type.annotation, entity.name.label, punctuation.definition.annotation</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.green %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Keyword</string>
+      <key>scope</key>
+      <string>keyword, storage.type</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.magenta %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Conditional &amp; Loop</string>
+      <key>scope</key>
+      <string>keyword.control, keyword.operator.word</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.green %></string>
+        <key>fontStyle</key>
+        <string>bold</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Function &amp; Method</string>
+      <key>scope</key>
+      <string>entity.name.function, meta.function-call, support.function</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.green %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Class &amp; Type</string>
+      <key>scope</key>
+      <string>entity.name.type, entity.other.inherited-class, storage.type.class</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.blue %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Interface &amp; Trait</string>
+      <key>scope</key>
+      <string>entity.name.type.interface, entity.name.type.trait</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.blue %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Namespace &amp; Module</string>
+      <key>scope</key>
+      <string>entity.name.namespace, meta.import, support.module</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.cyan %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Variable &amp; Parameter</string>
+      <key>scope</key>
+      <string>variable, variable.parameter, meta.definition.parameter</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.white %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Special Variable</string>
+      <key>scope</key>
+      <string>variable.language, variable.other.readwrite.global</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.magenta %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>String</string>
+      <key>scope</key>
+      <string>string, punctuation.definition.string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.yellow %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>String Escape</string>
+      <key>scope</key>
+      <string>constant.character.escape</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.yellow %></string>
+        <key>fontStyle</key>
+        <string>bold</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Number</string>
+      <key>scope</key>
+      <string>constant.numeric</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.cyan %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Boolean &amp; Constant</string>
+      <key>scope</key>
+      <string>constant.language, constant.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.cyan %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Operator</string>
+      <key>scope</key>
+      <string>keyword.operator, punctuation.separator</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.white %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Punctuation</string>
+      <key>scope</key>
+      <string>punctuation.definition, punctuation.terminator, punctuation.section</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.extras.muted %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Tag &amp; Markup</string>
+      <key>scope</key>
+      <string>entity.name.tag, meta.tag, markup.heading</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.green %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Attribute</string>
+      <key>scope</key>
+      <string>entity.other.attribute-name</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.yellow %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Markup Bold</string>
+      <key>scope</key>
+      <string>markup.bold</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.green %></string>
+        <key>fontStyle</key>
+        <string>bold</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Markup Italic</string>
+      <key>scope</key>
+      <string>markup.italic</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.magenta %></string>
+        <key>fontStyle</key>
+        <string>italic</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Markup Inline Code</string>
+      <key>scope</key>
+      <string>markup.raw.inline, markup.fenced_code.block</string>
+      <key>settings</key>
+      <dict>
+        <key>background</key>
+        <string><%= it.extras.overlay %></string>
+        <key>foreground</key>
+        <string><%= it.ansi.base.white %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Link</string>
+      <key>scope</key>
+      <string>markup.underline.link, variable.parameter.url</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.cyan %></string>
+        <key>fontStyle</key>
+        <string>underline</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Storage</string>
+      <key>scope</key>
+      <string>storage, storage.type.function</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.magenta %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Support</string>
+      <key>scope</key>
+      <string>support.class, support.constant, support.variable</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.blue %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Diff Added</string>
+      <key>scope</key>
+      <string>markup.inserted, meta.diff.header.to-file, punctuation.definition.inserted</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.green %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Diff Removed</string>
+      <key>scope</key>
+      <string>markup.deleted, meta.diff.header.from-file, punctuation.definition.deleted</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.red %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Diff Changed</string>
+      <key>scope</key>
+      <string>markup.changed</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.yellow %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Invalid</string>
+      <key>scope</key>
+      <string>invalid, invalid.deprecated</string>
+      <key>settings</key>
+      <dict>
+        <key>background</key>
+        <string><%= it.ansi.base.red %></string>
+        <key>foreground</key>
+        <string><%= it.ansi.base.black %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Warning</string>
+      <key>scope</key>
+      <string>markup.warning, invalid.illegal</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.bright.yellow %></string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Note</string>
+      <key>scope</key>
+      <string>markup.info, markup.quote</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string><%= it.ansi.base.cyan %></string>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>

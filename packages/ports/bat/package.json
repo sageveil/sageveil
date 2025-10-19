@@ -13,5 +13,30 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@sageveil/templater": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "tsx {projectRoot}/src/index.ts",
+          "env": {
+            "OUTPUT_DIR": "{workspaceRoot}/dist/{projectRoot}"
+          }
+        },
+        "outputs": [
+          "{workspaceRoot}/dist/{projectRoot}"
+        ]
+      },
+      "clean": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "rm -rf {projectRoot}/dist"
+        }
+      }
+    }
+  }
 }
