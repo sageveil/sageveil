@@ -2,14 +2,14 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../../node_modules/.vite/packages/ports/bat',
+  cacheDir: '../../../node_modules/.vite/packages/ports/text-mate',
   plugins: [],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
-    name: '@sageveil/bat',
+    name: '@sageveil/text-mate',
     watch: false,
     globals: true,
     environment: 'node',

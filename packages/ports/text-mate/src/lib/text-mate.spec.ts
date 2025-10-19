@@ -4,7 +4,7 @@ vi.mock('@sageveil/templater', () => ({
   render: mockRender,
 }));
 
-describe('bat', () => {
+describe('text-mate', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -12,19 +12,19 @@ describe('bat', () => {
   it('should call render with correct template configuration', async () => {
     mockRender.mockResolvedValue(undefined);
 
-    await import('./bat.js');
+    await import('./text-mate.js');
 
     expect(mockRender).toHaveBeenCalledOnce();
     expect(mockRender).toHaveBeenCalledWith({
       templateDir: expect.stringMatching(
-        /packages\/ports\/bat\/src\/lib\/templates$/
+        /packages\/ports\/text-mate\/src\/lib\/templates$/
       ),
       templateFiles: ['sageveil.tmTheme'],
     });
   });
 });
 
-describe('bat template', () => {
+describe('text-mate template', () => {
   it('should include key SageVeil colors', async () => {
     const { Eta } = await import('eta');
     const { join } = await import('node:path');

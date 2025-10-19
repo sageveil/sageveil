@@ -67,7 +67,7 @@
         "packages/ports/tmux/*",
         "packages/ports/fzf/*",
         "packages/ports/k9s/*",
-        "packages/ports/bat/*"
+        "packages/ports/text-mate/*"
       ]
     },
     {
@@ -80,7 +80,7 @@
         "packages/ports/tmux/*",
         "packages/ports/fzf/*",
         "packages/ports/k9s/*",
-        "packages/ports/bat/*"
+        "packages/ports/text-mate/*"
       ],
       "options": {
         "typecheck": {

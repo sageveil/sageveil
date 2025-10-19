@@ -3,11 +3,9 @@
 <plist version="1.0">
 <dict>
   <key>name</key>
-  <string>SageVeil</string>
+  <string>sageveil</string>
   <key>author</key>
-  <string>SageVeil Contributors</string>
-  <key>uuid</key>
-  <string>5d0f78aa-44ae-4b6e-8e7a-2aa2de93bc44</string>
+  <string>dgabka</string>
   <key>semanticClass</key>
   <string>theme.dark.sageveil</string>
   <key>colorSpaceName</key>
