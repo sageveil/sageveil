@@ -47,5 +47,6 @@
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
-  }
+  },
+  "dependencies": {}
 }
