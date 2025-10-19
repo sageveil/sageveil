@@ -9,7 +9,7 @@
 
 ## Overview
 
-Sageveil’s tmux port renders a status line that matches the palette used across the rest of the ecosystem. It ships as a standalone tmux script, so you can source it from any existing `tmux.conf` without bringing in extra plugins.
+sageveil’s tmux port renders a status line that matches the palette used across the rest of the ecosystem. It ships as a standalone tmux script, so you can source it from any existing `tmux.conf` without bringing in extra plugins.
 
 ## Build from the monorepo
 
@@ -21,7 +21,7 @@ All sageveil ports will be distributed in their dedicated repos (comming soon). 
 
 The build also writes a manifest with SHA-256 hashes for each output.
 
-## Apply Sageveil
+## Apply sageveil
 
 ### Prebuilt artifacts (coming soon)
 
@@ -54,7 +54,7 @@ All options are standard tmux global options. Set them **before** you source `sa
 | `@sv_show_session` | `on` | Shows the current session name (`#S`) on the left. |
 | `@sv_show_prefix_indicator` | `on` | Adds the prefix icon whenever the tmux prefix is pressed. |
 | `@sv_show_zoom_indicator` | `on` | Highlights zoomed panes (prefix + `z`). |
-| `@sv_show_session_count` | `"" (off)` | Displays the total number of server sessions. |
+| `@sv_show_session_count` | `""` (off) | Displays the total number of server sessions. |
 | `@sv_show_user` | `""` (off) | Set to `on` to show the current UNIX user on the right. |
 | `@sv_show_host` | `""` (off) | Set to `on` to show the hostname on the right. |
 | `@sv_show_date_time` | `""` (off) | Set to `on` to render the clock segment. |
@@ -67,7 +67,7 @@ All options are standard tmux global options. Set them **before** you source `sa
 | Option | Default | Description |
 | --- | --- | --- |
 | `@sv_date_time_format` | `%H:%M %d %b` | Format string fed to the clock segment. |
-| `@sv_window_idx_name_separator` | `:` | Separator between the window index (`#I`) and name (`#W`). |
+| `@sv_window_idx_name_separator` | `·` | Separator between the window index (`#I`) and name (`#W`). |
 | `@sv_window_segments_separator` | double space | Separator placed between each window segment. |
 | `@sv_left_separator` | single space | Glue used to join items in the left status line. |
 | `@sv_right_separator` | single space | Glue used to join items in the right status line. |
@@ -76,10 +76,10 @@ All options are standard tmux global options. Set them **before** you source `sa
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `@sv_status_left_prepend_section` | `""` | Prepends raw tmux status text to the left side (runs before Sageveil segments). |
-| `@sv_status_left_append_section` | `""` | Appends raw tmux status text after the Sageveil left segments. |
+| `@sv_status_left_prepend_section` | `""` | Prepends raw tmux status text to the left side (runs before sageveil segments). |
+| `@sv_status_left_append_section` | `""` | Appends raw tmux status text after the sageveil left segments. |
 | `@sv_status_right_prepend_section` | `""` | Prepends raw tmux status text to the right side. |
-| `@sv_status_right_append_section` | `""` | Appends raw tmux status text after the Sageveil right segments. |
+| `@sv_status_right_append_section` | `""` | Appends raw tmux status text after the sageveil right segments. |
 
 ### Icon glyphs
 

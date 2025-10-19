@@ -22,7 +22,7 @@ All sageveil ports will be distributed in their dedicated repos (comming soon). 
 
 Each build includes a manifest with SHA-256 hashes for integrity checks.
 
-## Apply Sageveil
+## Apply sageveil
 
 1. Copy `sageveil.tmTheme` to your bat theme directory, for example:
 

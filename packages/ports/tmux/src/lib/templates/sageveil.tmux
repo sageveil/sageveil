@@ -198,7 +198,7 @@ main() {
 
     # Custom separator between window index and name, replacing ':', e.g. " → "
     local window_idx_name_separator
-    window_idx_name_separator="$(read_tmux_setting "@sv_window_idx_name_separator" " · ")"
+    window_idx_name_separator="$(read_tmux_setting "@sv_window_idx_name_separator" "·")"
     readonly window_idx_name_separator
 
     # Custom separator that goes between each window's segment

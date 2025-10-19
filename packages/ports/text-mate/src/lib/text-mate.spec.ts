@@ -25,7 +25,7 @@ describe('text-mate', () => {
 });
 
 describe('text-mate template', () => {
-  it('should include key SageVeil colors', async () => {
+  it('should include key sageveil colors', async () => {
     const { Eta } = await import('eta');
     const { join } = await import('node:path');
 
