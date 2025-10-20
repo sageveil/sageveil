@@ -16,10 +16,8 @@ sageveil’s tmux port renders a status line that matches the palette used acros
 All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
 
 1. Install dependencies once: `pnpm install`
-2. Render the theme: `pnpm nx run tmux:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
-3. Grab the assets from `dist/ports/tmux/<version>/`
-
-The build also writes a manifest with SHA-256 hashes for each output.
+2. Render the theme: `pnpm nx run tmux:generate`
+3. Grab the assets from `dist/ports/tmux/`
 
 ## Apply sageveil
 

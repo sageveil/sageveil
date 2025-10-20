@@ -16,10 +16,8 @@ The sageveil neovim port provides a full Lua colorscheme, Tree‑sitter highligh
 All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
 
 1. Install dependencies once: `pnpm install`
-2. Render the runtime files: `pnpm nx run nvim:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
-3. The files land in `dist/ports/nvim/<version>/`
-
-Each build writes a manifest that lists SHA-256 hashes for every output.
+2. Render the runtime files: `pnpm nx run nvim:generate` 
+3. The files land in `dist/ports/nvim/`
 
 ## Apply sageveil
 
@@ -31,7 +29,7 @@ If you use a plugin manager, point it at the dist directory. Example for [lazy.n
 return {
   {
     -- "sageveil/nvim" (comming soon)
-    dir = "~/repos/sageveil/dist/ports/nvim/0.1.0/",
+    dir = "~/repos/sageveil/dist/ports/nvim/",
     name = "sageveil",
     priority = 1000,
     config = function()

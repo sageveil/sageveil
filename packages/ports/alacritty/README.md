@@ -5,7 +5,7 @@
 
 <p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
-# @sageveil alacritty
+# @sageveil/alacritty
 
 ## Overview
 
@@ -16,8 +16,8 @@ The sageveil alacritty port provides a low-contrast, green-tinted terminal palet
 All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
 
 1. Install dependencies once: `pnpm install`
-2. Generate the theme: `pnpm nx run alacritty:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
-3. Find the rendered assets under `dist/ports/alacritty/<version>/`
+2. Generate the theme: `pnpm nx run alacritty:generate` 
+3. Find the rendered assets under `dist/ports/alacritty/`
 
 Each build includes a manifest with SHA-256 hashes you can use to verify downloads.
 
