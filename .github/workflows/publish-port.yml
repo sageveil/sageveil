@@ -1,12 +1,12 @@
-name: Publish port from tag
+name: Publish Port
 on:
-  push:
-    tags:
-      - '@*/*@*'
-permissions:
-  contents: read
+  release:
+    types:
+      - published
+      - prereleased
 jobs:
   publish:
+    if: ${{ startsWith(github.event.release.tag_name, 'port/') }}
     runs-on: ubuntu-latest
     env:
       ORG: ${{ vars.PUBLISH_ORG != '' && vars.PUBLISH_ORG || 'sageveil' }}
@@ -15,9 +15,9 @@ jobs:
         id: parse
         shell: bash
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          # Matches @scope/port@1.2.3 or @scope/port@1.2.3-rc.1
-          if [[ "$TAG" =~ ^@[^/]+/([^@]+)@([0-9]+\.[0-9]+\.[0-9]+([-\.][A-Za-z0-9\.]+)?)$ ]]; then
+          TAG="${{ github.event.release.tag_name }}"
+          # Matches port/@scope/port@1.2.3 or port/@scope/port@1.2.3-rc.1
+          if [[ "$TAG" =~ ^port/@[^/]+/([^@]+)@([0-9]+\.[0-9]+\.[0-9]+([-\.][A-Za-z0-9\.]+)?)$ ]]; then
             PORT="${BASH_REMATCH[1]}"
             VERSION="${BASH_REMATCH[2]}"
             echo "port=$PORT" >> "$GITHUB_OUTPUT"
@@ -25,17 +25,20 @@ jobs:
             echo "Tag OK. port=$PORT version=$VERSION"
           else
             echo "Invalid tag format: $TAG"
-            echo "Expected @scope/port@version. Example @sageveil/tmux@1.0.0"
+            echo "Expected port/@scope/port-name@version. Example port/@sageveil/tmux@1.0.0"
             exit 1
           fi
       - name: Checkout monorepo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          ref: ${{ github.event.release.tag_name }}
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           version: 10.18.3
           run_install: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24.10
           cache: pnpm
@@ -54,62 +57,60 @@ jobs:
         run: |
           PORT="${{ steps.parse.outputs.port }}"
           test -d "dist/ports/$PORT" || { echo "dist/$PORT missing. Build must place artefacts there."; exit 1; }
-      - name: Publish to target repo
-        env:
-          TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      - name: Publish artifacts to downstream repo
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           set -euo pipefail
+          set -x
           PORT="${{ steps.parse.outputs.port }}"
           VERSION="${{ steps.parse.outputs.version }}"
           ORG="${ORG:-sageveil}"
           TARGET_REPO="$ORG/$PORT"
-          TARGET_URL="https://x-access-token:${TOKEN}@github.com/${TARGET_REPO}.git"
+          TARGET_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${TARGET_REPO}.git"
 
           PUB_DIR="$(mktemp -d)"
+          trap 'rm -rf "$PUB_DIR"' EXIT
+          echo "Using publish directory: ${PUB_DIR}"
 
-          git clone --depth=1 "$TARGET_URL" "$PUB_DIR" || {
-            # If the repo is empty or has no default branch yet
+          if ! git clone --depth=1 "$TARGET_URL" "$PUB_DIR"; then
+            # Fallback: repo missing or empty, bootstrap it
             mkdir -p "$PUB_DIR"
-            pushd "$PUB_DIR" >/dev/null
-            git init
-            git remote add origin "$TARGET_URL"
-            git checkout -b main
-            popd >/dev/null
-          }
-          rsync -a --delete "dist/ports/$PORT/" "$PUB_DIR/"
-          pushd "$PUB_DIR" >/dev/null
+            git -C "$PUB_DIR" init -b main
+            git -C "$PUB_DIR" remote add origin "$TARGET_URL"
+          fi
 
-          git config user.name "sageveil-bot"
-          git config user.email "bot@sageveil"
+          rsync -a --delete --exclude '.git/' "dist/ports/$PORT/" "$PUB_DIR/"
+          git -C "$PUB_DIR" status -sb || true
+
+          git -C "$PUB_DIR" config user.name "sageveil-bot"
+          git -C "$PUB_DIR" config user.email "bot@sageveil"
 
           # Stage and detect changes
-          git add -A
-          if git diff --cached --quiet; then
+          git -C "$PUB_DIR" add -A
+          if git -C "$PUB_DIR" diff --cached --quiet; then
             echo "No changes to publish for ${PORT} ${VERSION}"
             # Create tag if it does not exist yet
-            if ! git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
-              git tag "${VERSION}"
-              git push origin "refs/tags/${VERSION}"
+            if ! git -C "$PUB_DIR" rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+              git -C "$PUB_DIR" tag "${VERSION}"
+              git -C "$PUB_DIR" push origin "refs/tags/${VERSION}"
             fi
             exit 0
           fi
 
-          git commit -m "Release ${VERSION}"
-          git branch -M main
-          git push origin main
-          git tag -f "${VERSION}"
-          git push origin "refs/tags/${VERSION}"
-
-          popd >/dev/null
-          rm -rf "$PUB_DIR"
+          git -C "$PUB_DIR" commit -m "Release ${VERSION}"
+          git -C "$PUB_DIR" branch -M main
+          git -C "$PUB_DIR" push origin main
+          git -C "$PUB_DIR" tag -f "${VERSION}"
+          git -C "$PUB_DIR" push origin "refs/tags/${VERSION}"
       - name: Prepare release notes from monorepo
         id: notes
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          MONO_TAG: ${{ github.event.release.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         shell: bash
         run: |
-          MONO_TAG="${GITHUB_REF_NAME}" # like @sageveil/tmux@1.0.0
           NOTES_FILE="$(pwd)/.release-notes.md"
           # Try to read monorepo release body for the triggering tag
           if gh api \
@@ -121,10 +122,10 @@ jobs:
             echo "Release ${MONO_TAG}" > "$NOTES_FILE"
           fi
           echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
-      - name: Create downstream GitHub release and upload assets
-        env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      - name: Create downstream GitHub release
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           set -euo pipefail
           PORT="${{ steps.parse.outputs.port }}"
