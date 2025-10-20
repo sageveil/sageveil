@@ -18,16 +18,25 @@
     ]
   },
   "release": {
-    "releaseTagPattern": "{projectName}@{version}",
+    "groups": {
+      "ports": {
+        "releaseTagPattern": "port/{projectName}@{version}",
+        "projects": [
+          "packages/ports/*"
+        ]
+      },
+      "other": {
+        "releaseTagPattern": "{projectName}@{version}",
+        "projects": [
+          "packages/palette",
+          "packages/templater"
+        ]
+      }
+    },
+    "projectsRelationship": "independent",
     "version": {
       "conventionalCommits": true
     },
-    "projects": [
-      "packages/palette",
-      "packages/templater",
-      "packages/ports/*"
-    ],
-    "projectsRelationship": "independent",
     "changelog": {
       "projectChangelogs": {
         "file": false,
@@ -39,10 +48,49 @@
         }
       }
     },
-    "git": {
-      "commit": true,
-      "tag": true,
-      "push": true
+    "conventionalCommits": {
+      "types": {
+        "feat": {
+          "semverBump": "minor",
+          "changelog": {
+            "title": "🌿 New Growth",
+            "hidden": false
+          }
+        },
+        "fix": {
+          "semverBump": "patch",
+          "changelog": {
+            "title": "🪴 Repairs",
+            "hidden": false
+          }
+        },
+        "refactor": {
+          "semverBump": "none",
+          "changelog": {
+            "title": "🍃 Refinements",
+            "hidden": false
+          }
+        },
+        "docs": {
+          "semverBump": "none",
+          "changelog": {
+            "title": "📚 Knowledge",
+            "hidden": false
+          }
+        },
+        "chore": {
+          "semverBump": "none",
+          "changelog": {
+            "title": "🪻 Upkeep",
+            "hidden": false
+          }
+        }
+      },
+      "git": {
+        "commit": true,
+        "tag": true,
+        "push": true
+      }
     }
   },
   "plugins": [
