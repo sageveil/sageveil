@@ -17,10 +17,8 @@ It’s perfect for pairing with the Alacritty and tmux ports in the same termina
 All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
 
 1. Install dependencies once: `pnpm install`
-2. Render the theme: `pnpm nx run text-mate:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
-3. The files land in `dist/ports/text-mate/<version>/`
-
-Each build includes a manifest with SHA-256 hashes for integrity checks.
+2. Render the theme: `pnpm nx run text-mate:generate`
+3. The files land in `dist/ports/text-mate/`
 
 ## Apply sageveil
 

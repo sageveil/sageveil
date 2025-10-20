@@ -15,10 +15,8 @@ Pick the script that matches your shell and source it during startup to keep fuz
 ## Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
-2. Render the snippets: `pnpm nx run fzf:generate` (append `-- --skip-archive` to skip the `.tar.gz` bundle)
-3. The files land in `dist/ports/fzf/<version>/`
-
-Each build also writes a manifest containing SHA-256 hashes.
+2. Render the snippets: `pnpm nx run fzf:generate` 
+3. The files land in `dist/ports/fzf/`
 
 ## Generated files
 
