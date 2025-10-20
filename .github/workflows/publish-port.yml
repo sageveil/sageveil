@@ -1,0 +1,159 @@
+name: Publish port from tag
+on:
+  push:
+    tags:
+      - '@*/*@*'
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      ORG: ${{ vars.PUBLISH_ORG != '' && vars.PUBLISH_ORG || 'sageveil' }}
+    steps:
+      - name: Parse tag to port and version
+        id: parse
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          # Matches @scope/port@1.2.3 or @scope/port@1.2.3-rc.1
+          if [[ "$TAG" =~ ^@[^/]+/([^@]+)@([0-9]+\.[0-9]+\.[0-9]+([-\.][A-Za-z0-9\.]+)?)$ ]]; then
+            PORT="${BASH_REMATCH[1]}"
+            VERSION="${BASH_REMATCH[2]}"
+            echo "port=$PORT" >> "$GITHUB_OUTPUT"
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "Tag OK. port=$PORT version=$VERSION"
+          else
+            echo "Invalid tag format: $TAG"
+            echo "Expected @scope/port@version. Example @sageveil/tmux@1.0.0"
+            exit 1
+          fi
+      - name: Checkout monorepo
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10.18.3
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.10
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build selected port
+        shell: bash
+        run: |
+          PORT="${{ steps.parse.outputs.port }}"
+          if [[ ! -d "packages/ports/$PORT" ]]; then
+            echo "Port source not found at packages/ports/$PORT"
+            exit 1
+          fi
+          pnpm nx run "$PORT:generate"
+      - name: Verify artifacts
+        shell: bash
+        run: |
+          PORT="${{ steps.parse.outputs.port }}"
+          test -d "dist/ports/$PORT" || { echo "dist/$PORT missing. Build must place artefacts there."; exit 1; }
+      - name: Publish to target repo
+        env:
+          TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PORT="${{ steps.parse.outputs.port }}"
+          VERSION="${{ steps.parse.outputs.version }}"
+          ORG="${ORG:-sageveil}"
+          TARGET_REPO="$ORG/$PORT"
+          TARGET_URL="https://x-access-token:${TOKEN}@github.com/${TARGET_REPO}.git"
+
+          PUB_DIR="$(mktemp -d)"
+
+          git clone --depth=1 "$TARGET_URL" "$PUB_DIR" || {
+            # If the repo is empty or has no default branch yet
+            mkdir -p "$PUB_DIR"
+            pushd "$PUB_DIR" >/dev/null
+            git init
+            git remote add origin "$TARGET_URL"
+            git checkout -b main
+            popd >/dev/null
+          }
+          rsync -a --delete "dist/ports/$PORT/" "$PUB_DIR/"
+          pushd "$PUB_DIR" >/dev/null
+
+          git config user.name "sageveil-bot"
+          git config user.email "bot@sageveil"
+
+          # Stage and detect changes
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to publish for ${PORT} ${VERSION}"
+            # Create tag if it does not exist yet
+            if ! git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+              git tag "${VERSION}"
+              git push origin "refs/tags/${VERSION}"
+            fi
+            exit 0
+          fi
+
+          git commit -m "Release ${VERSION}"
+          git branch -M main
+          git push origin main
+          git tag -f "${VERSION}"
+          git push origin "refs/tags/${VERSION}"
+
+          popd >/dev/null
+          rm -rf "$PUB_DIR"
+      - name: Prepare release notes from monorepo
+        id: notes
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          MONO_TAG="${GITHUB_REF_NAME}" # like @sageveil/tmux@1.0.0
+          NOTES_FILE="$(pwd)/.release-notes.md"
+          # Try to read monorepo release body for the triggering tag
+          if gh api \
+               repos/${GITHUB_REPOSITORY}/releases/tags/${MONO_TAG} \
+               --jq .body > "$NOTES_FILE"; then
+            echo "Got monorepo notes for ${MONO_TAG}"
+          else
+            echo "Could not find monorepo release ${MONO_TAG}, generating simple notes"
+            echo "Release ${MONO_TAG}" > "$NOTES_FILE"
+          fi
+          echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+      - name: Create downstream GitHub release and upload assets
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PORT="${{ steps.parse.outputs.port }}"
+          VERSION="${{ steps.parse.outputs.version }}"
+          ORG="${{ env.ORG }}"
+          DEST_REPO="${ORG}/${PORT}"
+          NOTES_FILE="${{ steps.notes.outputs.notes_file }}"
+
+          # Title and prerelease flag
+          TITLE="${PORT} ${VERSION}"
+          PRE=""
+          if [[ "$VERSION" == *-* ]]; then
+            PRE="--prerelease"
+          fi
+
+          # Create or update release on the downstream repo
+          # If the release already exists, this will exit non-zero, so we try edit
+          if ! gh release create "${VERSION}" \
+                --repo "${DEST_REPO}" \
+                --title "${TITLE}" \
+                --notes-file "${NOTES_FILE}" \
+                ${PRE}; then
+            echo "Release exists, updating notes and title"
+            gh release edit "${VERSION}" \
+              --repo "${DEST_REPO}" \
+              --title "${TITLE}" \
+              --notes-file "${NOTES_FILE}" \
+              ${PRE}
+          fi
+      - name: Summary
+        run: |
+          echo "Published ${{ steps.parse.outputs.port }} ${{ steps.parse.outputs.version }} to https://github.com/${{ env.ORG }}/${{ steps.parse.outputs.port }}"
