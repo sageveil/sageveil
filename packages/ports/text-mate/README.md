@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="../../../assets/sageveil-logo.png" width="80" />
+    <img src="https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/assets/sageveil-logo.png" width="80" />
     <h2 align="center">@sageveil/text-mate</h2>
 </p>
 
