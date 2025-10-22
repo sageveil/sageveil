@@ -63,7 +63,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           set -euo pipefail
-          set -x
           PORT="${{ steps.parse.outputs.port }}"
           VERSION="${{ steps.parse.outputs.version }}"
           ORG="${ORG:-sageveil}"
@@ -82,7 +81,6 @@ jobs:
           fi
 
           rsync -a --delete --exclude '.git/' "dist/ports/$PORT/" "$PUB_DIR/"
-          git -C "$PUB_DIR" status -sb || true
 
           git -C "$PUB_DIR" config user.name "sageveil-bot"
           git -C "$PUB_DIR" config user.email "bot@sageveil"
@@ -99,7 +97,7 @@ jobs:
             exit 0
           fi
 
-          git -C "$PUB_DIR" commit -m "Release ${VERSION}"
+          git -C "$PUB_DIR" commit -m "chore(release): ${VERSION}"
           git -C "$PUB_DIR" branch -M main
           git -C "$PUB_DIR" push origin main
           git -C "$PUB_DIR" tag -f "${VERSION}"
