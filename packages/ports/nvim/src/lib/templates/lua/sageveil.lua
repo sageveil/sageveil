@@ -6,31 +6,32 @@ local utilities = require("sageveil.utilities")
 local function set_highlights()
 	local bold = config.options.style.bold
 	local italic = config.options.style.italic
+	local transparent = config.options.style.transparent
 
 	local highlights = {
 		-- UI
-		Normal = { fg = palette.white, bg = palette.black },
-		NormalNC = { bg = palette.black },
-		Conceal = { fg = palette.muted, bg = palette.black },
-		NormalFloat = { bg = palette.overlay },
-		FloatBorder = { fg = palette.border, bg = palette.overlay },
+		Normal = { fg = palette.white, bg = palette.black, transparent_bg = true },
+		NormalNC = { bg = palette.black, transparent_bg = true },
+		Conceal = { fg = palette.muted, bg = palette.black, transparent_bg = true },
+		NormalFloat = { bg = palette.overlay, transparent_bg = true },
+		FloatBorder = { fg = palette.border, bg = palette.overlay, transparent_bg = true },
 		Cursor = { fg = palette.cursor_text, bg = palette.cursor },
 		CursorLine = { bg = palette.surface },
 		CursorLineNr = { fg = palette.muted, bold = bold },
 		CursorColumn = { bg = palette.black_bright },
 		LineNr = { fg = palette.dim },
-		SignColumn = { bg = palette.black, fg = palette.dim },
+		SignColumn = { bg = palette.black, fg = palette.dim, transparent_bg = true },
 		VertSplit = { fg = palette.border },
 		WinSeparator = { fg = palette.border },
-		Pmenu = { fg = palette.white, bg = palette.overlay },
+		Pmenu = { fg = palette.white, bg = palette.overlay, transparent_bg = true },
 		PmenuSel = { fg = palette.white, bg = palette.highlight, bold = bold },
-		PmenuSbar = { bg = palette.overlay },
-		PmenuThumb = { bg = palette.border },
-		StatusLine = { fg = palette.white, bg = palette.surface },
-		StatusLineNC = { fg = palette.muted, bg = palette.surface },
-		TabLine = { fg = palette.muted, bg = palette.black },
-		TabLineSel = { fg = palette.magenta, bg = palette.surface, bold = bold },
-		TabLineFill = { bg = palette.black },
+		PmenuSbar = { bg = palette.overlay, transparent_bg = true },
+		PmenuThumb = { bg = palette.border, transparent_bg = true },
+		StatusLine = { fg = palette.white, bg = palette.surface, transparent_bg = true },
+		StatusLineNC = { fg = palette.muted, bg = palette.surface, transparent_bg = true },
+		TabLine = { fg = palette.muted, bg = palette.black, transparent_bg = true },
+		TabLineSel = { fg = palette.magenta, bg = palette.surface, bold = bold, transparent_bg = true },
+		TabLineFill = { bg = palette.black, transparent_bg = true },
 		Visual = { bg = palette.highlight },
 		Search = { fg = palette.white, bg = palette.highlight },
 		CurSearch = { fg = palette.black, bg = palette.yellow_bright },
@@ -135,17 +136,17 @@ local function set_highlights()
 		["@lsp.typemod.variable.readonly"] = { italic = italic },
 
 		-- Telescope
-		TelescopeBorder = { fg = palette.overlay, bg = palette.overlay },
-		TelescopeNormal = { fg = palette.muted, bg = palette.overlay },
+		TelescopeBorder = { fg = palette.border, bg = palette.overlay, transparent_bg = true },
+		TelescopeNormal = { fg = palette.muted, bg = palette.overlay, transparent_bg = true },
 		TelescopeSelection = { fg = palette.muted, bg = palette.highlight },
 		TelescopeSelectionCaret = { fg = palette.magenta, bg = palette.overlay },
 		TelescopeMultiSelection = { fg = palette.yellow },
 		TelescopeTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
 		TelescopePromptTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
 		TelescopePreviewTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
-		TelescopePreviewBorder = { fg = palette.overlay, bg = palette.overlay },
-		TelescopePromptNormal = { fg = palette.white, bg = palette.overlay },
-		TelescopePromptBorder = { fg = palette.overlay, bg = palette.overlay },
+		TelescopePreviewBorder = { fg = palette.border, bg = palette.overlay, transparent_bg = true },
+		TelescopePromptNormal = { fg = palette.white, bg = palette.overlay, transparent_bg = true },
+		TelescopePromptBorder = { fg = palette.magenta, bg = palette.overlay, transparent_bg = true },
 		TelescopeMatching = { fg = palette.white_bright, bold = bold },
 
 		-- Blink
@@ -221,9 +222,12 @@ local function set_highlights()
 
 	-- Apply highlights
 	for group, hl in pairs(highlights) do
-		if hl.blend ~= nil and (hl.blend >= 0 and hl.blend <= 100) and hl.bg ~= nil then
+		if transparent and hl.transparent_bg then
+			hl.bg = "NONE"
+		elseif hl.blend ~= nil and (hl.blend >= 0 and hl.blend <= 100) and hl.bg ~= nil then
 			hl.bg = utilities.blend(hl.bg, hl.blend_on or palette.black, hl.blend / 100)
 		end
+		hl.transparent_bg = nil
 
 		vim.api.nvim_set_hl(0, group, hl)
 	end

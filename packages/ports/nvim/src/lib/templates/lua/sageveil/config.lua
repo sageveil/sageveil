@@ -61,6 +61,7 @@ config.options = {
 	style = {
 		bold = true,
 		italic = true,
+		transparent = false,
 	},
 }
 

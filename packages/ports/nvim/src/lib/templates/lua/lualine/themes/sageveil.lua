@@ -1,34 +1,33 @@
 local p = require("sageveil.palette")
+local config = require("sageveil.config")
+
+local bold = config.options.style.bold and "bold" or ""
+local italic = config.options.style.italic and "italic" or ""
+local transparent = config.options.style.transparent
+
+local bg = transparent and "NONE" or p.black
 
 return {
 	normal = {
-		a = { bg = p.yellow, fg = p.black, gui = "bold" },
-		b = { bg = p.surface, fg = p.yellow_bright },
-		c = { bg = p.black, fg = p.white },
+		a = { bg = bg, fg = p.cyan, gui = bold },
+		b = { bg = bg, fg = p.magenta },
+		c = { bg = bg, fg = p.muted, gui = italic },
 	},
 	insert = {
-		a = { bg = p.cyan, fg = p.black, gui = "bold" },
-		b = { bg = p.surface, fg = p.cyan },
-		c = { bg = p.black, fg = p.white },
+		a = { bg = bg, fg = p.yellow, gui = bold },
 	},
 	visual = {
-		a = { bg = p.magenta, fg = p.black, gui = "bold" },
-		b = { bg = p.surface, fg = p.magenta },
-		c = { bg = p.black, fg = p.white },
+		a = { bg = bg, fg = p.magenta, gui = bold },
 	},
 	replace = {
-		a = { bg = p.green, fg = p.black, gui = "bold" },
-		b = { bg = p.surface, fg = p.green },
-		c = { bg = p.black, fg = p.white },
+		a = { bg = bg, fg = p.green, gui = bold },
 	},
 	command = {
-		a = { bg = p.red, fg = p.white, gui = "bold" },
-		b = { bg = p.surface, fg = p.red },
-		c = { bg = p.black, fg = p.white },
+		a = { bg = bg, fg = p.red, gui = bold },
 	},
 	inactive = {
-		a = { bg = p.black, fg = p.dim, gui = "bold" },
-		b = { bg = p.black, fg = p.dim },
-		c = { bg = p.black, fg = p.dim },
+		a = { bg = bg, fg = p.cyan, gui = bold },
+		b = { bg = bg, fg = p.magenta },
+		c = { bg = bg, fg = p.dim, gui = italic },
 	},
 }
