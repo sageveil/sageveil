@@ -103,9 +103,6 @@ local function set_highlights()
 		diffAdded = { link = "DiffAdd" },
 		diffChanged = { link = "DiffChange" },
 		diffRemoved = { link = "DiffDelete" },
-		GitSignsAdd = { fg = palette.green },
-		GitSignsChange = { fg = palette.yellow },
-		GitSignsDelete = { fg = palette.red },
 
 		-- Tree-sitter
 		["@comment"] = { link = "Comment" },
@@ -134,45 +131,23 @@ local function set_highlights()
 		["@lsp.type.namespace"] = { fg = palette.cyan },
 		["@lsp.mod.readonly"] = { italic = italic },
 		["@lsp.typemod.variable.readonly"] = { italic = italic },
-
-		-- Telescope
-		TelescopeBorder = { fg = palette.border, bg = palette.overlay, transparent_bg = true },
-		TelescopeNormal = { fg = palette.muted, bg = palette.overlay, transparent_bg = true },
-		TelescopeSelection = { fg = palette.muted, bg = palette.highlight },
-		TelescopeSelectionCaret = { fg = palette.magenta, bg = palette.overlay },
-		TelescopeMultiSelection = { fg = palette.yellow },
-		TelescopeTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
-		TelescopePromptTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
-		TelescopePreviewTitle = { bg = palette.magenta, fg = palette.overlay, bold = bold },
-		TelescopePreviewBorder = { fg = palette.border, bg = palette.overlay, transparent_bg = true },
-		TelescopePromptNormal = { fg = palette.white, bg = palette.overlay, transparent_bg = true },
-		TelescopePromptBorder = { fg = palette.magenta, bg = palette.overlay, transparent_bg = true },
-		TelescopeMatching = { fg = palette.white_bright, bold = bold },
-
-		-- Blink
-		BlinkCmpMenu = { link = "Pmenu" },
-		BlinkCmpMenuBorder = { fg = palette.border, bg = palette.overlay },
-
-		-- nvim-neotest/neotest
-		NeotestAdapterName = { fg = palette.blue },
-		NeotestBorder = { fg = palette.border },
-		NeotestDir = { fg = palette.blue },
-		NeotestExpandMarker = { fg = palette.highlight },
-		NeotestFailed = { fg = palette.red },
-		NeotestFile = { fg = palette.white },
-		NeotestFocused = { fg = palette.yellow, bg = palette.highlight },
-		NeotestIndent = { fg = palette.highlight },
-		NeotestMarked = { fg = palette.cyan, bold = 1 },
-		NeotestNamespace = { fg = palette.yellow },
-		NeotestPassed = { fg = palette.green },
-		NeotestRunning = { fg = palette.yellow },
-		NeotestWinSelect = { fg = palette.muted },
-		NeotestSkipped = { fg = palette.muted },
-		NeotestTarget = { fg = palette.magenta },
-		NeotestTest = { fg = palette.yellow },
-		NeotestUnknown = { fg = palette.muted },
-		NeotestWatching = { fg = palette.cyan },
 	}
+
+	local plugin_highlight_loaders = {
+		require("sageveil.plugins.telescope"),
+		require("sageveil.plugins.blink"),
+		require("sageveil.plugins.neotest"),
+		require("sageveil.plugins.gitsigns"),
+	}
+
+	for _, loader in ipairs(plugin_highlight_loaders) do
+		local plugin_highlights = loader({ bold = bold, italic = italic })
+		if type(plugin_highlights) == "table" then
+			for group, value in pairs(plugin_highlights) do
+				highlights[group] = value
+			end
+		end
+	end
 
 	-- Terminal ANSI colors
 	vim.g.terminal_color_0 = palette.black
