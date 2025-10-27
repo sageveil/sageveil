@@ -21,11 +21,11 @@ import { render } from '@sageveil/templater';
 
 await render({
   templateDir: `${import.meta.dirname}/templates`,
-  templateFiles: ['sageveil.toml'],
-  // ctx is available for future overrides but currently unused.
+  templateFiles: ['sageveil.toml', { filename: 'sageveil.sh', executable: true }],
 });
 ```
 
 - Each template file is resolved relative to `templateDir`.
 - `.eta` suffixes are stripped automatically; clean filenames fall straight into the dist folder.
+- `executable: true` will set the file mode to 755, which is necessary if script needs to executable (i.e. tmux)
 - `OUTPUT_DIR` **must** point at a writable directory before calling `render` (set by the build tool when running `nx run <port>:generate`).
