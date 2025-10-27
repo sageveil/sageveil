@@ -19,7 +19,7 @@ describe('tmux', () => {
       templateDir: expect.stringMatching(
         /packages\/ports\/tmux\/src\/lib\/templates$/
       ),
-      templateFiles: ['sageveil.tmux'],
+      templateFiles: [{ filename: 'sageveil.tmux', executable: true }],
     });
   });
 });
