@@ -18,17 +18,22 @@
 - [k9s](/packages/ports/k9s/README.md)
 - [text-mate](/packages/ports/text-mate/README.md)
 
-Each port renders assets from the shared palette in `packages/palette`. Documentation for additional ports will grow as they stabilize.
+Each port renders assets using the shared palette from `packages/palette`. Documentation for additional ports will grow as they stabilize.
 
 ## Get the builds
 
-1. Install dependencies once: `pnpm install`
-2. Generate a port: `pnpm nx run <port>:generate` (for example `pnpm nx run tmux:generate`)
-3. Find the rendered artifacts under `dist/ports/<port>/<version>/`
-
 ### Prebuilt artifacts
 
-Every port will also be published in a dedicated repository with ready-to-use assets (links TBD). You can either clone those standalone repos or consume the builds generated from this monorepo—the port-specific READMEs outline both flows once links are available.
+Every port ships in a dedicated repository at `https://github.com/sageveil/<port>`.
+For example, the tmux port lives at `https://github.com/sageveil/tmux`.
+Clone whichever port you need for ready-to-use assets, or generate artifacts directly from this monorepo — the port READMEs cover both workflows.
+
+### Build from source
+
+1. Install dependencies once: `pnpm install`
+2. Generate a port: `pnpm nx run <port>:generate` (for example `pnpm nx run tmux:generate`)
+3. Find the rendered artifacts under `dist/ports/<port>`
+
 
 ## Contributing
 
