@@ -12,7 +12,13 @@
 The sageveil fzf port provides shell-specific snippets that configure `FZF_DEFAULT_OPTS` with sageveil colors.
 Pick the script that matches your shell and source it during startup to keep fuzzy finder popups aligned with the rest of the palette.
 
-## Build from the monorepo
+## Get the snippets
+
+### Prebuilt releases
+
+Download the shell snippets from the dedicated repository: <https://github.com/sageveil/fzf>. Each release bundles POSIX, fish, PowerShell, and Nix helpers so you can drop them straight into your dotfiles.
+
+### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
 2. Render the snippets: `pnpm nx run fzf:generate` 

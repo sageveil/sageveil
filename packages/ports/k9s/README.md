@@ -13,11 +13,15 @@
 
 If you rely on k9s and want to help shape the port, contributions are welcome—see the notes below.
 
+## Follow the standalone repo
+
+The dedicated distribution repository lives at <https://github.com/sageveil/k9s>. Watch that space for prebuilt releases once the port is ready.
+
 ## Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
 2. Run the scaffolded build: `pnpm nx run k9s:generate`
-3. Inspect `dist/ports/k9s/<version>/`
+3. Inspect `dist/ports/k9s/`
 
 ## Development
 

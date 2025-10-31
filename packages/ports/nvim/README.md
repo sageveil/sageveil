@@ -15,9 +15,13 @@
 
 The sageveil neovim port provides a full Lua colorscheme, Tree‑sitter highlights, semantic token support, and two lualine themes.
 
-## Build from the monorepo
+## Get the plugin
 
-All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
+### Prebuilt releases
+
+Install the colorscheme directly from <https://github.com/sageveil/nvim>. The repository hosts tags and release assets that track the upstream palette.
+
+### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
 2. Render the runtime files: `pnpm nx run nvim:generate` 
@@ -25,15 +29,15 @@ All sageveil ports will be distributed in their dedicated repos (comming soon). 
 
 ## Apply sageveil
 
-If you use a plugin manager, point it at the dist directory. Example for [lazy.nvim](https://github.com/folke/lazy.nvim):
+If you use a plugin manager, point it at the dedicated repo (or the build output if you're working inside the monorepo). Example for [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 ---@module "lazy"
 ---@type LazySpec
 return {
   {
-    -- "sageveil/nvim" (comming soon)
-    dir = "~/repos/sageveil/dist/ports/nvim/",
+    "sageveil/nvim",
+    -- If you're working from the monorepo, swap this for: dir = "~/repos/sageveil/dist/ports/nvim/"
     name = "sageveil",
     priority = 1000,
     config = function()
@@ -62,4 +66,3 @@ The two lualine themes are available via `require("lualine").setup({ options = {
 [sageveil/sageveil](https://github.com/sageveil/sageveil) is the main project monorepo. All development happens there.
 
 [sageveil/nvim](https://github.com/sageveil/nvim) is used only for easy distribution of the ready-to-use nvim colorscheme plugin.
-

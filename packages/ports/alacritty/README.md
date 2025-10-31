@@ -11,12 +11,16 @@
 
 The sageveil alacritty port provides a low-contrast, green-tinted terminal palette tuned for long sessions.
 
-## Build from the monorepo
+## Get the theme
 
-All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
+### Prebuilt releases
+
+Grab the ready-to-use theme from the dedicated repository: <https://github.com/sageveil/alacritty>. Download the latest release and drop `sageveil.toml` wherever you keep Alacritty themes.
+
+### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
-2. Generate the theme: `pnpm nx run alacritty:generate` 
+2. Generate the theme: `pnpm nx run alacritty:generate`
 3. Find the rendered assets under `dist/ports/alacritty/`
 
 Each build includes a manifest with SHA-256 hashes you can use to verify downloads.
@@ -39,4 +43,3 @@ Adjust the `import` path if you keep themes elsewhere.
 [sageveil/sageveil](https://github.com/sageveil/sageveil) is the main project monorepo. All development happens there.
 
 [sageveil/alacritty](https://github.com/sageveil/alacritty) is used only for easy distribution of the ready-to-use alacritty colorscheme plugin.
-

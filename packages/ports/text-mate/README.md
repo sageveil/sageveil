@@ -12,9 +12,13 @@
 This sageveil port ships a TextMate theme (`.tmTheme`) that keeps bat’s syntax highlighting consistent with the rest of the palette.
 It’s perfect for pairing with the Alacritty and tmux ports in the same terminal session.
 
-## Build from the monorepo
+## Get the theme
 
-All sageveil ports will be distributed in their dedicated repos (comming soon). Until then they must be built from source.
+### Prebuilt releases
+
+Download the latest `.tmTheme` from <https://github.com/sageveil/text-mate>. Releases publish the ready-to-use file plus checksums for integrity verification.
+
+### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
 2. Render the theme: `pnpm nx run text-mate:generate`
@@ -38,4 +42,4 @@ The theme name inside the file is `sageveil`, so make sure your `BAT_THEME` matc
 
 [sageveil/sageveil](https://github.com/sageveil/sageveil) is the main project monorepo. All development happens there.
 
-[sageveil/nvim](https://github.com/sageveil/nvim) is used only for easy distribution of the ready-to-use nvim colorscheme plugin.
+[sageveil/text-mate](https://github.com/sageveil/text-mate) is used only for easy distribution of the ready-to-use TextMate theme.
