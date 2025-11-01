@@ -14,13 +14,13 @@ return {
 		c = { bg = bg, fg = p.muted, gui = italic },
 	},
 	insert = {
-		a = { bg = bg, fg = p.yellow, gui = bold },
+		a = { bg = bg, fg = p.green, gui = bold },
 	},
 	visual = {
 		a = { bg = bg, fg = p.magenta, gui = bold },
 	},
 	replace = {
-		a = { bg = bg, fg = p.green, gui = bold },
+		a = { bg = bg, fg = p.yellow, gui = bold },
 	},
 	command = {
 		a = { bg = bg, fg = p.red, gui = bold },
