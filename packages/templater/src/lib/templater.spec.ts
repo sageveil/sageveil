@@ -55,7 +55,10 @@ describe('templater', () => {
 
       await render(job);
 
-      expect(MockEta).toHaveBeenCalledWith({ views: './templates' });
+      expect(MockEta).toHaveBeenCalledWith({
+        views: './templates',
+        autoTrim: false,
+      });
       expect(mockMkdir).toHaveBeenCalledWith('dist/ports/test', {
         recursive: true,
       });
