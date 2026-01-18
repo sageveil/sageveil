@@ -26,6 +26,9 @@
     },
     {
       "path": "./packages/ports/text-mate"
+    },
+    {
+      "path": "./packages/ports/ghostty"
     }
   ]
 }

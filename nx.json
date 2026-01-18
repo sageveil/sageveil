@@ -1,10 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -13,24 +10,17 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
-    "sharedGlobals": [
-      "{workspaceRoot}/.github/workflows/ci.yml"
-    ]
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "release": {
     "groups": {
       "ports": {
         "releaseTagPattern": "port/{projectName}@{version}",
-        "projects": [
-          "packages/ports/*"
-        ]
+        "projects": ["packages/ports/*"]
       },
       "other": {
         "releaseTagPattern": "{projectName}@{version}",
-        "projects": [
-          "packages/palette",
-          "packages/templater"
-        ]
+        "projects": ["packages/palette", "packages/templater"]
       }
     },
     "projectsRelationship": "independent",
@@ -115,7 +105,8 @@
         "packages/ports/tmux/*",
         "packages/ports/fzf/*",
         "packages/ports/k9s/*",
-        "packages/ports/text-mate/*"
+        "packages/ports/text-mate/*",
+        "packages/ports/ghostty/*"
       ]
     },
     {
@@ -128,7 +119,8 @@
         "packages/ports/tmux/*",
         "packages/ports/fzf/*",
         "packages/ports/k9s/*",
-        "packages/ports/text-mate/*"
+        "packages/ports/text-mate/*",
+        "packages/ports/ghostty/*"
       ],
       "options": {
         "typecheck": {
@@ -159,9 +151,7 @@
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     }
   }
 }

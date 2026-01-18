@@ -122,6 +122,12 @@ importers:
         specifier: workspace:*
         version: link:../../templater
 
+  packages/ports/ghostty:
+    devDependencies:
+      '@sageveil/templater':
+        specifier: workspace:*
+        version: link:../../templater
+
   packages/ports/k9s:
     devDependencies:
       '@sageveil/templater':
