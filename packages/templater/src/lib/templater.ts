@@ -54,7 +54,7 @@ if (!OUTPUT_DIR || OUTPUT_DIR === '') {
  * ```
  */
 export async function render(job: RenderJob): Promise<void> {
-  const eta = new Eta({ views: job.templateDir });
+  const eta = new Eta({ views: job.templateDir, autoTrim: false });
   await mkdir(OUTPUT_DIR, { recursive: true });
   const results = await Promise.allSettled(
     job.templateFiles.map((file) => renderFile(eta, file))
