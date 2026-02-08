@@ -1,3 +1,6 @@
-export function k9s(): string {
-  return 'k9s';
-}
+import { render } from '@sageveil/templater';
+
+await render({
+  templateDir: `${import.meta.dirname}/templates`,
+  templateFiles: ['sageveil.yaml.eta'],
+});
