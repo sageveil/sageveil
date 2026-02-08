@@ -24,12 +24,7 @@
           "{workspaceRoot}/dist/ports/alacritty"
         ]
       },
-      "clean": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "node tools/scripts/clean-port.mjs {projectRoot}"
-        }
-      }
+      "clean": {}
     }
   }
 }
