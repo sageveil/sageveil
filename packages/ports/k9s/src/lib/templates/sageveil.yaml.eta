@@ -1,0 +1,115 @@
+<%
+const white = it.ansi.base.white;
+const black = it.ansi.base.black;
+const surface = it.extras.surface;
+const muted = it.extras.muted;
+const dim = it.extras.dim;
+const highlight = it.extras.highlight;
+const magenta = it.ansi.base.magenta;
+const cyan = it.ansi.base.cyan;
+const green = it.ansi.base.green;
+const magenta_bright = it.ansi.bright.magenta;
+const red = it.ansi.base.red;
+const yellow = it.ansi.base.yellow;
+%>
+# Sageveil k9s skin
+k9s:
+  body:
+    fgColor: '<%= white %>'
+    bgColor: '<%= black %>'
+    logoColor: '<%= magenta %>'
+  prompt:
+    fgColor: '<%= white %>'
+    bgColor: '<%= surface %>'
+    suggestColor: '<%= cyan %>'
+  help:
+    fgColor: '<%= white %>'
+    bgColor: '<%= black %>'
+    sectionColor: '<%= green %>'
+    keyColor: '<%= cyan %>'
+    numKeyColor: '<%= magenta_bright %>'
+  frame:
+    title:
+      fgColor: '<%= green %>'
+      bgColor: '<%= black %>'
+      highlightColor: '<%= magenta %>'
+      counterColor: '<%= yellow %>'
+      filterColor: '<%= green %>'
+    border:
+      fgColor: '<%= magenta %>'
+      focusColor: '<%= cyan %>'
+    menu:
+      fgColor: '<%= white %>'
+      keyColor: '<%= cyan %>'
+      numKeyColor: '<%= magenta_bright %>'
+    crumbs:
+      fgColor: '<%= black %>'
+      bgColor: '<%= magenta %>'
+      activeColor: '<%= magenta_bright %>'
+    status:
+      newColor: '<%= cyan %>'
+      modifyColor: '<%= cyan %>'
+      addColor: '<%= green %>'
+      pendingColor: '<%= red %>'
+      errorColor: '<%= red %>'
+      highlightColor: '<%= magenta_bright %>'
+      killColor: '<%= magenta %>'
+      completedColor: '<%= dim %>'
+  info:
+    fgColor: '<%= red %>'
+    sectionColor: '<%= white %>'
+  views:
+    table:
+      fgColor: '<%= white %>'
+      bgColor: '<%= black %>'
+      cursorFgColor: '<%= surface %>'
+      cursorBgColor: '<%= black %>'
+      markColor: '<%= magenta %>'
+      header:
+        fgColor: '<%= yellow %>'
+        bgColor: '<%= black %>'
+        sorterColor: '<%= magenta_bright %>'
+    xray:
+      fgColor: '<%= white %>'
+      bgColor: '<%= black %>'
+      cursorColor: '<%= highlight %>'
+      cursorTextColor: '<%= black %>'
+      graphicColor: '<%= magenta %>'
+    charts:
+      bgColor: '<%= black %>'
+      chartBgColor: '<%= black %>'
+      dialBgColor: '<%= black %>'
+      defaultDialColors:
+        - '<%= green %>'
+        - '<%= red %>'
+      defaultChartColors:
+        - '<%= green %>'
+        - '<%= red %>'
+      resourceColors:
+        cpu:
+          - '<%= magenta %>'
+          - '<%= cyan %>'
+        mem:
+          - '<%= yellow %>'
+          - '<%= red %>'
+    yaml:
+      keyColor: '<%= cyan %>'
+      valueColor: '<%= white %>'
+      colonColor: '<%= dim %>'
+    logs:
+      fgColor: '<%= white %>'
+      bgColor: '<%= black %>'
+      indicator:
+        fgColor: '<%= cyan %>'
+        bgColor: '<%= black %>'
+        toggleOnColor: '<%= green %>'
+        toggleOffColor: '<%= dim %>'
+  dialog:
+    fgColor: '<%= yellow %>'
+    bgColor: '<%= muted %>'
+    buttonFgColor: '<%= black %>'
+    buttonBgColor: '<%= white %>'
+    buttonFocusFgColor: '<%= black %>'
+    buttonFocusBgColor: '<%= magenta %>'
+    labelFgColor: '<%= magenta_bright %>'
+    fieldFgColor: '<%= white %>'

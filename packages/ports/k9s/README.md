@@ -9,19 +9,35 @@
 
 ## Overview
 
-🚧 The sageveil k9s port is a work in progress. The scaffolding is in place, but the actual theme templates still need to be implemented so k9s can inherit the palette inside its TUI.
+The sageveil k9s port ships a skin file that aligns k9s with the rest of the palette.
 
-If you rely on k9s and want to help shape the port, contributions are welcome—see the notes below.
+## Get the skin
 
-## Follow the standalone repo
+### Prebuilt releases
 
-The dedicated distribution repository lives at <https://github.com/sageveil/k9s>. Watch that space for prebuilt releases once the port is ready.
+Download the theme from the dedicated repository: <https://github.com/sageveil/k9s>.
 
-## Build from the monorepo
+### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
-2. Run the scaffolded build: `pnpm nx run k9s:generate`
-3. Inspect `dist/ports/k9s/`
+2. Render the skin: `pnpm nx run k9s:generate`
+3. The files land in `dist/ports/k9s/`
+
+## Generated files
+
+- `sageveil.yaml` – k9s skin file
+
+## Apply sageveil
+
+1. Copy `sageveil.yaml` into your k9s skins directory (for example `~/.config/k9s/skins/`).
+2. Reference the skin from your k9s config:
+
+   ```yaml
+   k9s:
+     skin: sageveil
+   ```
+
+3. Reload k9s to apply the theme.
 
 ## Development
 
