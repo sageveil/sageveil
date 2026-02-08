@@ -20,12 +20,8 @@
   "nx": {
     "targets": {
       "generate": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "node tools/scripts/build-port.mjs {projectRoot}"
-        },
         "outputs": [
-          "{workspaceRoot}/dist/ports"
+          "{workspaceRoot}/dist/ports/ghostty"
         ]
       },
       "clean": {
