@@ -157,6 +157,12 @@
         "command": "node tools/scripts/build-port.mjs {projectRoot}"
       }
     },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/clean-port.mjs {projectRoot}"
+      }
+    },
     "test": {
       "dependsOn": ["^build"]
     }
