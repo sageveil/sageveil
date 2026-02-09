@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "fzf",
+    "description": "Fast fuzzy search with Sageveil accents for fzf.",
+    "tags": ["cli"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"

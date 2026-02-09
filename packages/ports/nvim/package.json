@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "Neovim",
+    "description": "Sageveil highlights tuned for Neovim editing focus.",
+    "tags": ["editor"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"

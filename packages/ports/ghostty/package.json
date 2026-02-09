@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "Ghostty",
+    "description": "Sageveil colors tuned for Ghostty's terminal rendering.",
+    "tags": ["terminal", "emulator"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"

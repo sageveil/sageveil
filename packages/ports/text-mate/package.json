@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "TextMate",
+    "description": "Sageveil syntax tones for the TextMate editor.",
+    "tags": ["editor"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"

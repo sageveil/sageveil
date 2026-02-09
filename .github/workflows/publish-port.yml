@@ -57,6 +57,17 @@ jobs:
         run: |
           PORT="${{ steps.parse.outputs.port }}"
           test -d "dist/ports/$PORT" || { echo "dist/$PORT missing. Build must place artefacts there."; exit 1; }
+      - name: Package release asset
+        id: asset
+        shell: bash
+        run: |
+          PORT="${{ steps.parse.outputs.port }}"
+          VERSION="${{ steps.parse.outputs.version }}"
+          ASSET_NAME="sageveil-${PORT}-${VERSION}.zip"
+          ASSET_PATH="${RUNNER_TEMP}/${ASSET_NAME}"
+          (cd "dist/ports/${PORT}" && zip -r "${ASSET_PATH}" .)
+          echo "asset_name=${ASSET_NAME}" >> "$GITHUB_OUTPUT"
+          echo "asset_path=${ASSET_PATH}" >> "$GITHUB_OUTPUT"
       - name: Publish artifacts to downstream repo
         shell: bash
         env:
@@ -131,6 +142,7 @@ jobs:
           ORG="${{ env.ORG }}"
           DEST_REPO="${ORG}/${PORT}"
           NOTES_FILE="${{ steps.notes.outputs.notes_file }}"
+          ASSET_PATH="${{ steps.asset.outputs.asset_path }}"
 
           # Title and prerelease flag
           TITLE="${PORT} ${VERSION}"
@@ -153,6 +165,9 @@ jobs:
               --notes-file "${NOTES_FILE}" \
               ${PRE}
           fi
+          gh release upload "${VERSION}" "${ASSET_PATH}" \
+            --repo "${DEST_REPO}" \
+            --clobber
       - name: Summary
         run: |
           echo "Published ${{ steps.parse.outputs.port }} ${{ steps.parse.outputs.version }} to https://github.com/${{ env.ORG }}/${{ steps.parse.outputs.port }}"

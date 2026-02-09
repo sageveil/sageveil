@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "K9s",
+    "description": "Readable cluster views with Sageveil accents for k9s.",
+    "tags": ["cli"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"

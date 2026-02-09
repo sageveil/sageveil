@@ -1,0 +1,28 @@
+{
+  "name": "@sageveil/site",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  },
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate-ports": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node tools/scripts/ports-manifest.mjs",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "build": {
+        "dependsOn": ["generate-ports"]
+      },
+      "dev": {
+        "dependsOn": ["generate-ports"]
+      }
+    }
+  }
+}

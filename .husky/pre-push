@@ -1,1 +1,11 @@
-pnpm nx affected -t test
+default_base=origin/main
+if ! git rev-parse --verify "$default_base" >/dev/null 2>&1; then
+    default_base=main
+fi
+
+base="$(git merge-base "$default_base" HEAD 2>/dev/null || echo "$default_base")"
+if [ "$base" = "HEAD" ]; then
+    base="HEAD~1"
+fi
+
+NX_TUI=false pnpm nx affected -t test --base="$base" --head=HEAD

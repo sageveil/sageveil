@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@300;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+  --sv-card: color-mix(in srgb, var(--sv-surface) 78%, transparent);
+  --sv-shadow-35: color-mix(in srgb, var(--sv-base-black) 35%, transparent);
+  --sv-shadow-40: color-mix(in srgb, var(--sv-base-black) 40%, transparent);
+  --sv-shadow-45: color-mix(in srgb, var(--sv-base-black) 45%, transparent);
+  --sv-magenta-glow-18: color-mix(in srgb, var(--sv-base-magenta) 18%, transparent);
+  --sv-border-25: color-mix(in srgb, var(--sv-border) 25%, transparent);
+  --sv-border-40: color-mix(in srgb, var(--sv-border) 40%, transparent);
+  --sv-border-50: color-mix(in srgb, var(--sv-border) 50%, transparent);
+  --sv-border-60: color-mix(in srgb, var(--sv-border) 60%, transparent);
+  --sv-base-black-65: color-mix(in srgb, var(--sv-base-black) 65%, transparent);
+  --sv-surface-60: color-mix(in srgb, var(--sv-surface) 60%, transparent);
+  --sv-surface-70: color-mix(in srgb, var(--sv-surface) 70%, transparent);
+  --sv-overlay-90: color-mix(in srgb, var(--sv-overlay) 90%, transparent);
+  --sv-green-12: color-mix(in srgb, var(--sv-base-green) 12%, transparent);
+  --sv-green-20: color-mix(in srgb, var(--sv-base-green) 20%, transparent);
+  --sv-green-25: color-mix(in srgb, var(--sv-base-green) 25%, transparent);
+  --sv-green-40: color-mix(in srgb, var(--sv-base-green) 40%, transparent);
+  --sv-green-50: color-mix(in srgb, var(--sv-base-green) 50%, transparent);
+  --sv-blue-12: color-mix(in srgb, var(--sv-base-blue) 12%, transparent);
+  --sv-blue-18: color-mix(in srgb, var(--sv-base-blue) 18%, transparent);
+  --sv-blue-40: color-mix(in srgb, var(--sv-base-blue) 40%, transparent);
+  --sv-magenta-10: color-mix(in srgb, var(--sv-base-magenta) 10%, transparent);
+  --sv-magenta-20: color-mix(in srgb, var(--sv-base-magenta) 20%, transparent);
+  --sv-magenta-40: color-mix(in srgb, var(--sv-base-magenta) 40%, transparent);
+  --sv-magenta-60: color-mix(in srgb, var(--sv-base-magenta) 60%, transparent);
+  --sv-magenta-deep-70: color-mix(in srgb, var(--sv-base-magenta) 70%, var(--sv-base-black));
+  --sv-magenta-deep-85: color-mix(in srgb, var(--sv-base-magenta) 85%, var(--sv-base-black));
+  --sv-magenta-deep-90: color-mix(in srgb, var(--sv-base-magenta) 90%, var(--sv-base-black));
+  --sv-magenta-deep-95: color-mix(in srgb, var(--sv-base-magenta) 95%, var(--sv-base-black));
+  --sv-magenta-ink: color-mix(in srgb, var(--sv-base-black) 62%, var(--sv-base-magenta));
+  --sv-magenta-ink-hover: color-mix(in srgb, var(--sv-base-black) 54%, var(--sv-base-magenta));
+  --sv-bright-blue-15: color-mix(in srgb, var(--sv-bright-blue) 15%, transparent);
+  --sv-bright-blue-20: color-mix(in srgb, var(--sv-bright-blue) 20%, transparent);
+  --sv-bright-blue-40: color-mix(in srgb, var(--sv-bright-blue) 40%, transparent);
+  --sv-bright-blue-60: color-mix(in srgb, var(--sv-bright-blue) 60%, transparent);
+  --sv-bright-magenta-20: color-mix(in srgb, var(--sv-bright-magenta) 20%, transparent);
+  --sv-bright-magenta-40: color-mix(in srgb, var(--sv-bright-magenta) 40%, transparent);
+  --sv-bright-magenta-60: color-mix(in srgb, var(--sv-bright-magenta) 60%, transparent);
+  --sv-yellow-16: color-mix(in srgb, var(--sv-base-yellow) 16%, transparent);
+  --sv-white-8: color-mix(in srgb, var(--sv-base-white) 8%, transparent);
+  --sv-hero-from: color-mix(in srgb, var(--sv-overlay) 92%, transparent);
+  --sv-hero-to: color-mix(in srgb, var(--sv-surface) 88%, transparent);
+  --sv-palette-from: color-mix(in srgb, var(--sv-overlay) 92%, transparent);
+  --sv-palette-to: color-mix(in srgb, var(--sv-surface) 90%, transparent);
+  --sv-cta-from: color-mix(in srgb, var(--sv-overlay) 90%, transparent);
+  --sv-cta-to: color-mix(in srgb, var(--sv-base-black) 92%, transparent);
+  --sv-body-top: color-mix(in srgb, var(--sv-base-magenta) 16%, transparent);
+  --sv-body-mid: color-mix(in srgb, var(--sv-base-blue) 18%, transparent);
+  --sv-body-bottom: color-mix(in srgb, var(--sv-base-magenta) 12%, transparent);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: var(--sv-base-white);
+  background: radial-gradient(circle at top, var(--sv-body-top), transparent 55%),
+    radial-gradient(circle at 40% 60%, var(--sv-body-mid), transparent 45%),
+    linear-gradient(
+      140deg,
+      color-mix(in srgb, var(--sv-base-black) 88%, var(--sv-surface)) 0%,
+      color-mix(in srgb, var(--sv-base-black) 80%, var(--sv-overlay)) 40%,
+      var(--sv-base-black) 100%
+    );
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, var(--sv-bright-blue-15), transparent 45%),
+    radial-gradient(circle at 10% 80%, var(--sv-yellow-16), transparent 40%),
+    radial-gradient(circle at 65% 85%, var(--sv-body-bottom), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', serif;
+  margin: 0;
+}
+
+code {
+  font-family: 'Space Grotesk', monospace;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="140" height="140" filter="url(%23n)" opacity="0.12"/></svg>');
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

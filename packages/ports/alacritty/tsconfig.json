@@ -4,9 +4,6 @@
   "include": [],
   "references": [
     {
-      "path": "../../templater"
-    },
-    {
       "path": "./tsconfig.lib.json"
     },
     {

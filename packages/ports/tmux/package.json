@@ -13,6 +13,11 @@
     },
     "./package.json": "./package.json"
   },
+  "sageveil": {
+    "displayName": "tmux",
+    "description": "Statusline and pane styling with Sageveil balance for tmux.",
+    "tags": ["terminal", "multiplexer"]
+  },
   "dependencies": {},
   "devDependencies": {
     "@sageveil/templater": "workspace:*"
