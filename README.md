@@ -3,6 +3,12 @@
     <h2 align="center">sageveil</h2>
 </p>
 
+<p align="center">
+    <a href="https://github.com/sageveil/sageveil/actions/workflows/gh-pages.yml">
+        <img src="https://github.com/sageveil/sageveil/actions/workflows/gh-pages.yml/badge.svg" alt="Deploy site" />
+    </a>
+</p>
+
 <p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
 <p align="center">

@@ -1,0 +1,75 @@
+[
+  {
+    "slug": "alacritty",
+    "packageName": "@sageveil/alacritty",
+    "displayName": "Alacritty",
+    "description": "A focused, low-glare palette tuned for the Alacritty terminal.",
+    "version": "0.1.2",
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
+  },
+  {
+    "slug": "fzf",
+    "packageName": "@sageveil/fzf",
+    "displayName": "fzf",
+    "description": "Fast fuzzy search with Sageveil accents for fzf.",
+    "version": "0.1.2",
+    "tags": [
+      "cli"
+    ]
+  },
+  {
+    "slug": "ghostty",
+    "packageName": "@sageveil/ghostty",
+    "displayName": "Ghostty",
+    "description": "Sageveil colors tuned for Ghostty's terminal rendering.",
+    "version": "0.1.1",
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
+  },
+  {
+    "slug": "k9s",
+    "packageName": "@sageveil/k9s",
+    "displayName": "K9s",
+    "description": "Readable cluster views with Sageveil accents for k9s.",
+    "version": "0.1.2",
+    "tags": [
+      "cli"
+    ]
+  },
+  {
+    "slug": "nvim",
+    "packageName": "@sageveil/nvim",
+    "displayName": "Neovim",
+    "description": "Sageveil highlights tuned for Neovim editing focus.",
+    "version": "0.3.0",
+    "tags": [
+      "editor"
+    ]
+  },
+  {
+    "slug": "text-mate",
+    "packageName": "@sageveil/text-mate",
+    "displayName": "TextMate",
+    "description": "Sageveil syntax tones for the TextMate editor.",
+    "version": "0.1.2",
+    "tags": [
+      "editor"
+    ]
+  },
+  {
+    "slug": "tmux",
+    "packageName": "@sageveil/tmux",
+    "displayName": "tmux",
+    "description": "Statusline and pane styling with Sageveil balance for tmux.",
+    "version": "0.2.1",
+    "tags": [
+      "terminal",
+      "multiplexer"
+    ]
+  }
+]
