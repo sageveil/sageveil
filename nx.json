@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -10,24 +13,34 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "release": {
     "groups": {
       "ports": {
         "releaseTagPattern": "port/{projectName}@{version}",
-        "projects": ["packages/ports/*"]
+        "projects": [
+          "packages/ports/*"
+        ]
       },
       "other": {
         "releaseTagPattern": "{projectName}@{version}",
-        "projects": ["packages/palette", "packages/templater"]
+        "projects": [
+          "packages/palette",
+          "packages/templater",
+          "packages/nx"
+        ]
       }
     },
     "projectsRelationship": "independent",
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "fallbackCurrentVersionResolver": "disk"
     },
     "changelog": {
+      "automaticFromRef": true,
       "projectChangelogs": {
         "file": false,
         "createRelease": "github",
@@ -87,9 +100,6 @@
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -100,28 +110,11 @@
       "exclude": [
         "packages/palette/*",
         "packages/templater/*",
-        "packages/ports/alacritty/*",
-        "packages/ports/nvim/*",
-        "packages/ports/tmux/*",
-        "packages/ports/fzf/*",
-        "packages/ports/k9s/*",
-        "packages/ports/text-mate/*",
-        "packages/ports/ghostty/*"
+        "packages/ports/*/*"
       ]
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": [
-        "packages/palette/*",
-        "packages/templater/*",
-        "packages/ports/alacritty/*",
-        "packages/ports/nvim/*",
-        "packages/ports/tmux/*",
-        "packages/ports/fzf/*",
-        "packages/ports/k9s/*",
-        "packages/ports/text-mate/*",
-        "packages/ports/ghostty/*"
-      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
@@ -164,7 +157,9 @@
       }
     },
     "test": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     }
   },
   "generators": {
