@@ -2,8 +2,9 @@ name: Deploy site
 
 on:
   push:
-    tags:
-      - '@sageveil/site@*'
+    branches:
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
