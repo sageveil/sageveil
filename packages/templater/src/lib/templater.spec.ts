@@ -28,7 +28,9 @@ describe('templater', () => {
     mockEtaInstance = {
       renderAsync: vi.fn(),
     };
-    MockEta.mockImplementation(() => mockEtaInstance);
+    MockEta.mockImplementation(function () {
+      return mockEtaInstance;
+    });
     consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     processExitSpy = vi
       .spyOn(process, 'exit')
