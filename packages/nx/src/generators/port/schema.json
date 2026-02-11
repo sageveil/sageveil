@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "SageveilPortGenerator",
+  "cli": "nx",
+  "title": "Create a Sageveil Port",
+  "description": "Create a new Sageveil port package with standard metadata, targets, and scaffolding.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Port name. Used for project directory and package name.",
+      "x-prompt": "What is the port name?",
+      "x-priority": "important"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-friendly display name in package.json:sageveil.displayName. Defaults to the port name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional package.json:sageveil.description value."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional package.json:sageveil.tags values, e.g. terminal emulator."
+    },
+    "templateFile": {
+      "type": "string",
+      "description": "Template file name to create in src/lib/templates.",
+      "default": "sageveil.eta"
+    },
+    "skipInstall": {
+      "type": "boolean",
+      "description": "Skip installing packages.",
+      "default": false,
+      "x-priority": "internal"
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skip formatting files.",
+      "default": false,
+      "x-priority": "internal"
+    }
+  },
+  "required": ["name"]
+}

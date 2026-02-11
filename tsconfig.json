@@ -10,6 +10,12 @@
       "path": "./packages/templater"
     },
     {
+      "path": "./packages/nx"
+    },
+    {
+      "path": "./packages/site"
+    },
+    {
       "path": "./packages/ports/alacritty"
     },
     {
@@ -29,9 +35,6 @@
     },
     {
       "path": "./packages/ports/ghostty"
-    },
-    {
-      "path": "./packages/site"
     }
   ]
 }
