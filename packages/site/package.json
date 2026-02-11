@@ -22,7 +22,12 @@
           "generate-ports"
         ]
       },
-      "dev": {
+      "serve": {
+        "dependsOn": [
+          "generate-ports"
+        ]
+      },
+      "preview": {
         "dependsOn": [
           "generate-ports"
         ]

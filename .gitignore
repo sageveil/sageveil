@@ -52,3 +52,6 @@ vitest.config.*.timestamp*
 .direnv
 .envrc
 .env
+
+# generated site data
+packages/site/src/data/ports.json
