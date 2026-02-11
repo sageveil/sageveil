@@ -1,6 +1,6 @@
 {
   "name": "@sageveil/alacritty",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,10 @@
   "sageveil": {
     "displayName": "Alacritty",
     "description": "A focused, low-glare palette tuned for the Alacritty terminal.",
-    "tags": ["terminal", "emulator"]
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
   },
   "dependencies": {},
   "devDependencies": {

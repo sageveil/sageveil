@@ -1,6 +1,6 @@
 {
   "name": "@sageveil/nvim",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,9 @@
   "sageveil": {
     "displayName": "Neovim",
     "description": "Sageveil highlights tuned for Neovim editing focus.",
-    "tags": ["editor"]
+    "tags": [
+      "editor"
+    ]
   },
   "dependencies": {},
   "devDependencies": {
