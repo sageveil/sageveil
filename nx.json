@@ -30,7 +30,8 @@
         "projects": [
           "packages/palette",
           "packages/templater",
-          "packages/nx"
+          "packages/nx",
+          "packages/site"
         ]
       }
     },
