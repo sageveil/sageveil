@@ -1,6 +1,6 @@
 {
   "name": "@sageveil/tmux",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,10 @@
   "sageveil": {
     "displayName": "tmux",
     "description": "Statusline and pane styling with Sageveil balance for tmux.",
-    "tags": ["terminal", "multiplexer"]
+    "tags": [
+      "terminal",
+      "multiplexer"
+    ]
   },
   "dependencies": {},
   "devDependencies": {

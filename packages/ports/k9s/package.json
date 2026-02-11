@@ -1,6 +1,6 @@
 {
   "name": "@sageveil/k9s",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,9 @@
   "sageveil": {
     "displayName": "K9s",
     "description": "Readable cluster views with Sageveil accents for k9s.",
-    "tags": ["cli"]
+    "tags": [
+      "cli"
+    ]
   },
   "dependencies": {},
   "devDependencies": {

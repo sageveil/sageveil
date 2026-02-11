@@ -1,6 +1,6 @@
 {
   "name": "@sageveil/ghostty",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -16,7 +16,10 @@
   "sageveil": {
     "displayName": "Ghostty",
     "description": "Sageveil colors tuned for Ghostty's terminal rendering.",
-    "tags": ["terminal", "emulator"]
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
   },
   "dependencies": {},
   "devDependencies": {
