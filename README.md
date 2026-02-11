@@ -12,46 +12,60 @@
 <p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/assets/nvim-preview.png" width="90%" />
+    <img src="https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/assets/sageveil-preview.png" width="90%" />
 </p>
 
-## Ports
-
-- [alacritty](/packages/ports/alacritty/README.md)
-- [nvim](/packages/ports/nvim/README.md)
-- [tmux](/packages/ports/tmux/README.md)
-- [fzf](/packages/ports/fzf/README.md)
-- [ghostty](/packages/ports/ghostty/README.md)
-- [k9s](/packages/ports/k9s/README.md)
-- [text-mate](/packages/ports/text-mate/README.md)
-
-Each port renders assets using the shared palette from `packages/palette`. Documentation for additional ports will grow as they stabilize.
+sageveil is organized as a monorepo with:
+- a shared color palette in `packages/palette`
+- a rendering engine in `packages/templater`
+- ports in `packages/ports/*`
 
 ## Get the builds
 
 ### Prebuilt artifacts
 
-Every port ships in a dedicated repository at `https://github.com/sageveil/<port>`.
-For example, the tmux port lives at `https://github.com/sageveil/tmux`.
-Clone whichever port you need for ready-to-use assets, or generate artifacts directly from this monorepo — the port READMEs cover both workflows.
+Each port is published in its own repository at:
+
+`https://github.com/sageveil/<port>`
+
+Clone the repository for your target port if you want ready-to-use assets.
 
 ### Build from source
 
-1. Install dependencies once: `pnpm install`
-2. Generate a new port (if needed):
+1. Install dependencies once:
 
    ```bash
-   export PORT_NAME="<name>" && pnpm nx g @nx/js:lib "packages/ports/$PORT_NAME" --bundler none --linter eslint --name "@sageveil/$PORT_NAME" --unitTestRunner vitest
+   pnpm install
    ```
 
-2. Generate a port: `pnpm nx run <port>:generate` (for example `pnpm nx run tmux:generate`)
-3. Find the rendered artifacts under `dist/ports/<port>`
+2. Generate artifacts for a port:
+
+   ```bash
+   pnpm nx run <port>:generate
+   ```
+
+3. Find rendered artifacts under:
+
+   ```bash
+   dist/ports/<port>
+   ```
+
+Note: build artifacts in `dist/ports/*` are not committed to this monorepo.
+Distribution happens via dedicated port repositories.
 
 
 ## Contributing
 
-sageveil is still under active development, so expect changes.
+sageveil is under active development, and contributions are welcome.
 
-TBD
+To contribute:
+1. Open an issue describing the change, bug, or new port.
+2. Make your update in the relevant package under `packages/*`.
+3. Run checks before opening a PR:
+   - `pnpm nx run <project>:lint`
+   - `pnpm nx run <project>:typecheck`
+   - `pnpm nx run <project>:test` (if applicable)
+4. Do not commit generated artifacts from `dist/ports/*` to this monorepo.
 
 Thanks for growing the garden 🌱
+
