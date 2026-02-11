@@ -1,4 +1,5 @@
 import type { PortInfo } from '../types';
+import type { PortLinks } from '../port-links';
 import { PortCard } from './port-card';
 
 interface PortsSectionProps {
@@ -6,7 +7,7 @@ interface PortsSectionProps {
   activeTag: string;
   onTagChange: (tag: string) => void;
   ports: PortInfo[];
-  portLink: (slug: string) => string;
+  linksForPort: (port: PortInfo) => PortLinks;
 }
 
 const filterBase =
@@ -17,7 +18,7 @@ export function PortsSection({
   activeTag,
   onTagChange,
   ports,
-  portLink,
+  linksForPort,
 }: PortsSectionProps) {
   return (
     <section id="ports" className="mt-16 grid gap-7">
@@ -28,7 +29,7 @@ export function PortsSection({
           spot the right target quickly.
         </p>
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3" role="group" aria-label="Filter ports by tag">
         <button
           className={`${filterBase} border-[var(--sv-magenta-40)] ${
             activeTag === 'all'
@@ -36,6 +37,7 @@ export function PortsSection({
               : 'hover:border-[var(--sv-magenta-60)] hover:bg-[var(--sv-magenta-10)] hover:text-[var(--sv-base-magenta)]'
           }`}
           type="button"
+          aria-pressed={activeTag === 'all'}
           onClick={() => onTagChange('all')}
         >
           All ports
@@ -49,6 +51,7 @@ export function PortsSection({
                 : 'hover:border-[var(--sv-magenta-60)] hover:bg-[var(--sv-magenta-10)] hover:text-[var(--sv-base-magenta)]'
             }`}
             type="button"
+            aria-pressed={activeTag === tag}
             onClick={() => onTagChange(tag)}
           >
             {tag}
@@ -57,9 +60,10 @@ export function PortsSection({
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5">
         {ports.map((port, index) => (
-          <PortCard key={port.slug} port={port} index={index} portLink={portLink(port.slug)} />
+          <PortCard key={port.slug} port={port} index={index} links={linksForPort(port)} />
         ))}
       </div>
     </section>
   );
 }
+

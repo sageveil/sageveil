@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { sageveil } from '@sageveil/palette';
-import ports from '../data/ports.json';
-import type { PortInfo } from './types';
 import { CtaSection } from './components/cta-section';
 import { Hero } from './components/hero';
 import { PaletteSection } from './components/palette-section';
 import { PortsSection } from './components/ports-section';
+import { buildPortLinks, defaultRepoUrl } from './port-links';
+import { portList } from './ports-data';
 
-const portList = ports as PortInfo[];
 const tags = Array.from(
   new Set(portList.flatMap((port) => port.tags).filter(Boolean))
 ).sort((a, b) => a.localeCompare(b));
@@ -45,24 +44,19 @@ const applyTheme = () => {
   }
 };
 
-const repoUrl = import.meta.env.VITE_REPO_URL ?? 'https://github.com/sageveil/sageveil';
+const repoUrl = import.meta.env.VITE_REPO_URL ?? defaultRepoUrl;
+
+if (typeof document !== 'undefined') {
+  applyTheme();
+}
 
 export function App() {
-  useEffect(() => {
-    applyTheme();
-  }, []);
-
   const [activeTag, setActiveTag] = useState('all');
 
   const filteredPorts =
     activeTag === 'all'
       ? portList
       : portList.filter((port) => port.tags.includes(activeTag));
-
-  const portLink = (slug: string) =>
-    import.meta.env.VITE_REPO_URL
-      ? `${repoUrl}/tree/main/packages/ports/${slug}`
-      : `https://github.com/sageveil/${slug}`;
 
   return (
     <div className="relative z-10 mx-auto max-w-[1160px] px-[18px] pb-[96px] pt-[56px] sm:px-6 sm:pb-[120px] sm:pt-[72px]">
@@ -74,7 +68,7 @@ export function App() {
         activeTag={activeTag}
         onTagChange={setActiveTag}
         ports={filteredPorts}
-        portLink={portLink}
+        linksForPort={(port) => buildPortLinks({ repoUrl, slug: port.slug, version: port.version })}
       />
       <CtaSection repoUrl={repoUrl} />
     </div>
@@ -82,3 +76,4 @@ export function App() {
 }
 
 export default App;
+
