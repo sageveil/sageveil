@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  '{apps,libs}/**/*.{js,ts,jsx,tsx,json}': [
+  '{packages,tools}/**/*.{js,ts,jsx,tsx,json}': [
     (absolutePaths) => {
       const cwd = process.cwd();
       const relativePaths = absolutePaths.map((file) =>
