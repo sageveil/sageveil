@@ -1,0 +1,195 @@
+{
+  "document": {
+    "block_prefix": "\n",
+    "block_suffix": "\n",
+    "color": "<%= it.ansi.bright.white %>",
+    "margin": 2
+  },
+  "block_quote": {
+    "color": "<%= it.ansi.base.yellow %>",
+    "italic": true,
+    "indent": 2
+  },
+  "paragraph": {},
+  "list": {
+    "color": "<%= it.ansi.bright.white %>",
+    "level_indent": 2
+  },
+  "heading": {
+    "block_suffix": "\n",
+    "color": "<%= it.ansi.bright.blue %>",
+    "bold": true
+  },
+  "h1": {
+    "prefix": "# "
+  },
+  "h2": {
+    "prefix": "## "
+  },
+  "h3": {
+    "prefix": "### "
+  },
+  "h4": {
+    "prefix": "#### "
+  },
+  "h5": {
+    "prefix": "##### "
+  },
+  "h6": {
+    "prefix": "###### "
+  },
+  "text": {},
+  "strikethrough": {
+    "crossed_out": true
+  },
+  "emph": {
+    "color": "<%= it.ansi.base.yellow %>",
+    "italic": true
+  },
+  "strong": {
+    "color": "<%= it.ansi.bright.yellow %>",
+    "bold": true
+  },
+  "hr": {
+    "color": "<%= it.extras.border %>",
+    "format": "\n--------\n"
+  },
+  "item": {
+    "block_prefix": "• "
+  },
+  "enumeration": {
+    "block_prefix": ". ",
+    "color": "<%= it.ansi.base.cyan %>"
+  },
+  "task": {
+    "ticked": "[✓] ",
+    "unticked": "[ ] "
+  },
+  "link": {
+    "color": "<%= it.ansi.bright.cyan %>",
+    "underline": true
+  },
+  "link_text": {
+    "color": "<%= it.ansi.base.magenta %>"
+  },
+  "image": {
+    "color": "<%= it.ansi.bright.cyan %>",
+    "underline": true
+  },
+  "image_text": {
+    "color": "<%= it.ansi.base.magenta %>",
+    "format": "Image: {{.text}} →"
+  },
+  "code": {
+    "color": "<%= it.ansi.bright.green %>",
+    "background_color": "<%= it.extras.surface %>",
+    "prefix": " ",
+    "suffix": " "
+  },
+  "code_block": {
+    "color": "<%= it.extras.muted %>",
+    "margin": 2,
+    "chroma": {
+      "text": {
+        "color": "<%= it.ansi.bright.white %>"
+      },
+      "error": {
+        "color": "<%= it.ansi.bright.white %>",
+        "background_color": "<%= it.ansi.base.red %>"
+      },
+      "comment": {
+        "color": "<%= it.extras.dim %>"
+      },
+      "comment_preproc": {
+        "color": "<%= it.ansi.base.magenta %>"
+      },
+      "keyword": {
+        "color": "<%= it.ansi.bright.magenta %>"
+      },
+      "keyword_reserved": {
+        "color": "<%= it.ansi.bright.magenta %>"
+      },
+      "keyword_namespace": {
+        "color": "<%= it.ansi.base.magenta %>"
+      },
+      "keyword_type": {
+        "color": "<%= it.ansi.base.blue %>"
+      },
+      "operator": {
+        "color": "<%= it.ansi.base.red %>"
+      },
+      "punctuation": {
+        "color": "<%= it.ansi.base.yellow %>"
+      },
+      "name": {
+        "color": "<%= it.ansi.bright.white %>"
+      },
+      "name_builtin": {
+        "color": "<%= it.ansi.base.cyan %>"
+      },
+      "name_tag": {
+        "color": "<%= it.ansi.base.magenta %>"
+      },
+      "name_attribute": {
+        "color": "<%= it.ansi.base.green %>"
+      },
+      "name_class": {
+        "color": "<%= it.ansi.bright.blue %>",
+        "underline": true,
+        "bold": true
+      },
+      "name_constant": {
+        "color": "<%= it.ansi.base.yellow %>"
+      },
+      "name_decorator": {
+        "color": "<%= it.ansi.base.cyan %>"
+      },
+      "name_exception": {
+        "color": "<%= it.ansi.base.red %>"
+      },
+      "name_function": {
+        "color": "<%= it.ansi.base.green %>"
+      },
+      "name_other": {},
+      "literal": {},
+      "literal_number": {
+        "color": "<%= it.ansi.base.cyan %>"
+      },
+      "literal_date": {},
+      "literal_string": {
+        "color": "<%= it.ansi.base.green %>"
+      },
+      "literal_string_escape": {
+        "color": "<%= it.ansi.bright.cyan %>"
+      },
+      "generic_deleted": {
+        "color": "<%= it.ansi.base.red %>"
+      },
+      "generic_emph": {
+        "color": "<%= it.ansi.base.yellow %>",
+        "italic": true
+      },
+      "generic_inserted": {
+        "color": "<%= it.ansi.base.green %>"
+      },
+      "generic_strong": {
+        "color": "<%= it.ansi.bright.yellow %>",
+        "bold": true
+      },
+      "generic_subheading": {
+        "color": "<%= it.ansi.base.blue %>"
+      },
+      "background": {
+        "background_color": "<%= it.extras.surface %>"
+      }
+    }
+  },
+  "table": {},
+  "definition_list": {},
+  "definition_term": {},
+  "definition_description": {
+    "block_prefix": "\n "
+  },
+  "html_block": {},
+  "html_span": {}
+}

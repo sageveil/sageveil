@@ -35,6 +35,9 @@
     },
     {
       "path": "./packages/ports/ghostty"
+    },
+    {
+      "path": "./packages/ports/glamour"
     }
   ]
 }
