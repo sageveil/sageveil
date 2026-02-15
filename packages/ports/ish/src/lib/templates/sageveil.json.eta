@@ -1,0 +1,47 @@
+{
+  "dark": {
+    "backgroundColor": "<%= it.ansi.base.black %>",
+    "colorPaletteOverrides": [
+      "<%= it.ansi.base.black %>",
+      "<%= it.ansi.base.red %>",
+      "<%= it.ansi.base.green %>",
+      "<%= it.ansi.base.yellow %>",
+      "<%= it.ansi.base.blue %>",
+      "<%= it.ansi.base.magenta %>",
+      "<%= it.ansi.base.cyan %>",
+      "<%= it.ansi.base.white %>",
+      "<%= it.ansi.bright.black %>",
+      "<%= it.ansi.bright.red %>",
+      "<%= it.ansi.bright.green %>",
+      "<%= it.ansi.bright.yellow %>",
+      "<%= it.ansi.bright.blue %>",
+      "<%= it.ansi.bright.magenta %>",
+      "<%= it.ansi.bright.cyan %>",
+      "<%= it.ansi.bright.white %>"
+    ],
+    "foregroundColor": "<%= it.ansi.bright.white %>"
+  },
+  "light": {
+    "backgroundColor": "<%= it.ansi.bright.white %>",
+    "colorPaletteOverrides": [
+      "<%= it.ansi.base.black %>",
+      "<%= it.ansi.base.red %>",
+      "<%= it.ansi.base.green %>",
+      "<%= it.ansi.base.yellow %>",
+      "<%= it.ansi.base.blue %>",
+      "<%= it.ansi.base.magenta %>",
+      "<%= it.ansi.base.cyan %>",
+      "<%= it.ansi.base.white %>",
+      "<%= it.ansi.bright.white %>",
+      "<%= it.ansi.bright.red %>",
+      "<%= it.ansi.bright.green %>",
+      "<%= it.ansi.bright.yellow %>",
+      "<%= it.ansi.bright.blue %>",
+      "<%= it.ansi.bright.magenta %>",
+      "<%= it.ansi.bright.cyan %>",
+      "<%= it.ansi.base.black %>"
+    ],
+    "foregroundColor": "<%= it.ansi.base.black %>"
+  },
+  "version": 1
+}
