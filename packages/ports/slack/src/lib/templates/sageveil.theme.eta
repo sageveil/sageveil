@@ -1,0 +1,1 @@
+#<%= it.extras.surface %>,#<%= it.extras.surface %>,#<%= it.ansi.bright.black %>,#<%= it.ansi.base.blue %>,#<%= it.extras.overlay %>,#<%= it.ansi.base.white %>,#<%= it.ansi.base.yellow %>,#<%= it.ansi.bright.blue %>,#<%= it.extras.surface %>,#<%= it.ansi.base.magenta %>
