@@ -179,6 +179,12 @@ importers:
         specifier: workspace:*
         version: link:../../templater
 
+  packages/ports/obsidian:
+    devDependencies:
+      '@sageveil/templater':
+        specifier: workspace:*
+        version: link:../../templater
+
   packages/ports/text-mate:
     devDependencies:
       '@sageveil/templater':
