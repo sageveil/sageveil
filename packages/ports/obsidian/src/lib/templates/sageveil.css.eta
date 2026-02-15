@@ -1,0 +1,68 @@
+.theme-dark {
+  --color-base-00: <%= it.ansi.base.black %>;
+  --color-base-05: <%= it.extras.surface %>;
+  --color-base-10: <%= it.extras.overlay %>;
+  --color-base-20: <%= it.ansi.bright.black %>;
+  --color-base-25: <%= it.extras.highlight %>;
+  --color-base-30: <%= it.extras.border %>;
+  --color-base-35: <%= it.extras.dim %>;
+  --color-base-40: <%= it.extras.muted %>;
+  --color-base-50: <%= it.ansi.base.white %>;
+  --color-base-60: <%= it.ansi.bright.white %>;
+  --color-base-70: <%= it.ansi.bright.white %>;
+  --color-base-100: <%= it.ansi.bright.white %>;
+
+  --background-primary: <%= it.ansi.base.black %>;
+  --background-primary-alt: <%= it.extras.surface %>;
+  --background-secondary: <%= it.extras.surface %>;
+  --background-secondary-alt: <%= it.extras.overlay %>;
+  --background-modifier-border: <%= it.extras.border %>;
+  --background-modifier-form-field: <%= it.extras.overlay %>;
+  --background-modifier-hover: <%= it.extras.highlight %>;
+
+  --text-normal: <%= it.ansi.base.white %>;
+  --text-muted: <%= it.extras.muted %>;
+  --text-faint: <%= it.extras.dim %>;
+  --text-accent: <%= it.ansi.base.green %>;
+  --text-accent-hover: <%= it.ansi.bright.green %>;
+  --text-on-accent: <%= it.ansi.base.black %>;
+  --text-selection: <%= it.extras.highlight %>;
+
+  --h1-color: <%= it.ansi.bright.green %>;
+  --h2-color: <%= it.ansi.bright.green %>;
+  --h3-color: <%= it.ansi.bright.green %>;
+  --h4-color: <%= it.ansi.bright.green %>;
+  --h5-color: <%= it.ansi.bright.green %>;
+  --h6-color: <%= it.ansi.bright.green %>;
+
+  --link-color: <%= it.ansi.base.green %>;
+  --link-color-hover: <%= it.ansi.bright.green %>;
+  --link-external-color: <%= it.ansi.base.blue %>;
+  --link-external-color-hover: <%= it.ansi.bright.green %>;
+  --link-unresolved-color: <%= it.extras.muted %>;
+
+  --code-background: <%= it.extras.overlay %>;
+  --code-normal: <%= it.ansi.base.white %>;
+  --code-comment: <%= it.extras.muted %>;
+  --code-function: <%= it.ansi.bright.green %>;
+  --code-important: <%= it.ansi.base.red %>;
+  --code-keyword: <%= it.ansi.base.magenta %>;
+  --code-operator: <%= it.ansi.base.white %>;
+  --code-property: <%= it.ansi.base.yellow %>;
+  --code-punctuation: <%= it.extras.dim %>;
+  --code-string: <%= it.ansi.base.green %>;
+  --code-tag: <%= it.ansi.base.red %>;
+  --code-value: <%= it.ansi.base.cyan %>;
+
+  --color-red: <%= it.ansi.base.red %>;
+  --color-orange: <%= it.ansi.base.cyan %>;
+  --color-yellow: <%= it.ansi.base.yellow %>;
+  --color-green: <%= it.ansi.base.green %>;
+  --color-cyan: <%= it.ansi.base.blue %>;
+  --color-blue: <%= it.ansi.base.blue %>;
+  --color-purple: <%= it.ansi.base.magenta %>;
+  --color-pink: <%= it.ansi.bright.magenta %>;
+
+  --interactive-accent: <%= it.ansi.base.green %>;
+  --interactive-accent-hover: <%= it.ansi.bright.green %>;
+}
