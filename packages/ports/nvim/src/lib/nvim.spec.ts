@@ -28,6 +28,7 @@ describe('nvim', () => {
         'lua/sageveil/utilities.lua',
         'lua/sageveil/types.lua',
         'lua/sageveil/plugins/blink.lua',
+        'lua/sageveil/plugins/diffview.lua',
         'lua/sageveil/plugins/gitsigns.lua',
         'lua/sageveil/plugins/neotest.lua',
         'lua/sageveil/plugins/telescope.lua',

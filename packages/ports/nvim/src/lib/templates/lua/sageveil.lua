@@ -138,6 +138,7 @@ local function set_highlights()
 		require("sageveil.plugins.blink"),
 		require("sageveil.plugins.neotest"),
 		require("sageveil.plugins.gitsigns"),
+		require("sageveil.plugins.diffview"),
 		require("sageveil.plugins.obsidian"),
 	}
 
