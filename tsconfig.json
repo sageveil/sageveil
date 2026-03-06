@@ -38,6 +38,9 @@
     },
     {
       "path": "./packages/ports/glamour"
+    },
+    {
+      "path": "./packages/ports/ish"
     }
   ]
 }
