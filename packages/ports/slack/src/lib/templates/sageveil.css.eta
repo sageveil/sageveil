@@ -1,0 +1,20 @@
+.p-workspace,
+.p-workspace__primary_view,
+.p-workspace__primary_view_contents,
+.p-workspace__secondary_view,
+.p-workspace__tiles,
+.p-message_pane_input,
+.p-workspace__primary_view,
+.p-workspace__primary_view_contents,
+.p-file_drag_drop__container {
+  background-color: <%= it.extras.surface %> !important;
+}
+
+.sk-client-theme--dark {
+  --sk_primary_background: <%= it.extras.surface %>;
+}
+
+.c-basic_container__body,
+.c-message_kit__hover:hover {
+  background: <%= it.extras.overlay %> !important;
+}
