@@ -2,9 +2,6 @@
   "name": "@sageveil/site",
   "version": "0.1.2",
   "private": true,
-  "devDependencies": {
-    "prettier-plugin-tailwindcss": "^0.6.11"
-  },
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
@@ -20,6 +17,13 @@
       "build": {
         "dependsOn": [
           "generate-ports"
+        ],
+        "inputs": [
+          "production",
+          "^production",
+          {
+            "env": "BASE_PATH"
+          }
         ]
       },
       "serve": {
