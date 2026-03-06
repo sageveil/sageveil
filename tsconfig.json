@@ -41,6 +41,9 @@
     },
     {
       "path": "./packages/ports/ish"
+    },
+    {
+      "path": "./packages/ports/slack"
     }
   ]
 }
