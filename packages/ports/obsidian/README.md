@@ -5,6 +5,10 @@
 
 <p align="center">A minimalist low-contrast, green-tinted colorscheme 🌱</p>
 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/packages/ports/obsidian/assets/screenshot.png" alt="Sageveil theme in Obsidian" />
+</p>
+
 # @sageveil/obsidian
 
 ## Overview
