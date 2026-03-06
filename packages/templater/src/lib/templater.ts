@@ -26,7 +26,7 @@ export type RenderJob = {
   templateDir: string;
   /** Array of template files to render, can be strings or RenderFileOptions */
   templateFiles: (RenderFileOptions | string)[];
-  /** Context object for template rendering (currently unused - templates use sageveil palette instead) */
+  /** Extra context merged into template data alongside the sageveil palette */
   ctx?: Record<string, unknown>;
 };
 
@@ -57,7 +57,7 @@ export async function render(job: RenderJob): Promise<void> {
   const eta = new Eta({ views: job.templateDir, autoTrim: false });
   await mkdir(OUTPUT_DIR, { recursive: true });
   const results = await Promise.allSettled(
-    job.templateFiles.map((file) => renderFile(eta, file))
+    job.templateFiles.map((file) => renderFile(eta, file, job.ctx))
   );
 
   const failures = results
@@ -87,11 +87,13 @@ export async function render(job: RenderJob): Promise<void> {
  */
 async function renderFile(
   eta: Eta,
-  file: RenderFileOptions | string
+  file: RenderFileOptions | string,
+  ctx?: Record<string, unknown>
 ): Promise<void> {
   const { filename, executable } = normalizeFileOptions(file);
   const renderedContent: string = await eta.renderAsync(filename, {
     ...sageveil,
+    ...ctx,
   });
   const outputFilename = filename.endsWith(TEMPLATE_EXTENSION)
     ? filename.slice(0, -TEMPLATE_EXTENSION.length)
