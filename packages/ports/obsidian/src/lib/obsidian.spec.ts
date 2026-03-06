@@ -19,7 +19,8 @@ describe('obsidian', () => {
       templateDir: expect.stringMatching(
         /packages\/ports\/obsidian\/src\/lib\/templates$/
       ),
-      templateFiles: ['sageveil.css.eta'],
+      templateFiles: ['sageveil.css.eta', 'manifest.json.eta'],
+      ctx: expect.objectContaining({ version: expect.any(String) }),
     });
   });
 });

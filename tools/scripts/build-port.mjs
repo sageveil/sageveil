@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { spawn } from 'node:child_process';
-import { copyFile, mkdir, readFile, rm } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, rm } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 
 const projectRootArg = process.argv[2];
@@ -15,6 +15,22 @@ const workspaceRoot = process.env.NX_WORKSPACE_ROOT
   ? resolve(process.env.NX_WORKSPACE_ROOT)
   : resolve('.');
 const projectRoot = join(workspaceRoot, projectRootArg);
+
+async function copyDir(src, dest) {
+  const entries = await readdir(src, { withFileTypes: true });
+  await mkdir(dest, { recursive: true });
+  await Promise.all(
+    entries.map(async (entry) => {
+      const srcPath = join(src, entry.name);
+      const destPath = join(dest, entry.name);
+      if (entry.isDirectory()) {
+        await copyDir(srcPath, destPath);
+      } else {
+        await copyFile(srcPath, destPath);
+      }
+    })
+  );
+}
 
 async function readJson(path) {
   const contents = await readFile(path, 'utf8');
@@ -75,6 +91,12 @@ async function main() {
     await copyFile(readmeSrc, readmeDest);
   } catch {
     // Optional README
+  }
+
+  try {
+    await copyDir(join(projectRoot, 'assets'), buildRoot);
+  } catch {
+    // Optional assets directory
   }
 
   console.log(`Built ${packageName}`);

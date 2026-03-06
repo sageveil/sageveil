@@ -16,6 +16,7 @@
   --background-primary-alt: <%= it.extras.surface %>;
   --background-secondary: <%= it.extras.surface %>;
   --background-secondary-alt: <%= it.extras.overlay %>;
+  --background-modifier-cover: rgba(16, 20, 17, 0.8);
   --background-modifier-border: <%= it.extras.border %>;
   --background-modifier-form-field: <%= it.extras.overlay %>;
   --background-modifier-hover: <%= it.extras.highlight %>;
@@ -26,6 +27,8 @@
   --text-accent: <%= it.ansi.base.green %>;
   --text-accent-hover: <%= it.ansi.bright.green %>;
   --text-on-accent: <%= it.ansi.base.black %>;
+  --text-highlight-bg: rgba(180, 160, 90, 0.15);
+  --text-highlight-bg-active: rgba(180, 160, 90, 0.25);
   --text-selection: <%= it.extras.highlight %>;
 
   --h1-color: <%= it.ansi.bright.green %>;
@@ -63,6 +66,12 @@
   --color-purple: <%= it.ansi.base.magenta %>;
   --color-pink: <%= it.ansi.bright.magenta %>;
 
+  --interactive-normal: <%= it.extras.overlay %>;
+  --interactive-hover: <%= it.extras.highlight %>;
   --interactive-accent: <%= it.ansi.base.green %>;
   --interactive-accent-hover: <%= it.ansi.bright.green %>;
+
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb-bg: <%= it.extras.border %>;
+  --scrollbar-active-thumb-bg: <%= it.extras.muted %>;
 }
