@@ -80,8 +80,14 @@ main() {
     queue_global_option message-style "fg=$sageveil_fg,bg=$sageveil_overlay"
     queue_global_option message-command-style "fg=$sageveil_surface,bg=$sageveil_bred"
 
+    # Pane border thickness: single, double, heavy, simple, number (tmux 3.2+)
+    local pane_border_lines
+    pane_border_lines="$(read_tmux_setting "@sv_pane_border_lines" "heavy")"
+    readonly pane_border_lines
+
     queue_global_option pane-border-style "fg=$sageveil_border"
-    queue_global_option pane-active-border-style "fg=$sageveil_highlight"
+    queue_global_option pane-active-border-style "fg=$sageveil_green"
+    queue_global_option pane-border-lines "$pane_border_lines"
     queue_global_option display-panes-active-colour "${sageveil_bblue}"
     queue_global_option display-panes-colour "${sageveil_bmagenta}"
 
