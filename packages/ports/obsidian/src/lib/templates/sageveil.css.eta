@@ -66,6 +66,11 @@
   --color-purple: <%= it.ansi.base.magenta %>;
   --color-pink: <%= it.ansi.bright.magenta %>;
 
+  --tag-color: <%= it.ansi.base.black %>;
+  --tag-background: <%= it.ansi.base.magenta %>;
+  --tag-background-hover: <%= it.ansi.bright.magenta %>;
+  --tag-border-width: 0px;
+
   --interactive-normal: <%= it.extras.overlay %>;
   --interactive-hover: <%= it.extras.highlight %>;
   --interactive-accent: <%= it.ansi.base.green %>;
