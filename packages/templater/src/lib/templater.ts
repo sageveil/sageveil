@@ -34,30 +34,17 @@ const OUTPUT_DIR = process.env.OUTPUT_DIR || '';
 
 if (!OUTPUT_DIR || OUTPUT_DIR === '') {
   console.error(
-    "$OUTPUT_DIR environment variable is required. Check target settings in project's nx configuration."
+    "$OUTPUT_DIR environment variable is required. Check target settings in project's nx configuration.",
   );
   process.exit(1);
 }
 
-/**
- * Renders template files using the Eta templating engine.
- *
- * @param job - The render job configuration
- * @returns Promise that resolves when all template files have been processed
- *
- * @example
- * ```typescript
- * await render({
- *   templateDir: './templates',
- *   templateFiles: ['index.html.eta', { filename: 'script.sh.eta', executable: true }],
- * });
- * ```
- */
+/** Renders template files from a RenderJob and writes output to $OUTPUT_DIR. */
 export async function render(job: RenderJob): Promise<void> {
   const eta = new Eta({ views: job.templateDir, autoTrim: false });
   await mkdir(OUTPUT_DIR, { recursive: true });
   const results = await Promise.allSettled(
-    job.templateFiles.map((file) => renderFile(eta, file, job.ctx))
+    job.templateFiles.map((file) => renderFile(eta, file, job.ctx)),
   );
 
   const failures = results
@@ -76,19 +63,10 @@ export async function render(job: RenderJob): Promise<void> {
   if (failures.length) process.exit(1);
 }
 
-/**
- * Renders a single template file and writes it to the output directory.
- *
- * @param eta - The Eta templating engine instance
- * @param file - Template file specification (string filename or RenderFileOptions)
- * @returns Promise that resolves when the file has been rendered and written
- *
- * @internal
- */
 async function renderFile(
   eta: Eta,
   file: RenderFileOptions | string,
-  ctx?: Record<string, unknown>
+  ctx?: Record<string, unknown>,
 ): Promise<void> {
   const { filename, executable } = normalizeFileOptions(file);
   const renderedContent: string = await eta.renderAsync(filename, {
@@ -107,16 +85,8 @@ async function renderFile(
   });
 }
 
-/**
- * Normalizes file argument to RenderFileOptions format.
- *
- * @param file - Either a string filename or RenderFileOptions object
- * @returns Normalized RenderFileOptions with filename and executable flag
- *
- * @internal
- */
 function normalizeFileOptions(
-  file: RenderFileOptions | string
+  file: RenderFileOptions | string,
 ): RenderFileOptions {
   return typeof file === 'string'
     ? {
