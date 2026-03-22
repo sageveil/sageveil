@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { spawn } from 'node:child_process';
-import { copyFile, mkdir, readFile, readdir, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { copyFile, cp, mkdir, readFile, rm } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 
 const projectRootArg = process.argv[2];
@@ -16,85 +16,39 @@ const workspaceRoot = process.env.NX_WORKSPACE_ROOT
   : resolve('.');
 const projectRoot = join(workspaceRoot, projectRootArg);
 
-async function copyDir(src, dest) {
-  const entries = await readdir(src, { withFileTypes: true });
-  await mkdir(dest, { recursive: true });
-  await Promise.all(
-    entries.map(async (entry) => {
-      const srcPath = join(src, entry.name);
-      const destPath = join(dest, entry.name);
-      if (entry.isDirectory()) {
-        await copyDir(srcPath, destPath);
-      } else {
-        await copyFile(srcPath, destPath);
-      }
-    })
-  );
-}
-
-async function readJson(path) {
-  const contents = await readFile(path, 'utf8');
-  return JSON.parse(contents);
-}
-
 function stripScope(packageName) {
   const parts = packageName.split('/');
   return parts.length > 1 ? parts[1] : parts[0];
 }
 
-async function run(command, args, options = {}) {
-  await new Promise((resolvePromise, reject) => {
-    const child = spawn(command, args, {
-      stdio: 'inherit',
-      env: options.env,
-      cwd: options.cwd,
-    });
-
-    child.on('exit', (code) => {
-      if (code === 0) {
-        resolvePromise();
-      } else {
-        reject(
-          new Error(`${command} ${args.join(' ')} exited with code ${code}`)
-        );
-      }
-    });
-    child.on('error', reject);
-  });
-}
-
 async function main() {
   const pkgJsonPath = join(projectRoot, 'package.json');
-  const pkgJson = await readJson(pkgJsonPath);
+  const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'));
   const packageName = pkgJson.name;
 
   const abbreviatedName = stripScope(packageName);
   const buildRoot = join(workspaceRoot, 'dist', 'ports', abbreviatedName);
 
   await rm(buildRoot, { recursive: true, force: true });
-
   await mkdir(buildRoot, { recursive: true });
 
-  const env = {
-    ...process.env,
-    OUTPUT_DIR: buildRoot,
-  };
-
-  await run('pnpm', ['exec', 'tsx', `${projectRoot}/src/index.ts`], {
-    env,
-    cwd: workspaceRoot,
-  });
+  const result = spawnSync(
+    'pnpm',
+    ['exec', 'tsx', `${projectRoot}/src/index.ts`],
+    { stdio: 'inherit', env: { ...process.env, OUTPUT_DIR: buildRoot }, cwd: workspaceRoot }
+  );
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
+  }
 
   try {
-    const readmeSrc = join(projectRoot, 'README.md');
-    const readmeDest = join(buildRoot, 'README.md');
-    await copyFile(readmeSrc, readmeDest);
+    await copyFile(join(projectRoot, 'README.md'), join(buildRoot, 'README.md'));
   } catch {
     // Optional README
   }
 
   try {
-    await copyDir(join(projectRoot, 'assets'), buildRoot);
+    await cp(join(projectRoot, 'assets'), buildRoot, { recursive: true });
   } catch {
     // Optional assets directory
   }
