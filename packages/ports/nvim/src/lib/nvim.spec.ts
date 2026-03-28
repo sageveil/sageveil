@@ -33,6 +33,7 @@ describe('nvim', () => {
         'lua/sageveil/plugins/neotest.lua',
         'lua/sageveil/plugins/telescope.lua',
         'lua/sageveil/plugins/obsidian.lua',
+        'lua/sageveil/plugins/render-markdown.lua',
         'lua/sageveil.lua',
       ],
     });

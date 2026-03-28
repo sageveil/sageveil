@@ -124,6 +124,9 @@ local function set_highlights()
 		["@constant.builtin"] = { fg = palette.cyan, italic = italic },
 		["@tag"] = { fg = palette.green_bright },
 		["@attribute"] = { fg = palette.yellow },
+		["@markup.link"] = { fg = palette.magenta },
+		["@markup.link.label.markdown_inline"] = { fg = palette.magenta },
+		["@markup.link.markdown_inline"] = { fg = palette.magenta_bright, underline = true },
 
 		-- LSP semantic
 		["@lsp.type.parameter"] = { fg = palette.white },
@@ -140,6 +143,7 @@ local function set_highlights()
 		require("sageveil.plugins.gitsigns"),
 		require("sageveil.plugins.diffview"),
 		require("sageveil.plugins.obsidian"),
+		require("sageveil.plugins.render-markdown"),
 	}
 
 	for _, loader in ipairs(plugin_highlight_loaders) do
