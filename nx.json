@@ -148,9 +148,16 @@
   "targetDefaults": {
     "generate": {
       "cache": true,
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*",
+        "!{projectRoot}/src/**/*.spec.ts",
+        "!{projectRoot}/src/**/*.test.ts",
+        { "dependentTasksOutputFiles": "**/*", "transitiveDependencies": true }
+      ],
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/build-port.mjs {projectRoot}"
+        "command": "pnpm exec tsx tools/scripts/build-port.ts {projectRoot}"
       }
     },
     "clean": {

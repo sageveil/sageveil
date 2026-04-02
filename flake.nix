@@ -29,8 +29,6 @@
           nodejs_24
           (pnpm.override {nodejs = nodejs_24;})
           typescript
-          vtsls
-          vscode-langservers-extracted
           gh
         ];
       };
