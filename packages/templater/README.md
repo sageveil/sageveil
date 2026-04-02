@@ -12,7 +12,7 @@
 `@sageveil/templater` is the thin rendering layer shared by every port.
 It wraps the [Eta](https://eta.js.org/) template engine, injects the sageveil palette, and writes the rendered files to the build output directory.
 
-The executable entry point lives in `src/index.ts`; Nx targets call it with `OUTPUT_DIR` set by `tools/scripts/build-port.mjs`.
+The executable entry point lives in `src/index.ts`; Nx targets invoke it through `tools/scripts/build-port.ts`, which sets `OUTPUT_DIR` for port builds.
 
 ## Usage
 
@@ -21,11 +21,13 @@ import { render } from '@sageveil/templater';
 
 await render({
   templateDir: `${import.meta.dirname}/templates`,
+  outputDir: 'dist/ports/example',
   templateFiles: ['sageveil.toml', { filename: 'sageveil.sh', executable: true }],
 });
 ```
 
 - Each template file is resolved relative to `templateDir`.
+- If `templateFiles` is omitted, `render()` discovers every file under `templateDir` recursively.
 - `.eta` suffixes are stripped automatically; clean filenames fall straight into the dist folder.
-- `executable: true` will set the file mode to 755, which is necessary if script needs to executable (i.e. tmux)
-- `OUTPUT_DIR` **must** point at a writable directory before calling `render` (set by the build tool when running `nx run <port>:generate`).
+- `executable: true` sets the file mode to `755`, which is necessary for executable outputs such as tmux scripts.
+- `outputDir` can be passed directly; if omitted, `render()` falls back to `OUTPUT_DIR`.
