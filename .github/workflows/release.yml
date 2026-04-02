@@ -1,14 +1,10 @@
 name: Release
 on:
-  workflow_dispatch:
-    inputs:
-      release-args:
-        description: Optional additional arguments to pass to `nx release`
-        required: false
-        default: ''
+  push:
+    branches:
+      - main
 jobs:
   release:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: protected
     env:
@@ -39,9 +35,4 @@ jobs:
           git config user.name "sageveil-bot"
           git config user.email "bot@sageveil"
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          ARGS="${{ inputs['release-args'] }}"
-          if [[ -n "$ARGS" ]]; then
-            pnpm nx release --skip-publish $ARGS
-          else
-            pnpm nx release --skip-publish
-          fi
+          pnpm nx release --skip-publish
