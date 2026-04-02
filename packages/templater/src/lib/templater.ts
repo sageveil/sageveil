@@ -1,7 +1,7 @@
 import { sageveil } from '@sageveil/palette';
 import { Eta } from 'eta';
-import { mkdir, writeFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { dirname, join, relative } from 'node:path';
 
 const TEMPLATE_EXTENSION = '.eta';
 const EXECUTABLE_MODE = 0o755;
@@ -24,27 +24,42 @@ export type RenderFileOptions = {
 export type RenderJob = {
   /** Directory containing template files */
   templateDir: string;
-  /** Array of template files to render, can be strings or RenderFileOptions */
-  templateFiles: (RenderFileOptions | string)[];
+  /** Array of template files to render. When omitted, all files in templateDir are rendered. */
+  templateFiles?: (RenderFileOptions | string)[];
   /** Extra context merged into template data alongside the sageveil palette */
   ctx?: Record<string, unknown>;
+  /** Output directory for rendered files. Falls back to $OUTPUT_DIR env var. */
+  outputDir?: string;
 };
 
-const OUTPUT_DIR = process.env.OUTPUT_DIR || '';
-
-if (!OUTPUT_DIR || OUTPUT_DIR === '') {
-  console.error(
-    "$OUTPUT_DIR environment variable is required. Check target settings in project's nx configuration.",
-  );
-  process.exit(1);
+function resolveOutputDir(explicit?: string): string {
+  const outputDir = explicit ?? process.env.OUTPUT_DIR;
+  if (!outputDir) {
+    throw new Error(
+      "outputDir is required: pass it in RenderJob or set $OUTPUT_DIR. Check target settings in project's nx configuration.",
+    );
+  }
+  return outputDir;
 }
 
-/** Renders template files from a RenderJob and writes output to $OUTPUT_DIR. */
+/** Discovers all files in a directory recursively, returning paths relative to the directory. */
+export async function discoverTemplates(dir: string): Promise<string[]> {
+  const entries = await readdir(dir, { withFileTypes: true, recursive: true });
+  return entries
+    .filter((entry) => entry.isFile())
+    .map((entry) => relative(dir, join(entry.parentPath, entry.name)))
+    .sort();
+}
+
+/** Renders template files from a RenderJob and writes output to the resolved output directory. */
 export async function render(job: RenderJob): Promise<void> {
+  const outputDir = resolveOutputDir(job.outputDir);
+  const templateFiles =
+    job.templateFiles ?? (await discoverTemplates(job.templateDir));
   const eta = new Eta({ views: job.templateDir, autoTrim: false });
-  await mkdir(OUTPUT_DIR, { recursive: true });
+  await mkdir(outputDir, { recursive: true });
   const results = await Promise.allSettled(
-    job.templateFiles.map((file) => renderFile(eta, file, job.ctx)),
+    templateFiles.map((file) => renderFile(eta, outputDir, file, job.ctx)),
   );
 
   const failures = results
@@ -52,7 +67,7 @@ export async function render(job: RenderJob): Promise<void> {
     .filter(({ result }) => result.status === 'rejected')
     .map(({ result, index }) => ({
       reason: (result as PromiseRejectedResult).reason,
-      file: job.templateFiles[index],
+      file: templateFiles[index],
     }));
 
   failures.forEach(({ reason, file }) => {
@@ -60,11 +75,17 @@ export async function render(job: RenderJob): Promise<void> {
     console.error(`Failed to render template "${fileName}":`, reason);
   });
 
-  if (failures.length) process.exit(1);
+  if (failures.length) {
+    throw new AggregateError(
+      failures.map((f) => f.reason),
+      'Template rendering failed',
+    );
+  }
 }
 
 async function renderFile(
   eta: Eta,
+  outputDir: string,
   file: RenderFileOptions | string,
   ctx?: Record<string, unknown>,
 ): Promise<void> {
@@ -76,7 +97,7 @@ async function renderFile(
   const outputFilename = filename.endsWith(TEMPLATE_EXTENSION)
     ? filename.slice(0, -TEMPLATE_EXTENSION.length)
     : filename;
-  const outputPath = join(OUTPUT_DIR, outputFilename);
+  const outputPath = join(outputDir, outputFilename);
   const outputDirectory = dirname(outputPath);
   await mkdir(outputDirectory, { recursive: true });
   await writeFile(outputPath, renderedContent, {
