@@ -24,37 +24,9 @@ function normalizeTags(tags?: string[] | string): string[] | undefined {
   return normalized.length > 0 ? normalized : undefined;
 }
 
-function updateRootTsConfig(tree: Tree, portName: string): void {
-  const portReference = `./packages/ports/${portName}`;
-
-  updateJson(tree, 'tsconfig.json', (json) => {
-    const references: Array<{ path: string }> = [...(json.references ?? [])];
-
-    if (references.some((reference) => reference.path === portReference)) {
-      return json;
-    }
-
-    const insertAfterPortIndex = references.reduce(
-      (lastIndex, reference, i) => {
-        return reference.path.startsWith('./packages/ports/') ? i : lastIndex;
-      },
-      -1
-    );
-
-    if (insertAfterPortIndex >= 0) {
-      references.splice(insertAfterPortIndex + 1, 0, { path: portReference });
-    } else {
-      references.push({ path: portReference });
-    }
-
-    json.references = references;
-    return json;
-  });
-}
-
 export default async function generator(
   tree: Tree,
-  options: PortGeneratorSchema
+  options: PortGeneratorSchema,
 ): Promise<GeneratorCallback> {
   const normalizedPortName = names(options.name).fileName;
   const templateFile = (options.templateFile ?? 'sageveil.eta').trim();
@@ -65,7 +37,7 @@ export default async function generator(
 
   if (normalizedPortName !== options.name) {
     logger.info(
-      `Normalizing port name "${options.name}" to "${normalizedPortName}".`
+      `Normalizing port name "${options.name}" to "${normalizedPortName}".`,
     );
   }
 
@@ -95,8 +67,6 @@ export default async function generator(
 
     return json;
   });
-
-  updateRootTsConfig(tree, normalizedPortName);
 
   if (!options.skipFormat) {
     await formatFiles(tree);

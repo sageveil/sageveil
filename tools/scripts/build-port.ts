@@ -1,5 +1,6 @@
 import { copyFile, cp, mkdir, readFile, rm } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
+import { render } from './render.ts';
 
 const projectRootArg = process.argv[2];
 
@@ -22,6 +23,7 @@ async function main(): Promise<void> {
   const pkgJsonPath = join(projectRoot, 'package.json');
   const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'));
   const packageName: string = pkgJson.name;
+  const version: string = pkgJson.version;
 
   const abbreviatedName = stripScope(packageName);
   const buildRoot = join(workspaceRoot, 'dist', 'ports', abbreviatedName);
@@ -29,8 +31,11 @@ async function main(): Promise<void> {
   await rm(buildRoot, { recursive: true, force: true });
   await mkdir(buildRoot, { recursive: true });
 
-  process.env.OUTPUT_DIR = buildRoot;
-  await import(`${projectRoot}/src/index.ts`);
+  await render({
+    templateDir: join(projectRoot, 'templates'),
+    outputDir: buildRoot,
+    ctx: { version },
+  });
 
   try {
     await copyFile(

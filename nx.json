@@ -21,12 +21,7 @@
         }
       },
       "other": {
-        "projects": [
-          "packages/palette",
-          "packages/templater",
-          "packages/nx",
-          "packages/site"
-        ],
+        "projects": ["packages/palette", "packages/nx", "packages/site"],
         "releaseTag": {
           "pattern": "{projectName}@{version}"
         }
@@ -105,11 +100,7 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": [
-        "packages/palette/*",
-        "packages/templater/*",
-        "packages/ports/*/*"
-      ]
+      "exclude": ["packages/palette/*", "packages/ports/*/*"]
     },
     {
       "plugin": "@nx/js/typescript",
@@ -149,11 +140,14 @@
     "generate": {
       "cache": true,
       "inputs": [
-        "{projectRoot}/src/**/*.ts",
-        "{projectRoot}/src/**/*",
-        "!{projectRoot}/src/**/*.spec.ts",
-        "!{projectRoot}/src/**/*.test.ts",
-        { "dependentTasksOutputFiles": "**/*", "transitiveDependencies": true }
+        "{projectRoot}/templates/**/*",
+        "{projectRoot}/assets/**/*",
+        "{projectRoot}/demo/**/*",
+        "{projectRoot}/README.md",
+        "{projectRoot}/package.json",
+        {
+          "dependentTasksOutputFiles": "**/*"
+        }
       ],
       "executor": "nx:run-commands",
       "options": {

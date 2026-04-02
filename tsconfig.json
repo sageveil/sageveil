@@ -7,46 +7,10 @@
       "path": "./packages/palette"
     },
     {
-      "path": "./packages/templater"
-    },
-    {
       "path": "./packages/nx"
     },
     {
       "path": "./packages/site"
-    },
-    {
-      "path": "./packages/ports/alacritty"
-    },
-    {
-      "path": "./packages/ports/nvim"
-    },
-    {
-      "path": "./packages/ports/tmux"
-    },
-    {
-      "path": "./packages/ports/fzf"
-    },
-    {
-      "path": "./packages/ports/k9s"
-    },
-    {
-      "path": "./packages/ports/text-mate"
-    },
-    {
-      "path": "./packages/ports/ghostty"
-    },
-    {
-      "path": "./packages/ports/glamour"
-    },
-    {
-      "path": "./packages/ports/ish"
-    },
-    {
-      "path": "./packages/ports/slack"
-    },
-    {
-      "path": "./packages/ports/obsidian"
     }
   ]
 }

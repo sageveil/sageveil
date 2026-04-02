@@ -43,11 +43,11 @@ Build artifacts go to `dist/ports/<port>/` and are not committed to this repo.
 
 - **`packages/palette`** — Single source of truth for all colors. Exports `sageveil` object with `ansi.base`, `ansi.bright`, and `extras` (surface, overlay, highlight, border, muted, dim, cursor, cursor_text).
 
-- **`packages/templater`** — Rendering engine built on [Eta](https://eta.js.org/). The `render()` function takes a `RenderJob` (template directory + list of files), injects the full `sageveil` palette as template context, and writes output to `$OUTPUT_DIR`. Templates use `.eta` extension by default; the extension is stripped from output filenames.
+- **`tools/scripts/render.ts`** — Rendering engine built on [Eta](https://eta.js.org/). The `render()` function takes a `RenderJob` (template directory + list of files), injects the full `sageveil` palette as template context, and writes output to the specified output directory. Templates use `.eta` extension by default; the extension is stripped from output filenames.
 
-- **`packages/ports/*`** — Each port is a package that calls `render()` from `@sageveil/templater` with its own templates. The entry point is `src/index.ts`, templates live in `src/lib/templates/`. The `generate` nx target runs `tools/scripts/build-port.mjs` which sets `OUTPUT_DIR` and executes the port's `src/index.ts` via `tsx`.
+- **`packages/ports/*`** — Each port is a template-only package. Templates live in `templates/`. The `generate` nx target runs `tools/scripts/build-port.ts` which auto-discovers templates, renders them via the render engine, and writes output to `dist/ports/<name>/`.
 
-- **`packages/nx`** — Custom Nx generator (`@sageveil/nx:port`) that scaffolds new port packages with the correct structure, tsconfig references, and metadata.
+- **`packages/nx`** — Custom Nx generator (`@sageveil/nx:port`) that scaffolds new port packages with the correct flat structure and metadata.
 
 - **`packages/site`** — React + Tailwind showcase site deployed to GitHub Pages.
 
@@ -57,13 +57,8 @@ Each port follows this pattern:
 
 ```
 packages/ports/<name>/
-  src/
-    index.ts                      # Entry: calls render() with templateFiles list
-    lib/
-      <name>.ts                   # Same as index.ts (actual render call)
-      <name>.spec.ts              # Tests: mocks @sageveil/templater and tests template output directly via Eta
-      templates/
-        sageveil.<ext>[.eta]      # Eta templates; .eta suffix stripped on output
+  templates/
+    sageveil.<ext>[.eta]          # Eta templates; .eta suffix stripped on output
   package.json                    # Contains "sageveil" metadata (displayName, description, tags)
 ```
 
@@ -77,18 +72,16 @@ Templates receive the full `sageveil` palette object:
 
 ### Testing pattern
 
-Port tests have two concerns:
-
-1. Mock `@sageveil/templater` and verify `render()` is called with the correct `templateDir` and `templateFiles`
-2. Directly instantiate `Eta` with mock palette data and assert the rendered template output contains expected strings
+Port packages are content-only and currently do not carry package-local tests. Render engine tests live in `tools/scripts/render.spec.ts`.
 
 ### Build pipeline
 
-The `generate` target invokes `tools/scripts/build-port.mjs <projectRoot>`, which:
+The `generate` target invokes `tools/scripts/build-port.ts <projectRoot>`, which:
 
-1. Sets `OUTPUT_DIR` to `dist/ports/<abbreviatedName>`
-2. Runs `pnpm exec tsx <projectRoot>/src/index.ts`
-3. Copies `README.md` to the output directory if present
+1. Sets output directory to `dist/ports/<abbreviatedName>`
+2. Auto-discovers templates in `templates/` and renders them via `render()` from `tools/scripts/render.ts`
+3. Passes the port's `version` from `package.json` as template context
+4. Copies `README.md` and `assets/` to the output directory if present
 
 ### Release
 

@@ -1,0 +1,271 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { Mock } from 'vitest';
+import { render, type RenderJob } from './render.ts';
+
+vi.mock('@sageveil/palette', () => ({
+  sageveil: { black: '#000', white: '#fff' },
+}));
+
+vi.mock('node:fs/promises', () => ({
+  mkdir: vi.fn(),
+  writeFile: vi.fn(),
+}));
+
+vi.mock('eta', () => ({
+  Eta: vi.fn(),
+}));
+
+const mockMkdir = vi.mocked(await import('node:fs/promises')).mkdir;
+const mockWriteFile = vi.mocked(await import('node:fs/promises')).writeFile;
+const MockEta = vi.mocked(await import('eta')).Eta as Mock;
+
+describe('render', () => {
+  let mockEtaInstance: any;
+  let consoleSpy: any;
+
+  beforeEach(() => {
+    mockEtaInstance = {
+      renderAsync: vi.fn(),
+    };
+    MockEta.mockImplementation(function () {
+      return mockEtaInstance;
+    });
+    consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    mockMkdir.mockResolvedValue(undefined);
+    mockWriteFile.mockResolvedValue(undefined);
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should successfully render template files', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['index.html.eta', 'styles.css.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    mockEtaInstance.renderAsync
+      .mockResolvedValueOnce('<html>Test</html>')
+      .mockResolvedValueOnce('body { color: red; }');
+
+    await render(job);
+
+    expect(MockEta).toHaveBeenCalledWith({
+      views: './templates',
+      autoTrim: false,
+    });
+    expect(mockMkdir).toHaveBeenCalledWith('dist/ports/test', {
+      recursive: true,
+    });
+    expect(mockEtaInstance.renderAsync).toHaveBeenCalledTimes(2);
+    expect(mockEtaInstance.renderAsync).toHaveBeenCalledWith('index.html.eta', {
+      black: '#000',
+      white: '#fff',
+    });
+    expect(mockEtaInstance.renderAsync).toHaveBeenCalledWith('styles.css.eta', {
+      black: '#000',
+      white: '#fff',
+    });
+    expect(mockWriteFile).toHaveBeenCalledTimes(2);
+  });
+
+  it('should throw when outputDir is not provided', async () => {
+    const originalEnv = process.env.OUTPUT_DIR;
+    delete process.env.OUTPUT_DIR;
+
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['index.html.eta'],
+    };
+
+    await expect(render(job)).rejects.toThrow('outputDir is required');
+
+    process.env.OUTPUT_DIR = originalEnv;
+  });
+
+  it('should fall back to $OUTPUT_DIR env var', async () => {
+    const originalEnv = process.env.OUTPUT_DIR;
+    process.env.OUTPUT_DIR = 'dist/ports/env-test';
+
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['index.html.eta'],
+    };
+
+    mockEtaInstance.renderAsync.mockResolvedValueOnce('<html>Test</html>');
+
+    await render(job);
+
+    expect(mockMkdir).toHaveBeenCalledWith('dist/ports/env-test', {
+      recursive: true,
+    });
+
+    process.env.OUTPUT_DIR = originalEnv;
+  });
+
+  it('should handle template rendering failures', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['failing-template.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    const error = new Error('Template rendering failed');
+    mockEtaInstance.renderAsync.mockRejectedValue(error);
+
+    await expect(render(job)).rejects.toThrow(AggregateError);
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Failed to render template "failing-template.eta":',
+      error,
+    );
+  });
+
+  it('should handle partial failures', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['success.eta', 'failure.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    const error = new Error('Second template failed');
+    mockEtaInstance.renderAsync
+      .mockResolvedValueOnce('<html>Success</html>')
+      .mockRejectedValueOnce(error);
+
+    await expect(render(job)).rejects.toThrow(AggregateError);
+
+    expect(mockWriteFile).toHaveBeenCalledTimes(1);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Failed to render template "failure.eta":',
+      error,
+    );
+  });
+
+  it('should handle nested output directories', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['nested/deep/template.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    mockEtaInstance.renderAsync.mockResolvedValue('<html>Nested</html>');
+
+    await render(job);
+
+    expect(mockMkdir).toHaveBeenCalledWith(
+      expect.stringMatching(/nested[\\/]deep$/),
+      { recursive: true },
+    );
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/nested[\\/]deep[\\/]template$/),
+      '<html>Nested</html>',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o644,
+      }),
+    );
+  });
+
+  it('should remove .eta extension from output files', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['index.html.eta', 'style.css.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    mockEtaInstance.renderAsync
+      .mockResolvedValueOnce('<html>Index</html>')
+      .mockResolvedValueOnce('.class { color: blue; }');
+
+    await render(job);
+
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/index\.html$/),
+      '<html>Index</html>',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o644,
+      }),
+    );
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/style\.css$/),
+      '.class { color: blue; }',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o644,
+      }),
+    );
+  });
+
+  it('should keep directories containing .eta in their names', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: ['scripts/.eta-config/init.eta'],
+      outputDir: 'dist/ports/test',
+    };
+
+    mockEtaInstance.renderAsync.mockResolvedValue('init config');
+
+    await render(job);
+
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/scripts[\\/]\.eta-config[\\/]init$/),
+      'init config',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o644,
+      }),
+    );
+  });
+
+  it('should make selected files executable', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: [
+        { filename: 'script.sh.eta', executable: true },
+        'style.css.eta',
+      ],
+      outputDir: 'dist/ports/test',
+    };
+
+    mockEtaInstance.renderAsync
+      .mockResolvedValueOnce('#!/usr/bin/env bash')
+      .mockResolvedValueOnce('.class { color: blue; }');
+
+    await render(job);
+
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/script\.sh$/),
+      '#!/usr/bin/env bash',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o755,
+      }),
+    );
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      expect.stringMatching(/style\.css$/),
+      '.class { color: blue; }',
+      expect.objectContaining({
+        encoding: 'utf8',
+        mode: 0o644,
+      }),
+    );
+  });
+
+  it('should handle empty template files array', async () => {
+    const job: RenderJob = {
+      templateDir: './templates',
+      templateFiles: [],
+      outputDir: 'dist/ports/test',
+    };
+
+    await render(job);
+
+    expect(mockEtaInstance.renderAsync).not.toHaveBeenCalled();
+    expect(mockWriteFile).not.toHaveBeenCalled();
+  });
+});

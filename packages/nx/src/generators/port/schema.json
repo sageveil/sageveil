@@ -29,7 +29,7 @@
     },
     "templateFile": {
       "type": "string",
-      "description": "Template file name to create in src/lib/templates.",
+      "description": "Template file name to create in templates/.",
       "default": "sageveil.eta"
     },
     "skipInstall": {

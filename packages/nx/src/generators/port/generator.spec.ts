@@ -7,21 +7,6 @@ describe('port generator', () => {
   it('creates port scaffold and metadata', async () => {
     const tree = createTreeWithEmptyWorkspace();
 
-    tree.write(
-      'tsconfig.json',
-      JSON.stringify(
-        {
-          references: [
-            { path: './packages/palette' },
-            { path: './packages/ports/alacritty' },
-            { path: './packages/site' },
-          ],
-        },
-        null,
-        2
-      )
-    );
-
     await generator(tree, {
       name: 'ghostty-plus',
       displayName: 'Ghostty Plus',
@@ -33,20 +18,26 @@ describe('port generator', () => {
     });
 
     expect(tree.exists('packages/ports/ghostty-plus/package.json')).toBe(true);
-    expect(tree.exists('packages/ports/ghostty-plus/src/index.ts')).toBe(true);
     expect(
-      tree.exists('packages/ports/ghostty-plus/src/lib/ghostty-plus.ts')
+      tree.exists('packages/ports/ghostty-plus/templates/my-theme.eta'),
     ).toBe(true);
-    expect(
-      tree.exists('packages/ports/ghostty-plus/src/lib/ghostty-plus.spec.ts')
-    ).toBe(true);
-    expect(
-      tree.exists('packages/ports/ghostty-plus/src/lib/templates/my-theme.eta')
-    ).toBe(true);
+    expect(tree.exists('packages/ports/ghostty-plus/tests')).toBe(false);
+    expect(tree.exists('packages/ports/ghostty-plus/tsconfig.spec.json')).toBe(
+      false,
+    );
+    expect(tree.exists('packages/ports/ghostty-plus/tsconfig.json')).toBe(
+      false,
+    );
+    expect(tree.exists('packages/ports/ghostty-plus/vite.config.ts')).toBe(
+      false,
+    );
+    expect(tree.exists('packages/ports/ghostty-plus/eslint.config.mjs')).toBe(
+      false,
+    );
 
     const portPackageJson = readJson(
       tree,
-      'packages/ports/ghostty-plus/package.json'
+      'packages/ports/ghostty-plus/package.json',
     );
     expect(portPackageJson.sageveil).toEqual({
       displayName: 'Ghostty Plus',
@@ -54,13 +45,13 @@ describe('port generator', () => {
       tags: ['terminal', 'emulator'],
     });
 
-    const portSource = tree
-      .read('packages/ports/ghostty-plus/src/lib/ghostty-plus.ts', 'utf-8')
-      .trim();
-    expect(portSource).toContain("templateFiles: ['my-theme.eta']");
+    expect(portPackageJson.main).toBeUndefined();
+    expect(portPackageJson.types).toBeUndefined();
+    expect(portPackageJson.exports).toBeUndefined();
+    expect(portPackageJson.devDependencies).toBeUndefined();
   });
 
-  it('adds the port to root tsconfig references after existing ports', async () => {
+  it('does not modify root tsconfig references for template-only ports', async () => {
     const tree = createTreeWithEmptyWorkspace();
 
     tree.write(
@@ -74,8 +65,8 @@ describe('port generator', () => {
           ],
         },
         null,
-        2
-      )
+        2,
+      ),
     );
 
     await generator(tree, {
@@ -86,13 +77,14 @@ describe('port generator', () => {
 
     const rootTsConfig = readJson(tree, 'tsconfig.json');
     const references = rootTsConfig.references.map(
-      (reference: { path: string }) => reference.path
+      (reference: { path: string }) => reference.path,
     );
 
-    expect(references).toContain('./packages/ports/new-port');
-    expect(references.indexOf('./packages/ports/new-port')).toBe(
-      references.indexOf('./packages/ports/alacritty') + 1
-    );
+    expect(references).toEqual([
+      './packages/palette',
+      './packages/ports/alacritty',
+      './packages/site',
+    ]);
   });
 
   it('returns an install callback when skipInstall is false', async () => {

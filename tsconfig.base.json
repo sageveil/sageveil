@@ -10,7 +10,8 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "paths": {
-      "@sageveil/nx": ["packages/nx/src/index.ts"]
+      "@sageveil/nx": ["packages/nx/src/index.ts"],
+      "@sageveil/palette": ["packages/palette/src/index.ts"]
     },
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,

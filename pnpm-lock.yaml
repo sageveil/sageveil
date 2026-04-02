@@ -51,6 +51,9 @@ importers:
       '@nx/web':
         specifier: 22.5.0
         version: 22.5.0(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@swc/core@1.15.8(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.8.3))(@swc/core@1.15.8(@swc/helpers@0.5.18))(nx@22.5.0(@swc-node/register@1.11.1(@swc/core@1.15.8(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.8.3))(@swc/core@1.15.8(@swc/helpers@0.5.18)))
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:packages/palette
       '@swc-node/register':
         specifier: 1.11.1
         version: 1.11.1(@swc/core@1.15.8(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.8.3)
@@ -138,79 +141,73 @@ importers:
   packages/palette: {}
 
   packages/ports/alacritty:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/fzf:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/ghostty:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/glamour:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/ish:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/k9s:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/nvim:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/obsidian:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/slack:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/text-mate:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/ports/tmux:
-    devDependencies:
-      '@sageveil/templater':
-        specifier: workspace:*
-        version: link:../../templater
-
-  packages/site:
     dependencies:
       '@sageveil/palette':
         specifier: workspace:*
-        version: link:../palette
+        version: link:../../palette
 
-  packages/templater:
-    devDependencies:
+  packages/ports/fzf:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/ghostty:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/glamour:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/ish:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/k9s:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/nvim:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/obsidian:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/slack:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/text-mate:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/ports/tmux:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
+  packages/site:
+    dependencies:
       '@sageveil/palette':
         specifier: workspace:*
         version: link:../palette
