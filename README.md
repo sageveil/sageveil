@@ -39,10 +39,22 @@ Clone the repository for your target port if you want ready-to-use assets.
    pnpm install
    ```
 
+   Or via `just`:
+
+   ```bash
+   just init
+   ```
+
 2. Generate artifacts for a port:
 
    ```bash
    pnpm nx run <port>:generate
+   ```
+
+   Or via `just`:
+
+   ```bash
+   just generate <port>
    ```
 
 3. Find rendered artifacts under:
@@ -60,6 +72,12 @@ Generate a new port package with Sageveil defaults:
 
 ```bash
 pnpm nx g @sageveil/nx:port --name <port>
+```
+
+Or via `just`:
+
+```bash
+just new-port <port>
 ```
 
 What the generator does:
@@ -105,5 +123,30 @@ To contribute:
    - `pnpm nx run <project>:typecheck`
    - `pnpm nx run <project>:test` (if applicable for non-port code packages)
 4. Do not commit generated artifacts from `dist/ports/*` to this monorepo.
+
+Available `just` recipes from the repo root:
+
+```bash
+just --list
+
+Available recipes:
+    clean port             # Clean generated artifacts for a port project.
+    clean-all              # Clean generated artifacts for all port projects.
+    default
+    generate port          # Generate artifacts for a port project.
+    generate-all           # Generate artifacts for all ports. [alias: g]
+    init                   # Install workspace dependencies.
+    lint project           # Run lint for a single project.
+    lint-all               # Run lint for all projects.
+    new-port name *args='' # Create a new port package.
+    projects               # Show available Nx projects.
+    site-build             # Build the site.
+    site-dev               # Start the site dev server.
+    site-generate-ports    # Generate the site port manifest.
+    site-preview           # Preview the site production build.
+    test project           # Run tests for a single project.
+    test-all               # Run all tests.
+    typecheck project      # Run typecheck for a single project.
+```
 
 Thanks for growing the garden 🌱

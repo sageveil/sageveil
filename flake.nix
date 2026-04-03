@@ -22,6 +22,8 @@
           pkgs = import nixpkgs {inherit system;};
         });
   in {
+    formatter = forAllSystems ({pkgs}: pkgs.alejandra);
+
     devShells = forAllSystems ({pkgs}: {
       default = pkgs.mkShell {
         name = "sageveil-sh";
@@ -29,7 +31,10 @@
           nodejs_24
           (pnpm.override {nodejs = nodejs_24;})
           typescript
+          stylua
+          yamlfmt
           gh
+          just
         ];
       };
     });

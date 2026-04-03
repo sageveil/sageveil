@@ -1,14 +1,9 @@
-const path = require('path');
-
 module.exports = {
+  'flake.nix': ['nix fmt'],
+  '.github/workflows/*.{yml,yaml}': ['yamlfmt'],
+  'packages/ports/nvim/templates/**/*.lua': ['stylua'],
   '{packages,tools}/**/*.{js,ts,jsx,tsx,json}': [
-    (absolutePaths) => {
-      const cwd = process.cwd();
-      const relativePaths = absolutePaths.map((file) =>
-        path.relative(cwd, file)
-      );
-      return `nx affected:lint --files=${relativePaths.join(',')}`;
-    },
+    'esling --fix',
     'prettier --write',
   ],
 };
