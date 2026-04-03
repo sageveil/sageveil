@@ -20,6 +20,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.workflow_run.head_sha }}
           token: ${{ secrets.PAT }}
+      - name: Attach HEAD to release branch
+        run: |
+          set -euo pipefail
+          git checkout -B "${{ github.event.workflow_run.head_branch }}" "${{ github.event.workflow_run.head_sha }}"
+          git branch --set-upstream-to="origin/${{ github.event.workflow_run.head_branch }}" "${{ github.event.workflow_run.head_branch }}"
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
