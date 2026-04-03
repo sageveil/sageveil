@@ -1,7 +1,7 @@
 import { readJson } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing.js';
 import { describe, expect, it } from 'vitest';
-import generator from './generator';
+import generator from './generator.js';
 
 describe('port generator', () => {
   it('creates port scaffold and metadata', async () => {

@@ -3,7 +3,7 @@ module.exports = {
   '.github/workflows/*.{yml,yaml}': ['yamlfmt'],
   'packages/ports/nvim/templates/**/*.lua': ['stylua'],
   '{packages,tools}/**/*.{js,ts,jsx,tsx,json}': [
-    'esling --fix',
+    'eslint --fix',
     'prettier --write',
   ],
 };
