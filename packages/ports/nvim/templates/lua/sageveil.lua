@@ -144,6 +144,7 @@ local function set_highlights()
 		require("sageveil.plugins.diffview"),
 		require("sageveil.plugins.obsidian"),
 		require("sageveil.plugins.render-markdown"),
+		require("sageveil.plugins.mini"),
 	}
 
 	for _, loader in ipairs(plugin_highlight_loaders) do
