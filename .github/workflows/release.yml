@@ -1,14 +1,10 @@
 name: Release
 on:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
   version:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment: protected
     env:
@@ -17,19 +13,19 @@ jobs:
       changed_ports: ${{ steps.derive.outputs.changed_ports }}
       umbrella_tag: ${{ steps.derive.outputs.umbrella_tag }}
       umbrella_bump: ${{ steps.derive.outputs.umbrella_bump }}
-      release_branch: ${{ github.event.workflow_run.head_branch }}
+      release_branch: ${{ github.ref_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.ref }}
           token: ${{ secrets.PAT }}
       - name: Attach HEAD to release branch
         run: |
           set -euo pipefail
-          git checkout -B "${{ github.event.workflow_run.head_branch }}" "${{ github.event.workflow_run.head_sha }}"
-          git branch --set-upstream-to="origin/${{ github.event.workflow_run.head_branch }}" "${{ github.event.workflow_run.head_branch }}"
+          git checkout -B "${{ github.ref_name }}" "${{ github.sha }}"
+          git branch --set-upstream-to="origin/${{ github.ref_name }}" "${{ github.ref_name }}"
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -103,7 +99,7 @@ jobs:
         if: ${{ steps.check.outputs.made_changes == 'true' }}
         run: |
           set -euo pipefail
-          git push origin "${{ github.event.workflow_run.head_branch }}"
+          git push origin "${{ github.ref_name }}"
           git push origin --tags
       - name: Create umbrella GitHub release
         if: ${{ steps.check.outputs.made_changes == 'true' && steps.derive.outputs.changed_ports != '[]' }}
