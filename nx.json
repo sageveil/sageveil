@@ -13,36 +13,30 @@
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "release": {
-    "groups": {
-      "ports": {
-        "projects": ["packages/ports/*"],
-        "releaseTag": {
-          "pattern": "port/{projectName}@{version}"
-        }
-      },
-      "other": {
-        "projects": ["packages/palette", "packages/nx", "packages/site"],
-        "releaseTag": {
-          "pattern": "{projectName}@{version}"
-        }
-      }
-    },
+    "projects": ["packages/ports/*", "packages/palette", "packages/nx", "packages/site"],
     "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}@{version}",
     "version": {
       "conventionalCommits": true,
       "fallbackCurrentVersionResolver": "disk"
     },
     "changelog": {
       "automaticFromRef": true,
+      "workspaceChangelog": false,
       "projectChangelogs": {
-        "file": false,
-        "createRelease": "github",
+        "file": "{projectRoot}/CHANGELOG.md",
+        "createRelease": false,
         "renderOptions": {
           "authors": false,
           "commitReferences": true,
           "versionTitleDate": true
         }
       }
+    },
+    "git": {
+      "commit": true,
+      "tag": true,
+      "push": false
     },
     "conventionalCommits": {
       "types": {
@@ -77,15 +71,9 @@
         "chore": {
           "semverBump": "none",
           "changelog": {
-            "title": "🪻 Upkeep",
-            "hidden": false
+            "hidden": true
           }
         }
-      },
-      "git": {
-        "commit": true,
-        "tag": true,
-        "push": true
       }
     }
   },

@@ -85,7 +85,7 @@ The `generate` target invokes `tools/scripts/build-port.ts <projectRoot>`, which
 
 ### Release
 
-Releases use `nx release` with conventional commits. Ports are released independently under the tag pattern `port/{projectName}@{version}`. Each port is distributed via its own GitHub repository at `https://github.com/sageveil/<port>`.
+Releases use `nx release` with conventional commits. Per-package version bumps land as `{projectName}@{version}` tags in the monorepo (no GitHub release per package). Each release cycle is wrapped in a single umbrella `vX.Y.Z` GitHub release whose body aggregates the changed ports' CHANGELOG entries; the umbrella semver bump is derived from the largest port bump in the cycle. After the umbrella release, `release.yml` fans out a matrix to publish each changed port's built assets to its downstream repository (`https://github.com/sageveil/<port>`), with the per-port `vX.Y.Z` tag/release living there. Prereleases (`-rc.N`, `-beta.N`, etc.) push to an orphan commit in the downstream repo so its `main` branch only moves for stable versions.
 
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->

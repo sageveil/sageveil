@@ -7,12 +7,17 @@ on:
 permissions:
   contents: write
 jobs:
-  release:
+  version:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment: protected
     env:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    outputs:
+      changed_ports: ${{ steps.derive.outputs.changed_ports }}
+      umbrella_tag: ${{ steps.derive.outputs.umbrella_tag }}
+      umbrella_bump: ${{ steps.derive.outputs.umbrella_bump }}
+      release_branch: ${{ github.event.workflow_run.head_branch }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,12 +41,210 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run Nx release
+      - name: Configure git
+        run: |
+          git config user.name "sageveil-bot"
+          git config user.email "bot@sageveil"
+          git remote set-url origin "https://x-access-token:${{ secrets.PAT }}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: Snapshot pre-release state
+        id: pre
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          node tools/scripts/release-snapshot-versions.mjs > /tmp/before.json
+      - name: Run nx release
+        run: pnpm nx release --skip-publish
+      - name: Detect whether nx release made any changes
+        id: check
+        run: |
+          set -euo pipefail
+          if [[ "$(git rev-parse HEAD)" == "${{ steps.pre.outputs.sha }}" ]]; then
+            echo "made_changes=false" >> "$GITHUB_OUTPUT"
+            echo "nx release produced no commit; nothing to release."
+          else
+            echo "made_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Derive umbrella version and changed ports
+        if: ${{ steps.check.outputs.made_changes == 'true' }}
+        id: derive
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/release-out
+          node tools/scripts/release-derive.mjs /tmp/before.json /tmp/release-out
+          CHANGED=$(cat /tmp/release-out/changed-ports.json)
+          UMBRELLA=$(cat /tmp/release-out/umbrella-version.txt)
+          BUMP=$(cat /tmp/release-out/umbrella-bump.txt)
+          echo "changed_ports=${CHANGED}" >> "$GITHUB_OUTPUT"
+          echo "umbrella_tag=v${UMBRELLA}" >> "$GITHUB_OUTPUT"
+          echo "umbrella_bump=${BUMP}" >> "$GITHUB_OUTPUT"
+          echo "Umbrella: v${UMBRELLA} (${BUMP})"
+          echo "Changed ports: ${CHANGED}"
+      - name: Aggregate per-port changelogs
+        if: ${{ steps.check.outputs.made_changes == 'true' && steps.derive.outputs.changed_ports != '[]' }}
+        run: |
+          node tools/scripts/release-aggregate-changelog.mjs \
+            /tmp/release-out/changed-ports.json \
+            /tmp/release-out/aggregated.md
+      - name: Amend release commit with umbrella bump
+        if: ${{ steps.check.outputs.made_changes == 'true' && steps.derive.outputs.changed_ports != '[]' }}
+        env:
+          UMBRELLA_TAG: ${{ steps.derive.outputs.umbrella_tag }}
+        run: |
+          set -euo pipefail
+          ORIG_SHA=$(git rev-parse HEAD)
+          git add package.json
+          git commit --amend --no-edit
+          NEW_SHA=$(git rev-parse HEAD)
+          # Re-point per-package tags created by nx release at the amended commit.
+          for tag in $(git tag --points-at "$ORIG_SHA"); do
+            git tag -f "$tag" "$NEW_SHA"
+          done
+          git tag -a "${UMBRELLA_TAG}" -m "Release ${UMBRELLA_TAG}"
+      - name: Push release commit and tags
+        if: ${{ steps.check.outputs.made_changes == 'true' }}
+        run: |
+          set -euo pipefail
+          git push origin "${{ github.event.workflow_run.head_branch }}"
+          git push origin --tags
+      - name: Create umbrella GitHub release
+        if: ${{ steps.check.outputs.made_changes == 'true' && steps.derive.outputs.changed_ports != '[]' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          UMBRELLA_TAG: ${{ steps.derive.outputs.umbrella_tag }}
+        run: |
+          gh release create "${UMBRELLA_TAG}" \
+            --title "${UMBRELLA_TAG}" \
+            --notes-file /tmp/release-out/aggregated.md
+  publish-ports:
+    needs: version
+    if: ${{ needs.version.outputs.changed_ports != '[]' && needs.version.outputs.changed_ports != '' }}
+    runs-on: ubuntu-latest
+    environment: protected
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ${{ fromJSON(needs.version.outputs.changed_ports) }}
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      ORG: ${{ vars.PUBLISH_ORG != '' && vars.PUBLISH_ORG || 'sageveil' }}
+      PORT: ${{ matrix.entry.port }}
+      VERSION: ${{ matrix.entry.version }}
+      IS_PRERELEASE: ${{ matrix.entry.isPrerelease }}
+    steps:
+      - name: Checkout monorepo at umbrella tag
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          ref: ${{ needs.version.outputs.umbrella_tag }}
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build selected port
+        run: |
+          set -euo pipefail
+          if [[ ! -d "packages/ports/${PORT}" ]]; then
+            echo "Port source not found at packages/ports/${PORT}"
+            exit 1
+          fi
+          pnpm nx run "${PORT}:generate"
+      - name: Verify artifacts
+        run: |
+          test -d "dist/ports/${PORT}" || {
+            echo "dist/ports/${PORT} missing. Build must place artefacts there."
+            exit 1
+          }
+      - name: Package release asset
+        id: asset
+        run: |
+          set -euo pipefail
+          ASSET_NAME="sageveil-${PORT}-${VERSION}.zip"
+          ASSET_PATH="${RUNNER_TEMP}/${ASSET_NAME}"
+          (cd "dist/ports/${PORT}" && zip -r "${ASSET_PATH}" .)
+          echo "asset_name=${ASSET_NAME}" >> "$GITHUB_OUTPUT"
+          echo "asset_path=${ASSET_PATH}" >> "$GITHUB_OUTPUT"
+      - name: Publish artifacts to downstream repo
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           set -euo pipefail
-          git config user.name "sageveil-bot"
-          git config user.email "bot@sageveil"
-          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          pnpm nx release --skip-publish
+          TARGET_REPO="${ORG}/${PORT}"
+          TARGET_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${TARGET_REPO}.git"
+          PUB_DIR="$(mktemp -d)"
+          trap 'rm -rf "$PUB_DIR"' EXIT
+
+          if ! git clone --depth=1 "$TARGET_URL" "$PUB_DIR"; then
+            mkdir -p "$PUB_DIR"
+            git -C "$PUB_DIR" init -b main
+            git -C "$PUB_DIR" remote add origin "$TARGET_URL"
+          fi
+
+          git -C "$PUB_DIR" config user.name "sageveil-bot"
+          git -C "$PUB_DIR" config user.email "bot@sageveil"
+
+          if [[ "${IS_PRERELEASE}" == "true" ]]; then
+            # Prerelease: orphan commit + tag-only push. Leaves downstream main untouched.
+            git -C "$PUB_DIR" checkout --orphan "tmp/${VERSION}"
+            rsync -a --delete --exclude '.git/' "${GITHUB_WORKSPACE}/dist/ports/${PORT}/" "$PUB_DIR/"
+            git -C "$PUB_DIR" add -A
+            git -C "$PUB_DIR" commit --allow-empty -m "chore(release): ${VERSION}"
+            git -C "$PUB_DIR" tag -f "v${VERSION}"
+            git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+          else
+            rsync -a --delete --exclude '.git/' "${GITHUB_WORKSPACE}/dist/ports/${PORT}/" "$PUB_DIR/"
+            git -C "$PUB_DIR" add -A
+            if git -C "$PUB_DIR" diff --cached --quiet; then
+              echo "No content changes for ${PORT} ${VERSION}; ensuring tag exists"
+              if ! git -C "$PUB_DIR" rev-parse -q --verify "refs/tags/v${VERSION}" >/dev/null; then
+                git -C "$PUB_DIR" tag "v${VERSION}"
+                git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+              fi
+            else
+              git -C "$PUB_DIR" commit -m "chore(release): ${VERSION}"
+              git -C "$PUB_DIR" branch -M main
+              git -C "$PUB_DIR" push origin main
+              git -C "$PUB_DIR" tag -f "v${VERSION}"
+              git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+            fi
+          fi
+      - name: Extract per-port release notes
+        id: notes
+        run: |
+          set -euo pipefail
+          NOTES_FILE="${RUNNER_TEMP}/notes.md"
+          CHANGELOG="packages/ports/${PORT}/CHANGELOG.md"
+          if [[ -f "$CHANGELOG" ]]; then
+            awk '/^## /{c++} c==1' "$CHANGELOG" | tail -n +2 > "$NOTES_FILE"
+          else
+            echo "Release ${PORT} v${VERSION}" > "$NOTES_FILE"
+          fi
+          echo "notes_file=${NOTES_FILE}" >> "$GITHUB_OUTPUT"
+      - name: Create downstream GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: |
+          set -euo pipefail
+          DEST_REPO="${ORG}/${PORT}"
+          TITLE="${PORT} v${VERSION}"
+          PRE=""
+          [[ "${IS_PRERELEASE}" == "true" ]] && PRE="--prerelease"
+          if ! gh release create "v${VERSION}" \
+                --repo "${DEST_REPO}" \
+                --title "${TITLE}" \
+                --notes-file "${{ steps.notes.outputs.notes_file }}" \
+                ${PRE}; then
+            gh release edit "v${VERSION}" \
+              --repo "${DEST_REPO}" \
+              --title "${TITLE}" \
+              --notes-file "${{ steps.notes.outputs.notes_file }}" \
+              ${PRE}
+          fi
+          gh release upload "v${VERSION}" "${{ steps.asset.outputs.asset_path }}" \
+            --repo "${DEST_REPO}" \
+            --clobber
+      - name: Summary
+        run: |
+          echo "Published ${PORT} v${VERSION} to https://github.com/${ORG}/${PORT}"
