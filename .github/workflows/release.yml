@@ -1,6 +1,36 @@
 name: Release
 on:
   workflow_dispatch:
+    inputs:
+      specifier:
+        description: Version bump (conventional = derive from commits)
+        type: choice
+        default: conventional
+        options:
+          - conventional
+          - patch
+          - minor
+          - major
+          - prerelease
+          - prepatch
+          - preminor
+          - premajor
+      preid:
+        description: Prerelease identifier (e.g. rc, beta, alpha). Only used with pre* specifiers.
+        type: string
+        default: ''
+      dry_run:
+        description: Run nx release in dry-run mode (no commit, no push, no publish)
+        type: boolean
+        default: false
+      first_release:
+        description: Pass --first-release to nx release
+        type: boolean
+        default: false
+      verbose:
+        description: Pass --verbose to nx release
+        type: boolean
+        default: false
 permissions:
   contents: write
 jobs:
@@ -48,7 +78,32 @@ jobs:
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           node tools/scripts/release-snapshot-versions.mjs > /tmp/before.json
       - name: Run nx release
-        run: pnpm nx release --skip-publish
+        env:
+          SPECIFIER: ${{ inputs.specifier }}
+          PREID: ${{ inputs.preid }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          FIRST_RELEASE: ${{ inputs.first_release }}
+          VERBOSE: ${{ inputs.verbose }}
+        run: |
+          set -euo pipefail
+          args=(--skip-publish)
+          if [[ "${SPECIFIER}" != "conventional" ]]; then
+            args+=("${SPECIFIER}")
+          fi
+          if [[ -n "${PREID}" ]]; then
+            args+=(--preid "${PREID}")
+          fi
+          if [[ "${DRY_RUN}" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          if [[ "${FIRST_RELEASE}" == "true" ]]; then
+            args+=(--first-release)
+          fi
+          if [[ "${VERBOSE}" == "true" ]]; then
+            args+=(--verbose)
+          fi
+          echo "Running: pnpm nx release ${args[*]}"
+          pnpm nx release "${args[@]}"
       - name: Detect whether nx release made any changes
         id: check
         run: |
