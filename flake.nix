@@ -28,8 +28,8 @@
       default = pkgs.mkShell {
         name = "sageveil-sh";
         packages = with pkgs; [
-          nodejs_24
-          (pnpm.override {nodejs = nodejs_24;})
+          nodejs_26
+          (pnpm.override {nodejs = nodejs_26;})
           typescript
           stylua
           yamlfmt
