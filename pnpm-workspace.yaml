@@ -3,3 +3,9 @@ packages:
   - 'packages/ports/*'
 ignoreWorkspaceRootCheck: true
 minimumReleaseAge: 3
+strictPeerDependencies: false
+autoInstallPeers: true
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  nx: true
