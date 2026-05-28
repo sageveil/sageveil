@@ -1,6 +1,6 @@
 import { sageveil } from '@sageveil/palette';
 import { Eta } from 'eta';
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { chmod, mkdir, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
 
 const TEMPLATE_EXTENSION = '.eta';
@@ -9,23 +9,13 @@ const REGULAR_FILE_MODE = 0o644;
 const FILE_ENCODING = 'utf8';
 
 /**
- * Configuration options for rendering a single template file.
- */
-export type RenderFileOptions = {
-  /** The template filename (relative to template directory) */
-  filename: string;
-  /** Whether the output file should have executable permissions (755 vs 644) */
-  executable?: boolean;
-};
-
-/**
  * Configuration for a template rendering job.
  */
 export type RenderJob = {
   /** Directory containing template files */
   templateDir: string;
-  /** Array of template files to render. When omitted, all files in templateDir are rendered. */
-  templateFiles?: (RenderFileOptions | string)[];
+  /** Template filenames (relative to templateDir). When omitted, all files in templateDir are rendered. */
+  templateFiles?: string[];
   /** Extra context merged into template data alongside the sageveil palette */
   ctx?: Record<string, unknown>;
   /** Output directory for rendered files. Falls back to $OUTPUT_DIR env var. */
@@ -71,25 +61,20 @@ export async function render(job: RenderJob): Promise<void> {
     }));
 
   failures.forEach(({ reason, file }) => {
-    const fileName = typeof file === 'string' ? file : file.filename;
-    console.error(`Failed to render template "${fileName}":`, reason);
+    console.error(`Failed to render template "${file}":`, reason);
   });
 
   if (failures.length) {
-    throw new AggregateError(
-      failures.map((f) => f.reason),
-      'Template rendering failed',
-    );
+    throw new Error(JSON.stringify(failures.map((f) => f.reason)));
   }
 }
 
 async function renderFile(
   eta: Eta,
   outputDir: string,
-  file: RenderFileOptions | string,
+  filename: string,
   ctx?: Record<string, unknown>,
 ): Promise<void> {
-  const { filename, executable } = normalizeFileOptions(file);
   const renderedContent: string = await eta.renderAsync(filename, {
     ...sageveil,
     ...ctx,
@@ -100,19 +85,16 @@ async function renderFile(
   const outputPath = join(outputDir, outputFilename);
   const outputDirectory = dirname(outputPath);
   await mkdir(outputDirectory, { recursive: true });
+  // A shebang in the rendered output means the file is meant to be executed,
+  // so it needs the exec bit.
+  const mode = renderedContent.startsWith('#!')
+    ? EXECUTABLE_MODE
+    : REGULAR_FILE_MODE;
   await writeFile(outputPath, renderedContent, {
     encoding: FILE_ENCODING,
-    mode: executable ? EXECUTABLE_MODE : REGULAR_FILE_MODE,
+    mode,
   });
-}
-
-function normalizeFileOptions(
-  file: RenderFileOptions | string,
-): RenderFileOptions {
-  return typeof file === 'string'
-    ? {
-        filename: file,
-        executable: false,
-      }
-    : file;
+  // writeFile's `mode` only applies on creation; chmod makes the mode
+  // deterministic when re-rendering over an existing file.
+  await chmod(outputPath, mode);
 }

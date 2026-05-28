@@ -1,6 +1,6 @@
 import { copyFile, cp, mkdir, readFile, rm } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
-import { render } from './render.ts';
+import { render } from './render';
 
 const projectRootArg = process.argv[2];
 

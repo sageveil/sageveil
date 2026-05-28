@@ -9,6 +9,7 @@ vi.mock('@sageveil/palette', () => ({
 vi.mock('node:fs/promises', () => ({
   mkdir: vi.fn(),
   writeFile: vi.fn(),
+  chmod: vi.fn(),
 }));
 
 vi.mock('eta', () => ({
@@ -17,6 +18,7 @@ vi.mock('eta', () => ({
 
 const mockMkdir = vi.mocked(await import('node:fs/promises')).mkdir;
 const mockWriteFile = vi.mocked(await import('node:fs/promises')).writeFile;
+const mockChmod = vi.mocked(await import('node:fs/promises')).chmod;
 const MockEta = vi.mocked(await import('eta')).Eta as Mock;
 
 describe('render', () => {
@@ -34,6 +36,7 @@ describe('render', () => {
 
     mockMkdir.mockResolvedValue(undefined);
     mockWriteFile.mockResolvedValue(undefined);
+    mockChmod.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
@@ -222,37 +225,36 @@ describe('render', () => {
     );
   });
 
-  it('should make selected files executable', async () => {
+  it('should make files with a shebang executable', async () => {
     const job: RenderJob = {
       templateDir: './templates',
-      templateFiles: [
-        { filename: 'script.sh.eta', executable: true },
-        'style.css.eta',
-      ],
+      templateFiles: ['sageveil.tmux', 'sageveil.conf'],
       outputDir: 'dist/ports/test',
     };
 
     mockEtaInstance.renderAsync
-      .mockResolvedValueOnce('#!/usr/bin/env bash')
-      .mockResolvedValueOnce('.class { color: blue; }');
+      .mockResolvedValueOnce('#!/usr/bin/env bash\necho hi')
+      .mockResolvedValueOnce('color = green');
 
     await render(job);
 
     expect(mockWriteFile).toHaveBeenCalledWith(
-      expect.stringMatching(/script\.sh$/),
-      '#!/usr/bin/env bash',
-      expect.objectContaining({
-        encoding: 'utf8',
-        mode: 0o755,
-      }),
+      expect.stringMatching(/sageveil\.tmux$/),
+      '#!/usr/bin/env bash\necho hi',
+      expect.objectContaining({ encoding: 'utf8', mode: 0o755 }),
+    );
+    expect(mockChmod).toHaveBeenCalledWith(
+      expect.stringMatching(/sageveil\.tmux$/),
+      0o755,
     );
     expect(mockWriteFile).toHaveBeenCalledWith(
-      expect.stringMatching(/style\.css$/),
-      '.class { color: blue; }',
-      expect.objectContaining({
-        encoding: 'utf8',
-        mode: 0o644,
-      }),
+      expect.stringMatching(/sageveil\.conf$/),
+      'color = green',
+      expect.objectContaining({ encoding: 'utf8', mode: 0o644 }),
+    );
+    expect(mockChmod).toHaveBeenCalledWith(
+      expect.stringMatching(/sageveil\.conf$/),
+      0o644,
     );
   });
 
