@@ -18,9 +18,9 @@ export type AnsiPalette<T extends string = string> = {
 
 export const ansi: AnsiPalette<string> = {
   base: {
-    black: '#101411',
+    black: '#101310',
     red: '#9A6B6B',
-    green: '#859270',
+    green: '#959C70',
     yellow: '#A69966',
     blue: '#8A8493',
     magenta: '#876f7f',
@@ -28,9 +28,9 @@ export const ansi: AnsiPalette<string> = {
     white: '#A8AFA6',
   },
   bright: {
-    black: '#26322A',
+    black: '#262F26',
     red: '#B08585',
-    green: '#99A888',
+    green: '#9C9F7F',
     yellow: '#C6B67E',
     blue: '#A39DAC',
     magenta: '#947e8d',
