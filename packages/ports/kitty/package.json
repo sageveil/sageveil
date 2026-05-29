@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/kitty",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sageveil": {
+    "displayName": "Kitty",
+    "description": "Sageveil tones tuned for the kitty terminal.",
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
+  },
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/kitty"
+        ]
+      },
+      "clean": {}
+    }
+  }
+}

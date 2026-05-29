@@ -188,6 +188,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/kitty:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/nvim:
     dependencies:
       '@sageveil/palette':
