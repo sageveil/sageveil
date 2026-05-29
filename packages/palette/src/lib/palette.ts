@@ -11,7 +11,7 @@ export const sageveil = {
   extras: {
     surface: '#1D2320',
     overlay: '#1F2624',
-    highlight: '#3F322C',
+    highlight: '#33423A',
 
     border: '#4E504C',
 
