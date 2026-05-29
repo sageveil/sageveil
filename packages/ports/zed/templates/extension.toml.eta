@@ -1,0 +1,10 @@
+id = "sageveil"
+name = "Sageveil"
+version = "<%= it.version %>"
+schema_version = 1
+authors = ["sageveil"]
+description = "A minimalist low-contrast, green-tinted colorscheme."
+repository = "https://github.com/sageveil/zed"
+
+[themes]
+"Sageveil" = "themes/sageveil.json"

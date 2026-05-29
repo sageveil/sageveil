@@ -1,0 +1,26 @@
+{
+  "name": "@sageveil/zed",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sageveil": {
+    "displayName": "Zed",
+    "description": "Sageveil syntax tones for the Zed editor.",
+    "tags": [
+      "editor"
+    ]
+  },
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/zed"
+        ]
+      },
+      "clean": {}
+    }
+  }
+}

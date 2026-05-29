@@ -1,0 +1,242 @@
+<%
+const bg = it.ansi.base.black;
+const fg = it.ansi.base.white;
+const fgBright = it.ansi.bright.white;
+const surface = it.extras.surface;
+const overlay = it.extras.overlay;
+const highlight = it.extras.highlight;
+const border = it.extras.border;
+const muted = it.extras.muted;
+const dim = it.extras.dim;
+const cursor = it.extras.cursor;
+
+const red = it.ansi.base.red;
+const green = it.ansi.base.green;
+const yellow = it.ansi.base.yellow;
+const blue = it.ansi.base.blue;
+const magenta = it.ansi.base.magenta;
+const cyan = it.ansi.base.cyan;
+
+const redBr = it.ansi.bright.red;
+const greenBr = it.ansi.bright.green;
+const yellowBr = it.ansi.bright.yellow;
+const blueBr = it.ansi.bright.blue;
+const magentaBr = it.ansi.bright.magenta;
+const cyanBr = it.ansi.bright.cyan;
+
+const a = (hex, alpha) => hex + alpha;
+%>{
+  "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
+  "name": "Sageveil",
+  "author": "sageveil",
+  "themes": [
+    {
+      "name": "Sageveil",
+      "appearance": "dark",
+      "style": {
+        "border": "<%= border %>",
+        "border.variant": "<%= overlay %>",
+        "border.focused": "<%= green %>",
+        "border.selected": "<%= green %>",
+        "border.transparent": "#00000000",
+        "border.disabled": "<%= dim %>",
+
+        "elevated_surface.background": "<%= surface %>",
+        "surface.background": "<%= surface %>",
+        "background": "<%= bg %>",
+
+        "element.background": "<%= surface %>",
+        "element.hover": "<%= overlay %>",
+        "element.active": "<%= highlight %>",
+        "element.selected": "<%= highlight %>",
+        "element.disabled": "<%= surface %>",
+
+        "drop_target.background": "<%= a(green, '40') %>",
+
+        "ghost_element.background": "#00000000",
+        "ghost_element.hover": "<%= overlay %>",
+        "ghost_element.active": "<%= highlight %>",
+        "ghost_element.selected": "<%= highlight %>",
+        "ghost_element.disabled": "#00000000",
+
+        "text": "<%= fg %>",
+        "text.muted": "<%= muted %>",
+        "text.placeholder": "<%= muted %>",
+        "text.disabled": "<%= dim %>",
+        "text.accent": "<%= green %>",
+
+        "icon": "<%= fg %>",
+        "icon.muted": "<%= muted %>",
+        "icon.disabled": "<%= dim %>",
+        "icon.placeholder": "<%= muted %>",
+        "icon.accent": "<%= green %>",
+
+        "status_bar.background": "<%= surface %>",
+        "title_bar.background": "<%= surface %>",
+        "title_bar.inactive_background": "<%= surface %>",
+        "toolbar.background": "<%= bg %>",
+        "tab_bar.background": "<%= surface %>",
+        "tab.inactive_background": "<%= surface %>",
+        "tab.active_background": "<%= bg %>",
+
+        "search.match_background": "<%= a(magenta, '60') %>",
+
+        "panel.background": "<%= surface %>",
+        "panel.focused_border": "<%= green %>",
+
+        "pane.focused_border": "<%= green %>",
+
+        "scrollbar.thumb.background": "<%= a(border, '80') %>",
+        "scrollbar.thumb.hover_background": "<%= border %>",
+        "scrollbar.thumb.border": "#00000000",
+        "scrollbar.track.background": "<%= bg %>",
+        "scrollbar.track.border": "<%= overlay %>",
+
+        "editor.foreground": "<%= fg %>",
+        "editor.background": "<%= bg %>",
+        "editor.gutter.background": "<%= bg %>",
+        "editor.subheader.background": "<%= surface %>",
+        "editor.active_line.background": "<%= overlay %>",
+        "editor.highlighted_line.background": "<%= overlay %>",
+        "editor.line_number": "<%= dim %>",
+        "editor.active_line_number": "<%= fgBright %>",
+        "editor.invisible": "<%= dim %>",
+        "editor.wrap_guide": "<%= overlay %>",
+        "editor.active_wrap_guide": "<%= border %>",
+        "editor.document_highlight.read_background": "<%= a(highlight, '60') %>",
+        "editor.document_highlight.write_background": "<%= a(highlight, '90') %>",
+
+        "terminal.background": "<%= bg %>",
+        "terminal.foreground": "<%= fg %>",
+        "terminal.bright_foreground": "<%= fgBright %>",
+        "terminal.dim_foreground": "<%= muted %>",
+        "terminal.ansi.black": "<%= it.ansi.base.black %>",
+        "terminal.ansi.red": "<%= red %>",
+        "terminal.ansi.green": "<%= green %>",
+        "terminal.ansi.yellow": "<%= yellow %>",
+        "terminal.ansi.blue": "<%= blue %>",
+        "terminal.ansi.magenta": "<%= magenta %>",
+        "terminal.ansi.cyan": "<%= cyan %>",
+        "terminal.ansi.white": "<%= fg %>",
+        "terminal.ansi.bright_black": "<%= it.ansi.bright.black %>",
+        "terminal.ansi.bright_red": "<%= redBr %>",
+        "terminal.ansi.bright_green": "<%= greenBr %>",
+        "terminal.ansi.bright_yellow": "<%= yellowBr %>",
+        "terminal.ansi.bright_blue": "<%= blueBr %>",
+        "terminal.ansi.bright_magenta": "<%= magentaBr %>",
+        "terminal.ansi.bright_cyan": "<%= cyanBr %>",
+        "terminal.ansi.bright_white": "<%= fgBright %>",
+        "terminal.ansi.dim_black": "<%= it.ansi.base.black %>",
+        "terminal.ansi.dim_red": "<%= red %>",
+        "terminal.ansi.dim_green": "<%= green %>",
+        "terminal.ansi.dim_yellow": "<%= yellow %>",
+        "terminal.ansi.dim_blue": "<%= blue %>",
+        "terminal.ansi.dim_magenta": "<%= magenta %>",
+        "terminal.ansi.dim_cyan": "<%= cyan %>",
+        "terminal.ansi.dim_white": "<%= muted %>",
+
+        "link_text.hover": "<%= cyan %>",
+
+        "conflict": "<%= magenta %>",
+        "conflict.background": "<%= a(magenta, '20') %>",
+        "conflict.border": "<%= magenta %>",
+        "created": "<%= green %>",
+        "created.background": "<%= a(green, '20') %>",
+        "created.border": "<%= green %>",
+        "deleted": "<%= red %>",
+        "deleted.background": "<%= a(red, '20') %>",
+        "deleted.border": "<%= red %>",
+        "error": "<%= red %>",
+        "error.background": "<%= a(red, '20') %>",
+        "error.border": "<%= red %>",
+        "hidden": "<%= dim %>",
+        "hidden.background": "<%= surface %>",
+        "hidden.border": "<%= surface %>",
+        "hint": "<%= cyan %>",
+        "hint.background": "<%= a(cyan, '20') %>",
+        "hint.border": "<%= cyan %>",
+        "ignored": "<%= dim %>",
+        "ignored.background": "<%= surface %>",
+        "ignored.border": "<%= surface %>",
+        "info": "<%= blue %>",
+        "info.background": "<%= a(blue, '20') %>",
+        "info.border": "<%= blue %>",
+        "modified": "<%= yellow %>",
+        "modified.background": "<%= a(yellow, '20') %>",
+        "modified.border": "<%= yellow %>",
+        "predictive": "<%= muted %>",
+        "predictive.background": "<%= a(muted, '20') %>",
+        "predictive.border": "<%= muted %>",
+        "renamed": "<%= blue %>",
+        "renamed.background": "<%= a(blue, '20') %>",
+        "renamed.border": "<%= blue %>",
+        "success": "<%= green %>",
+        "success.background": "<%= a(green, '20') %>",
+        "success.border": "<%= green %>",
+        "unreachable": "<%= dim %>",
+        "unreachable.background": "<%= surface %>",
+        "unreachable.border": "<%= surface %>",
+        "warning": "<%= yellow %>",
+        "warning.background": "<%= a(yellow, '20') %>",
+        "warning.border": "<%= yellow %>",
+
+        "players": [
+          { "cursor": "<%= cursor %>", "background": "<%= cursor %>", "selection": "<%= highlight %>" },
+          { "cursor": "<%= green %>",  "background": "<%= green %>",  "selection": "<%= a(green, '40') %>" },
+          { "cursor": "<%= magenta %>","background": "<%= magenta %>","selection": "<%= a(magenta, '40') %>" },
+          { "cursor": "<%= yellow %>", "background": "<%= yellow %>", "selection": "<%= a(yellow, '40') %>" },
+          { "cursor": "<%= blue %>",   "background": "<%= blue %>",   "selection": "<%= a(blue, '40') %>" },
+          { "cursor": "<%= cyan %>",   "background": "<%= cyan %>",   "selection": "<%= a(cyan, '40') %>" },
+          { "cursor": "<%= red %>",    "background": "<%= red %>",    "selection": "<%= a(red, '40') %>" },
+          { "cursor": "<%= magentaBr %>", "background": "<%= magentaBr %>", "selection": "<%= a(magentaBr, '40') %>" }
+        ],
+
+        "syntax": {
+          "attribute":     { "color": "<%= yellow %>", "font_style": "italic" },
+          "boolean":       { "color": "<%= cyanBr %>" },
+          "comment":       { "color": "<%= muted %>", "font_style": "italic" },
+          "comment.doc":   { "color": "<%= muted %>", "font_style": "italic" },
+          "constant":      { "color": "<%= cyanBr %>" },
+          "constructor":   { "color": "<%= yellow %>" },
+          "embedded":      { "color": "<%= fg %>" },
+          "emphasis":      { "color": "<%= magenta %>", "font_style": "italic" },
+          "emphasis.strong": { "color": "<%= yellow %>", "font_weight": 700 },
+          "enum":          { "color": "<%= yellow %>" },
+          "function":      { "color": "<%= green %>" },
+          "function.method": { "color": "<%= green %>" },
+          "function.special": { "color": "<%= yellow %>" },
+          "hint":          { "color": "<%= muted %>", "font_style": "italic" },
+          "keyword":       { "color": "<%= magenta %>" },
+          "keyword.import": { "color": "<%= blue %>" },
+          "label":         { "color": "<%= magenta %>" },
+          "link_text":     { "color": "<%= magenta %>" },
+          "link_uri":      { "color": "<%= cyan %>", "font_style": "italic" },
+          "number":        { "color": "<%= cyanBr %>" },
+          "operator":      { "color": "<%= cyan %>" },
+          "predictive":    { "color": "<%= muted %>", "font_style": "italic" },
+          "preproc":       { "color": "<%= blue %>" },
+          "primary":       { "color": "<%= fg %>" },
+          "property":      { "color": "<%= blue %>" },
+          "punctuation":   { "color": "<%= fg %>" },
+          "punctuation.bracket":    { "color": "<%= muted %>" },
+          "punctuation.delimiter":  { "color": "<%= muted %>" },
+          "punctuation.list_marker": { "color": "<%= cyan %>" },
+          "punctuation.special":    { "color": "<%= magenta %>" },
+          "string":        { "color": "<%= greenBr %>" },
+          "string.escape": { "color": "<%= magentaBr %>" },
+          "string.regex":  { "color": "<%= magentaBr %>" },
+          "string.special": { "color": "<%= magentaBr %>" },
+          "string.special.symbol": { "color": "<%= magentaBr %>" },
+          "tag":           { "color": "<%= magenta %>" },
+          "text.literal":  { "color": "<%= greenBr %>" },
+          "title":         { "color": "<%= green %>", "font_weight": 700 },
+          "type":          { "color": "<%= yellow %>" },
+          "type.builtin":  { "color": "<%= yellow %>" },
+          "variable":      { "color": "<%= fg %>" },
+          "variable.special": { "color": "<%= red %>" },
+          "variant":       { "color": "<%= yellow %>" }
+        }
+      }
+    }
+  ]
+}
