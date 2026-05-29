@@ -1,0 +1,185 @@
+# sageveil — minimalist low-contrast, green-tinted theme for Helix
+# https://docs.helix-editor.com/themes.html
+
+# UI
+"ui.background" = { bg = "bg" }
+"ui.background.separator" = { fg = "border" }
+
+"ui.text" = { fg = "fg" }
+"ui.text.focus" = { fg = "fg_bright" }
+"ui.text.info" = { fg = "fg", bg = "surface" }
+
+"ui.cursor" = { fg = "cursor_text", bg = "cursor" }
+"ui.cursor.primary" = { fg = "cursor_text", bg = "cursor" }
+"ui.cursor.match" = { bg = "highlight", modifiers = ["bold"] }
+"ui.cursor.insert" = { fg = "cursor_text", bg = "cursor" }
+"ui.cursor.select" = { fg = "cursor_text", bg = "magenta" }
+"ui.cursorline.primary" = { bg = "surface" }
+"ui.cursorcolumn.primary" = { bg = "surface" }
+
+"ui.selection" = { bg = "highlight" }
+"ui.selection.primary" = { bg = "highlight" }
+
+"ui.linenr" = { fg = "dim" }
+"ui.linenr.selected" = { fg = "fg_bright" }
+
+"ui.statusline" = { fg = "fg", bg = "surface" }
+"ui.statusline.inactive" = { fg = "muted", bg = "surface" }
+"ui.statusline.normal" = { fg = "bg", bg = "green", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "bg", bg = "yellow", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "bg", bg = "magenta", modifiers = ["bold"] }
+
+"ui.bufferline" = { fg = "muted", bg = "surface" }
+"ui.bufferline.active" = { fg = "fg_bright", bg = "bg", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "surface" }
+
+"ui.popup" = { fg = "fg", bg = "surface" }
+"ui.window" = { fg = "border" }
+"ui.help" = { fg = "fg", bg = "surface" }
+
+"ui.menu" = { fg = "fg", bg = "surface" }
+"ui.menu.selected" = { fg = "fg_bright", bg = "highlight", modifiers = ["bold"] }
+"ui.menu.scroll" = { fg = "muted", bg = "surface" }
+
+"ui.virtual.ruler" = { bg = "surface" }
+"ui.virtual.whitespace" = { fg = "dim" }
+"ui.virtual.indent-guide" = { fg = "dim" }
+"ui.virtual.inlay-hint" = { fg = "dim", bg = "surface" }
+"ui.virtual.wrap" = { fg = "dim" }
+"ui.virtual.jump-label" = { fg = "magenta", modifiers = ["bold"] }
+
+# Syntax
+"comment" = { fg = "muted", modifiers = ["italic"] }
+"comment.line" = "muted"
+"comment.block" = "muted"
+"comment.block.documentation" = { fg = "muted", modifiers = ["italic"] }
+
+"keyword" = "magenta"
+"keyword.control" = "magenta"
+"keyword.control.conditional" = "magenta"
+"keyword.control.repeat" = "magenta"
+"keyword.control.import" = "blue"
+"keyword.control.return" = "magenta"
+"keyword.operator" = "cyan"
+"keyword.directive" = "blue"
+"keyword.function" = "magenta"
+"keyword.storage" = "blue"
+
+"operator" = "cyan"
+
+"function" = "green"
+"function.builtin" = "green"
+"function.method" = "green"
+"function.macro" = "yellow"
+"function.special" = "yellow"
+
+"type" = "yellow"
+"type.builtin" = "yellow"
+"type.parameter" = "yellow_bright"
+"constructor" = "yellow"
+
+"constant" = "cyan_bright"
+"constant.builtin" = "cyan_bright"
+"constant.builtin.boolean" = "cyan_bright"
+"constant.numeric" = "cyan_bright"
+"constant.character" = "green_bright"
+"constant.character.escape" = "magenta_bright"
+
+"string" = "green_bright"
+"string.regexp" = "magenta_bright"
+"string.special" = "magenta_bright"
+"string.special.path" = "blue"
+"string.special.url" = "cyan"
+"string.special.symbol" = "magenta_bright"
+
+"variable" = "fg"
+"variable.builtin" = "red"
+"variable.parameter" = "fg_bright"
+"variable.other.member" = "blue"
+
+"label" = "magenta"
+
+"punctuation" = "fg"
+"punctuation.delimiter" = "muted"
+"punctuation.bracket" = "muted"
+"punctuation.special" = "magenta"
+
+"namespace" = "blue"
+"attribute" = "yellow"
+"tag" = "magenta"
+"tag.builtin" = "magenta"
+
+# Markup
+"markup.heading" = { fg = "green", modifiers = ["bold"] }
+"markup.heading.1" = { fg = "green", modifiers = ["bold"] }
+"markup.heading.2" = { fg = "yellow", modifiers = ["bold"] }
+"markup.heading.3" = { fg = "blue", modifiers = ["bold"] }
+"markup.heading.4" = { fg = "magenta", modifiers = ["bold"] }
+"markup.heading.5" = { fg = "cyan", modifiers = ["bold"] }
+"markup.heading.6" = { fg = "fg", modifiers = ["bold"] }
+"markup.heading.marker" = { fg = "muted" }
+"markup.list" = "cyan"
+"markup.list.numbered" = "cyan"
+"markup.list.unnumbered" = "cyan"
+"markup.list.checked" = "green"
+"markup.list.unchecked" = "muted"
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "cyan", modifiers = ["underlined"] }
+"markup.link.text" = "magenta"
+"markup.link.label" = "magenta"
+"markup.quote" = { fg = "muted", modifiers = ["italic"] }
+"markup.raw" = "green_bright"
+"markup.raw.inline" = "green_bright"
+"markup.raw.block" = "green_bright"
+
+# Diff
+"diff.plus" = "green"
+"diff.plus.gutter" = "green"
+"diff.minus" = "red"
+"diff.minus.gutter" = "red"
+"diff.delta" = "yellow"
+"diff.delta.moved" = "blue"
+"diff.delta.gutter" = "yellow"
+
+# Diagnostics
+"error" = "red"
+"warning" = "yellow"
+"info" = "blue"
+"hint" = "cyan"
+
+"diagnostic" = { underline = { color = "muted", style = "curl" } }
+"diagnostic.error" = { underline = { color = "red", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.info" = { underline = { color = "blue", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "cyan", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+[palette]
+bg = "<%= it.ansi.base.black %>"
+fg = "<%= it.ansi.base.white %>"
+fg_bright = "<%= it.ansi.bright.white %>"
+surface = "<%= it.extras.surface %>"
+overlay = "<%= it.extras.overlay %>"
+highlight = "<%= it.extras.highlight %>"
+border = "<%= it.extras.border %>"
+muted = "<%= it.extras.muted %>"
+dim = "<%= it.extras.dim %>"
+cursor = "<%= it.extras.cursor %>"
+cursor_text = "<%= it.extras.cursor_text %>"
+
+red = "<%= it.ansi.base.red %>"
+green = "<%= it.ansi.base.green %>"
+yellow = "<%= it.ansi.base.yellow %>"
+blue = "<%= it.ansi.base.blue %>"
+magenta = "<%= it.ansi.base.magenta %>"
+cyan = "<%= it.ansi.base.cyan %>"
+
+red_bright = "<%= it.ansi.bright.red %>"
+green_bright = "<%= it.ansi.bright.green %>"
+yellow_bright = "<%= it.ansi.bright.yellow %>"
+blue_bright = "<%= it.ansi.bright.blue %>"
+magenta_bright = "<%= it.ansi.bright.magenta %>"
+cyan_bright = "<%= it.ansi.bright.cyan %>"
