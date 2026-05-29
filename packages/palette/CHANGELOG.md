@@ -1,3 +1,9 @@
+## 0.2.0-rc.1 (2026-05-29)
+
+### 🌿 New Growth
+
+- **palette:** adjust ansi and highlight colors ([ec78d2f](https://github.com/sageveil/sageveil/commit/ec78d2f))
+
 ## 0.2.0-rc.0 (2026-05-28)
 
 ### 🌿 New Growth
