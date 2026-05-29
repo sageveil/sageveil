@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/wezterm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sageveil": {
+    "displayName": "WezTerm",
+    "description": "Sageveil tones for the WezTerm terminal.",
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
+  },
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/wezterm"
+        ]
+      },
+      "clean": {}
+    }
+  }
+}

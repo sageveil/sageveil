@@ -1,0 +1,69 @@
+[metadata]
+name = "sageveil"
+author = "sageveil"
+origin_url = "https://github.com/sageveil/sageveil"
+
+[colors]
+foreground = "<%= it.ansi.base.white %>"
+background = "<%= it.ansi.base.black %>"
+
+cursor_bg = "<%= it.extras.cursor %>"
+cursor_fg = "<%= it.extras.cursor_text %>"
+cursor_border = "<%= it.extras.cursor %>"
+
+selection_fg = "<%= it.ansi.base.white %>"
+selection_bg = "<%= it.extras.highlight %>"
+
+scrollbar_thumb = "<%= it.extras.border %>"
+split = "<%= it.extras.border %>"
+
+ansi = [
+  "<%= it.ansi.base.black %>",
+  "<%= it.ansi.base.red %>",
+  "<%= it.ansi.base.green %>",
+  "<%= it.ansi.base.yellow %>",
+  "<%= it.ansi.base.blue %>",
+  "<%= it.ansi.base.magenta %>",
+  "<%= it.ansi.base.cyan %>",
+  "<%= it.ansi.base.white %>",
+]
+
+brights = [
+  "<%= it.ansi.bright.black %>",
+  "<%= it.ansi.bright.red %>",
+  "<%= it.ansi.bright.green %>",
+  "<%= it.ansi.bright.yellow %>",
+  "<%= it.ansi.bright.blue %>",
+  "<%= it.ansi.bright.magenta %>",
+  "<%= it.ansi.bright.cyan %>",
+  "<%= it.ansi.bright.white %>",
+]
+
+[colors.tab_bar]
+background = "<%= it.extras.surface %>"
+
+[colors.tab_bar.active_tab]
+bg_color = "<%= it.ansi.base.black %>"
+fg_color = "<%= it.ansi.base.green %>"
+intensity = "Normal"
+underline = "None"
+italic = false
+strikethrough = false
+
+[colors.tab_bar.inactive_tab]
+bg_color = "<%= it.extras.surface %>"
+fg_color = "<%= it.extras.muted %>"
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "<%= it.extras.overlay %>"
+fg_color = "<%= it.ansi.base.white %>"
+italic = false
+
+[colors.tab_bar.new_tab]
+bg_color = "<%= it.extras.surface %>"
+fg_color = "<%= it.extras.muted %>"
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "<%= it.extras.overlay %>"
+fg_color = "<%= it.ansi.base.white %>"
+italic = false
