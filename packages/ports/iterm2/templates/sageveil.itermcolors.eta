@@ -1,0 +1,52 @@
+<%
+function toComponents(hex) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  return { r, g, b };
+}
+function colorEntry(key, hex) {
+  const { r, g, b } = toComponents(hex);
+  return `\t<key>${key}</key>
+\t<dict>
+\t\t<key>Alpha Component</key>
+\t\t<real>1</real>
+\t\t<key>Blue Component</key>
+\t\t<real>${b}</real>
+\t\t<key>Color Space</key>
+\t\t<string>sRGB</string>
+\t\t<key>Green Component</key>
+\t\t<real>${g}</real>
+\t\t<key>Red Component</key>
+\t\t<real>${r}</real>
+\t</dict>`;
+}
+const ansi = [
+  it.ansi.base.black, it.ansi.base.red, it.ansi.base.green, it.ansi.base.yellow,
+  it.ansi.base.blue, it.ansi.base.magenta, it.ansi.base.cyan, it.ansi.base.white,
+  it.ansi.bright.black, it.ansi.bright.red, it.ansi.bright.green, it.ansi.bright.yellow,
+  it.ansi.bright.blue, it.ansi.bright.magenta, it.ansi.bright.cyan, it.ansi.bright.white,
+];
+const entries = [];
+ansi.forEach((hex, i) => entries.push(colorEntry(`Ansi ${i} Color`, hex)));
+entries.push(colorEntry('Background Color', it.ansi.base.black));
+entries.push(colorEntry('Badge Color', it.ansi.base.red));
+entries.push(colorEntry('Bold Color', it.ansi.bright.white));
+entries.push(colorEntry('Cursor Color', it.extras.cursor));
+entries.push(colorEntry('Cursor Guide Color', it.extras.overlay));
+entries.push(colorEntry('Cursor Text Color', it.extras.cursor_text));
+entries.push(colorEntry('Foreground Color', it.ansi.base.white));
+entries.push(colorEntry('Link Color', it.ansi.base.cyan));
+entries.push(colorEntry('Match Background Color', it.extras.highlight));
+entries.push(colorEntry('Selected Text Color', it.ansi.base.white));
+entries.push(colorEntry('Selection Color', it.extras.highlight));
+entries.push(colorEntry('Tab Color', it.extras.surface));
+entries.push(colorEntry('Underline Color', it.ansi.base.cyan));
+%><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<%~ entries.join('\n') %>
+</dict>
+</plist>

@@ -176,6 +176,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/iterm2:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/k9s:
     dependencies:
       '@sageveil/palette':

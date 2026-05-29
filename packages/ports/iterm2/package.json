@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/iterm2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sageveil": {
+    "displayName": "iTerm2",
+    "description": "Sageveil tones for the iTerm2 macOS terminal.",
+    "tags": [
+      "terminal",
+      "emulator"
+    ]
+  },
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/iterm2"
+        ]
+      },
+      "clean": {}
+    }
+  }
+}
