@@ -9,7 +9,7 @@ interface CardProps extends PropsWithChildren<DivProps> {
 export function Card({ className = '', children, ...rest }: CardProps) {
   return (
     <div
-      className={`rounded-[22px] border border-[var(--sv-border-50)] shadow-[0_14px_30px_var(--sv-shadow-35),0_0_24px_var(--sv-magenta-glow-18)] ${className}`}
+      className={`rounded-2xl border border-[var(--sv-hairline)] bg-[var(--sv-card)] shadow-[0_10px_30px_var(--sv-shadow-soft)] ${className}`}
       {...rest}
     >
       {children}

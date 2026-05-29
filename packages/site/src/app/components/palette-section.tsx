@@ -1,7 +1,15 @@
 import { sageveil } from '@sageveil/palette';
-import { Card } from './card';
 
-const ansiOrder = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'] as const;
+const ansiOrder = [
+  'black',
+  'red',
+  'green',
+  'yellow',
+  'blue',
+  'magenta',
+  'cyan',
+  'white',
+] as const;
 
 type Swatch = {
   label: string;
@@ -29,57 +37,80 @@ const brightAnsi: Swatch[] = ansiOrder.map((key) => ({
   value: sageveil.ansi.bright[key],
 }));
 
-function SwatchGrid({ title, description, swatches }: { title: string; description?: string; swatches: Swatch[] }) {
+function SwatchCard({ swatch }: { swatch: Swatch }) {
   return (
-    <Card className="grid gap-4 bg-[var(--sv-base-black-65)] p-6">
-      <header className="grid gap-1">
-        <h3 className="text-[1.25rem] capitalize">{title}</h3>
-        {description ? <p className="m-0 text-[0.9rem] text-[var(--sv-muted)]">{description}</p> : null}
-      </header>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
+    <div className="group grid gap-3">
+      <span
+        className="aspect-[5/4] w-full rounded-xl border border-[var(--sv-hairline)] transition-transform duration-200 group-hover:-translate-y-1"
+        style={{ backgroundColor: swatch.value }}
+      />
+      <div className="flex items-baseline justify-between gap-2 px-0.5">
+        <span className="text-[0.85rem] font-medium text-[var(--sv-bright-white)] capitalize">
+          {swatch.label}
+        </span>
+        <span className="mono text-[0.72rem] tracking-[0.05em] text-[var(--sv-muted)] uppercase">
+          {swatch.value}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function SwatchGroup({
+  title,
+  swatches,
+}: {
+  title: string;
+  swatches: Swatch[];
+}) {
+  return (
+    <div className="grid gap-5">
+      <h3 className="text-[1.4rem] text-[var(--sv-bright-white)] capitalize">
+        {title}
+      </h3>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {swatches.map((swatch) => (
-          <div
-            key={`${title}-${swatch.label}`}
-            className="flex items-center gap-3 rounded-[16px] border border-[var(--sv-border-25)] bg-[var(--sv-surface-70)] px-3 py-2.5"
-          >
-            <span
-              className="h-8 w-8 shrink-0 rounded-[10px] border border-[var(--sv-white-8)]"
-              style={{ backgroundColor: swatch.value }}
-            />
-            <div className="grid">
-              <span className="text-[0.85rem] font-semibold capitalize text-[var(--sv-base-white)]">
-                {swatch.label}
-              </span>
-              <span className="text-[0.78rem] uppercase tracking-[0.08em] text-[var(--sv-muted)]">
-                {swatch.value}
-              </span>
-            </div>
-          </div>
+          <SwatchCard key={`${title}-${swatch.label}`} swatch={swatch} />
         ))}
       </div>
-    </Card>
+    </div>
   );
 }
 
 export function PaletteSection() {
   return (
-    <Card id="about" className="mt-16 grid gap-7 rounded-[26px] bg-[linear-gradient(135deg,var(--sv-palette-from),var(--sv-palette-to))] p-9">
-      <div className="grid max-w-[760px] gap-3">
-        <h2 className="text-[clamp(2rem,3vw,2.6rem)]">
-          Minimalist, low-contrast, green-tinted
+    <section id="palette" className="grid gap-12">
+      <div className="grid max-w-[820px] gap-5">
+        <span className="text-[0.72rem] font-medium tracking-[0.22em] text-[var(--sv-accent)] uppercase">
+          The palette
+        </span>
+        <h2 className="text-[clamp(2.4rem,5vw,4rem)] font-light text-[var(--sv-bright-white)]">
+          Minimalist, low-contrast, green-tinted.
         </h2>
-        <p className="m-0 text-[var(--sv-muted)] leading-[1.6]">
-          Every Sageveil port pulls from the same base + bright ANSI colors plus the supporting
-          surface and UI tones. Use these tokens everywhere to keep tools consistent.
+        <p className="m-0 text-[1.05rem] leading-[1.65] text-[var(--sv-muted)]">
+          Every Sageveil port pulls from the same base and bright ANSI colors
+          plus supporting surface tones. The same tokens everywhere keep tools
+          quietly consistent.
         </p>
       </div>
-      <div className="grid gap-5">
-        <div className="grid gap-5 lg:grid-cols-2">
-          <SwatchGrid title="ANSI base" description="Core terminal colors" swatches={baseAnsi} />
-          <SwatchGrid title="ANSI bright" description="Bright terminal colors" swatches={brightAnsi} />
-        </div>
-        <SwatchGrid title="Extras" description="Interface and surface tones" swatches={extras} />
+
+      {/* Full-bleed color ribbon */}
+      <div className="flex h-16 w-full overflow-hidden rounded-xl border border-[var(--sv-hairline)] sm:h-24">
+        {baseAnsi.map((swatch) => (
+          <span
+            key={`ribbon-${swatch.label}`}
+            className="flex-1 transition-[flex-grow] duration-300 hover:flex-[1.6]"
+            style={{ backgroundColor: swatch.value }}
+            title={`${swatch.label} ${swatch.value}`}
+          />
+        ))}
       </div>
-    </Card>
+
+      <div className="grid gap-12">
+        <SwatchGroup title="ANSI base" swatches={baseAnsi} />
+        <SwatchGroup title="ANSI bright" swatches={brightAnsi} />
+        <SwatchGroup title="Extras" swatches={extras} />
+      </div>
+    </section>
   );
 }

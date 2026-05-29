@@ -11,7 +11,11 @@ interface PortsSectionProps {
 }
 
 const filterBase =
-  'rounded-full border bg-[var(--sv-surface-60)] px-4 py-2 text-[0.9rem] text-[var(--sv-bright-white)] transition-all duration-200';
+  'rounded-full border px-4 py-2 text-[0.85rem] font-medium capitalize transition-colors duration-200';
+const filterIdle =
+  'border-[var(--sv-hairline)] text-[var(--sv-muted)] hover:border-[var(--sv-accent-line)] hover:text-[var(--sv-accent)]';
+const filterActive =
+  'border-[var(--sv-accent-line)] bg-[var(--sv-accent-soft)] text-[var(--sv-accent)]';
 
 export function PortsSection({
   tags,
@@ -21,21 +25,26 @@ export function PortsSection({
   linksForPort,
 }: PortsSectionProps) {
   return (
-    <section id="ports" className="mt-16 grid gap-7">
-      <div className="grid max-w-[720px] gap-3">
-        <h2 className="text-[clamp(2rem,3vw,2.6rem)]">Ports that move together</h2>
-        <p className="m-0 text-[var(--sv-muted)] leading-[1.6]">
-          Each port ships from the same tokens with its own tailored configuration. Tags help you
-          spot the right target quickly.
+    <section id="ports" className="grid gap-10">
+      <div className="grid max-w-[760px] gap-5">
+        <span className="text-[0.72rem] font-medium tracking-[0.22em] text-[var(--sv-accent)] uppercase">
+          The ports
+        </span>
+        <h2 className="text-[clamp(2.4rem,5vw,4rem)] font-light text-[var(--sv-bright-white)]">
+          Ports that move together.
+        </h2>
+        <p className="m-0 text-[1.05rem] leading-[1.65] text-[var(--sv-muted)]">
+          Each port ships from the same tokens with its own tailored
+          configuration. Tags help you spot the right target quickly.
         </p>
       </div>
-      <div className="flex flex-wrap gap-3" role="group" aria-label="Filter ports by tag">
+      <div
+        className="flex flex-wrap gap-2.5"
+        role="group"
+        aria-label="Filter ports by tag"
+      >
         <button
-          className={`${filterBase} border-[var(--sv-magenta-40)] ${
-            activeTag === 'all'
-              ? 'border-[var(--sv-magenta-60)] bg-[var(--sv-magenta-10)] text-[var(--sv-base-magenta)]'
-              : 'hover:border-[var(--sv-magenta-60)] hover:bg-[var(--sv-magenta-10)] hover:text-[var(--sv-base-magenta)]'
-          }`}
+          className={`${filterBase} ${activeTag === 'all' ? filterActive : filterIdle}`}
           type="button"
           aria-pressed={activeTag === 'all'}
           onClick={() => onTagChange('all')}
@@ -45,11 +54,7 @@ export function PortsSection({
         {tags.map((tag) => (
           <button
             key={tag}
-            className={`${filterBase} border-[var(--sv-magenta-40)] ${
-              activeTag === tag
-                ? 'border-[var(--sv-magenta-60)] bg-[var(--sv-magenta-10)] text-[var(--sv-base-magenta)]'
-                : 'hover:border-[var(--sv-magenta-60)] hover:bg-[var(--sv-magenta-10)] hover:text-[var(--sv-base-magenta)]'
-            }`}
+            className={`${filterBase} ${activeTag === tag ? filterActive : filterIdle}`}
             type="button"
             aria-pressed={activeTag === tag}
             onClick={() => onTagChange(tag)}
@@ -58,12 +63,16 @@ export function PortsSection({
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
         {ports.map((port, index) => (
-          <PortCard key={port.slug} port={port} index={index} links={linksForPort(port)} />
+          <PortCard
+            key={port.slug}
+            port={port}
+            index={index}
+            links={linksForPort(port)}
+          />
         ))}
       </div>
     </section>
   );
 }
-

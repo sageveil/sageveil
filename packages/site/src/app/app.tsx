@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import type { PropsWithChildren } from 'react';
 import { sageveil } from '@sageveil/palette';
 import { CtaSection } from './components/cta-section';
 import { Hero } from './components/hero';
 import { PaletteSection } from './components/palette-section';
 import { PortsSection } from './components/ports-section';
+import { TerminalPreview } from './components/terminal-preview';
 import { buildPortLinks, defaultRepoUrl } from './port-links';
 import { portList } from './ports-data';
 
 const tags = Array.from(
-  new Set(portList.flatMap((port) => port.tags).filter(Boolean))
+  new Set(portList.flatMap((port) => port.tags).filter(Boolean)),
 ).sort((a, b) => a.localeCompare(b));
 
 const themeVars: Record<string, string> = {
@@ -35,6 +37,7 @@ const themeVars: Record<string, string> = {
   '--sv-muted': sageveil.extras.muted,
   '--sv-dim': sageveil.extras.dim,
   '--sv-cursor': sageveil.extras.cursor,
+  '--sv-cursor-text': sageveil.extras.cursor_text,
 };
 
 const applyTheme = () => {
@@ -50,6 +53,20 @@ if (typeof document !== 'undefined') {
   applyTheme();
 }
 
+function Band({ alt = false, children }: PropsWithChildren<{ alt?: boolean }>) {
+  return (
+    <section
+      className={`w-full border-b border-[var(--sv-hairline)] ${
+        alt ? 'bg-[var(--sv-band-alt)]' : 'bg-transparent'
+      }`}
+    >
+      <div className="mx-auto w-full max-w-[1120px] px-5 py-20 sm:px-8 sm:py-28">
+        {children}
+      </div>
+    </section>
+  );
+}
+
 export function App() {
   const [activeTag, setActiveTag] = useState('all');
 
@@ -59,21 +76,32 @@ export function App() {
       : portList.filter((port) => port.tags.includes(activeTag));
 
   return (
-    <div className="relative z-10 mx-auto max-w-[1160px] px-[18px] pb-[96px] pt-[56px] sm:px-6 sm:pb-[120px] sm:pt-[72px]">
-      <div className="noise" />
-      <Hero />
-      <PaletteSection />
-      <PortsSection
-        tags={tags}
-        activeTag={activeTag}
-        onTagChange={setActiveTag}
-        ports={filteredPorts}
-        linksForPort={(port) => buildPortLinks({ repoUrl, slug: port.slug, version: port.version })}
-      />
-      <CtaSection repoUrl={repoUrl} />
-    </div>
+    <main className="relative">
+      <Band>
+        <div className="grid gap-16">
+          <Hero />
+          <TerminalPreview />
+        </div>
+      </Band>
+      <Band alt>
+        <PaletteSection />
+      </Band>
+      <Band>
+        <PortsSection
+          tags={tags}
+          activeTag={activeTag}
+          onTagChange={setActiveTag}
+          ports={filteredPorts}
+          linksForPort={(port) =>
+            buildPortLinks({ repoUrl, slug: port.slug, version: port.version })
+          }
+        />
+      </Band>
+      <Band alt>
+        <CtaSection repoUrl={repoUrl} />
+      </Band>
+    </main>
   );
 }
 
 export default App;
-
