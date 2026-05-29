@@ -1,3 +1,13 @@
+## 0.2.0-rc.2 (2026-05-29)
+
+### 🌿 New Growth
+
+- **site:** redesign with bold editorial layout ([4fc9cae](https://github.com/sageveil/sageveil/commit/4fc9cae))
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.0-rc.2
+
 ## 0.2.0-rc.1 (2026-05-29)
 
 ### 🧱 Updated Dependencies
