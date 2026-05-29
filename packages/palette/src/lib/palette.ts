@@ -11,12 +11,12 @@ export const sageveil = {
   extras: {
     surface: '#1D2320',
     overlay: '#1F2624',
-    highlight: '#33423A',
+    highlight: '#241d21',
 
     border: '#4E504C',
 
-    muted: '#8C918C',
-    dim: '#616560',
+    muted: '#8A928B',
+    dim: '#6F7B6F',
 
     cursor: base.white,
     cursor_text: base.black,
