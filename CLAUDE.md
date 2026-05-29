@@ -43,7 +43,7 @@ Build artifacts go to `dist/ports/<port>/` and are not committed to this repo.
 
 - **`packages/palette`** — Single source of truth for all colors. Exports `sageveil` object with `ansi.base`, `ansi.bright`, and `extras` (surface, overlay, highlight, border, muted, dim, cursor, cursor_text).
 
-- **`tools/scripts/render.ts`** — Rendering engine built on [Eta](https://eta.js.org/). The `render()` function takes a `RenderJob` (template directory + list of files), injects the full `sageveil` palette as template context, and writes output to the specified output directory. Templates use `.eta` extension by default; the extension is stripped from output filenames.
+- **`tools/scripts/render.mjs`** — Rendering engine built on [Eta](https://eta.js.org/). The `render()` function takes a `RenderJob` (template directory + list of files), injects the full `sageveil` palette as template context, and writes output to the specified output directory. Templates use `.eta` extension by default; the extension is stripped from output filenames.
 
 - **`packages/ports/*`** — Each port is a template-only package. Templates live in `templates/`. The `generate` nx target runs `tools/scripts/build-port.ts` which auto-discovers templates, renders them via the render engine, and writes output to `dist/ports/<name>/`.
 
@@ -72,14 +72,14 @@ Templates receive the full `sageveil` palette object:
 
 ### Testing pattern
 
-Port packages are content-only and currently do not carry package-local tests. Render engine tests live in `tools/scripts/render.spec.ts`.
+Port packages are content-only and currently do not carry package-local tests.
 
 ### Build pipeline
 
-The `generate` target invokes `tools/scripts/build-port.ts <projectRoot>`, which:
+The `generate` target invokes `tools/scripts/build-port.mjs <projectRoot>`, which:
 
 1. Sets output directory to `dist/ports/<abbreviatedName>`
-2. Auto-discovers templates in `templates/` and renders them via `render()` from `tools/scripts/render.ts`
+2. Auto-discovers templates in `templates/` and renders them via `render()` from `tools/scripts/render.mjs`
 3. Passes the port's `version` from `package.json` as template context
 4. Copies `README.md` and `assets/` to the output directory if present
 

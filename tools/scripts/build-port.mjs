@@ -1,11 +1,11 @@
 import { copyFile, cp, mkdir, readFile, rm } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
-import { render } from './render';
+import { render } from './render.mjs';
 
 const projectRootArg = process.argv[2];
 
 if (!projectRootArg) {
-  console.error('Usage: tsx tools/scripts/build-port.ts <projectRoot>');
+  console.error('Usage: tsx tools/scripts/build-port.mjs <projectRoot>');
   process.exit(1);
 }
 
@@ -14,16 +14,16 @@ const workspaceRoot = process.env.NX_WORKSPACE_ROOT
   : resolve('.');
 const projectRoot = join(workspaceRoot, projectRootArg);
 
-function stripScope(packageName: string): string {
+function stripScope(packageName) {
   const parts = packageName.split('/');
   return parts.length > 1 ? parts[1] : parts[0];
 }
 
-async function main(): Promise<void> {
+async function main() {
   const pkgJsonPath = join(projectRoot, 'package.json');
   const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'));
-  const packageName: string = pkgJson.name;
-  const version: string = pkgJson.version;
+  const packageName = pkgJson.name;
+  const version = pkgJson.version;
 
   const abbreviatedName = stripScope(packageName);
   const buildRoot = join(workspaceRoot, 'dist', 'ports', abbreviatedName);
@@ -42,13 +42,13 @@ async function main(): Promise<void> {
       join(projectRoot, 'README.md'),
       join(buildRoot, 'README.md'),
     );
-  } catch (err: any) {
+  } catch (err) {
     if (err.code !== 'ENOENT') throw err;
   }
 
   try {
     await cp(join(projectRoot, 'assets'), buildRoot, { recursive: true });
-  } catch (err: any) {
+  } catch (err) {
     if (err.code !== 'ENOENT') throw err;
   }
 

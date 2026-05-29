@@ -19,7 +19,6 @@ Run commands from the repo root.
 - `pnpm nx run <port>:generate`: build a port (example: `pnpm nx run tmux:generate`).
 - `pnpm nx run <project>:lint`: ESLint checks for code-bearing projects.
 - `pnpm nx run <project>:typecheck`: TypeScript typecheck for a project.
-- `pnpm exec vitest --config tools/scripts/vite.config.ts run`: run Vitest tests for the shared render scripts.
 
 ## Coding Style & Naming Conventions
 

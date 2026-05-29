@@ -139,7 +139,7 @@
       ],
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec tsx tools/scripts/build-port.ts {projectRoot}"
+        "command": "pnpm exec tsx tools/scripts/build-port.mjs {projectRoot}"
       }
     },
     "clean": {

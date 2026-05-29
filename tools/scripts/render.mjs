@@ -9,20 +9,14 @@ const REGULAR_FILE_MODE = 0o644;
 const FILE_ENCODING = 'utf8';
 
 /**
- * Configuration for a template rendering job.
+ * @typedef {Object} RenderJob
+ * @property {string} templateDir Directory containing template files
+ * @property {string[]} [templateFiles] Template filenames (relative to templateDir). When omitted, all files in templateDir are rendered.
+ * @property {Record<string, unknown>} [ctx] Extra context merged into template data alongside the sageveil palette
+ * @property {string} [outputDir] Output directory for rendered files. Falls back to $OUTPUT_DIR env var.
  */
-export type RenderJob = {
-  /** Directory containing template files */
-  templateDir: string;
-  /** Template filenames (relative to templateDir). When omitted, all files in templateDir are rendered. */
-  templateFiles?: string[];
-  /** Extra context merged into template data alongside the sageveil palette */
-  ctx?: Record<string, unknown>;
-  /** Output directory for rendered files. Falls back to $OUTPUT_DIR env var. */
-  outputDir?: string;
-};
 
-function resolveOutputDir(explicit?: string): string {
+function resolveOutputDir(explicit) {
   const outputDir = explicit ?? process.env.OUTPUT_DIR;
   if (!outputDir) {
     throw new Error(
@@ -33,7 +27,7 @@ function resolveOutputDir(explicit?: string): string {
 }
 
 /** Discovers all files in a directory recursively, returning paths relative to the directory. */
-export async function discoverTemplates(dir: string): Promise<string[]> {
+export async function discoverTemplates(dir) {
   const entries = await readdir(dir, { withFileTypes: true, recursive: true });
   return entries
     .filter((entry) => entry.isFile())
@@ -42,7 +36,7 @@ export async function discoverTemplates(dir: string): Promise<string[]> {
 }
 
 /** Renders template files from a RenderJob and writes output to the resolved output directory. */
-export async function render(job: RenderJob): Promise<void> {
+export async function render(job) {
   const outputDir = resolveOutputDir(job.outputDir);
   const templateFiles =
     job.templateFiles ?? (await discoverTemplates(job.templateDir));
@@ -56,7 +50,7 @@ export async function render(job: RenderJob): Promise<void> {
     .map((result, index) => ({ result, index }))
     .filter(({ result }) => result.status === 'rejected')
     .map(({ result, index }) => ({
-      reason: (result as PromiseRejectedResult).reason,
+      reason: result.reason,
       file: templateFiles[index],
     }));
 
@@ -69,13 +63,8 @@ export async function render(job: RenderJob): Promise<void> {
   }
 }
 
-async function renderFile(
-  eta: Eta,
-  outputDir: string,
-  filename: string,
-  ctx?: Record<string, unknown>,
-): Promise<void> {
-  const renderedContent: string = await eta.renderAsync(filename, {
+async function renderFile(eta, outputDir, filename, ctx) {
+  const renderedContent = await eta.renderAsync(filename, {
     ...sageveil,
     ...ctx,
   });
