@@ -1,0 +1,26 @@
+{
+  "name": "sageveil",
+  "displayName": "Sageveil",
+  "description": "A minimalist low-contrast, green-tinted colorscheme.",
+  "version": "<%= it.version %>",
+  "publisher": "sageveil",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": ["Themes"],
+  "keywords": ["theme", "dark", "low-contrast", "green", "sage"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sageveil/vscode.git"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Sageveil",
+        "uiTheme": "vs-dark",
+        "path": "./themes/sageveil-color-theme.json"
+      }
+    ]
+  }
+}

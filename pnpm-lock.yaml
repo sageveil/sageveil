@@ -224,6 +224,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/vscode:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/site:
     dependencies:
       '@sageveil/palette':

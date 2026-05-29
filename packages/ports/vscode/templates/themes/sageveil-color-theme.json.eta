@@ -1,0 +1,587 @@
+<%
+const bg = it.ansi.base.black;
+const fg = it.ansi.base.white;
+const fgBright = it.ansi.bright.white;
+const surface = it.extras.surface;
+const overlay = it.extras.overlay;
+const highlight = it.extras.highlight;
+const border = it.extras.border;
+const muted = it.extras.muted;
+const dim = it.extras.dim;
+const cursor = it.extras.cursor;
+
+const red = it.ansi.base.red;
+const green = it.ansi.base.green;
+const yellow = it.ansi.base.yellow;
+const blue = it.ansi.base.blue;
+const magenta = it.ansi.base.magenta;
+const cyan = it.ansi.base.cyan;
+
+const redBr = it.ansi.bright.red;
+const greenBr = it.ansi.bright.green;
+const yellowBr = it.ansi.bright.yellow;
+const blueBr = it.ansi.bright.blue;
+const magentaBr = it.ansi.bright.magenta;
+const cyanBr = it.ansi.bright.cyan;
+
+// Translucent helpers (VS Code accepts 8-digit hex; alpha as suffix).
+const a = (hex, alpha) => hex + alpha;
+%>{
+  "name": "Sageveil",
+  "type": "dark",
+  "semanticHighlighting": true,
+  "colors": {
+    "focusBorder": "<%= border %>",
+    "foreground": "<%= fg %>",
+    "descriptionForeground": "<%= muted %>",
+    "errorForeground": "<%= red %>",
+    "icon.foreground": "<%= fg %>",
+    "selection.background": "<%= highlight %>",
+
+    "editor.background": "<%= bg %>",
+    "editor.foreground": "<%= fg %>",
+    "editor.lineHighlightBackground": "<%= overlay %>",
+    "editor.selectionBackground": "<%= highlight %>",
+    "editor.selectionHighlightBackground": "<%= a(highlight, '80') %>",
+    "editor.inactiveSelectionBackground": "<%= a(highlight, '60') %>",
+    "editor.wordHighlightBackground": "<%= a(highlight, '60') %>",
+    "editor.wordHighlightStrongBackground": "<%= a(highlight, '90') %>",
+    "editor.findMatchBackground": "<%= a(magenta, '60') %>",
+    "editor.findMatchHighlightBackground": "<%= a(magenta, '40') %>",
+    "editor.hoverHighlightBackground": "<%= overlay %>",
+    "editor.lineHighlightBorder": "<%= overlay %>",
+    "editorWhitespace.foreground": "<%= dim %>",
+    "editorIndentGuide.background1": "<%= overlay %>",
+    "editorIndentGuide.activeBackground1": "<%= border %>",
+    "editorRuler.foreground": "<%= overlay %>",
+    "editorCursor.foreground": "<%= cursor %>",
+    "editorBracketMatch.background": "<%= a(highlight, '80') %>",
+    "editorBracketMatch.border": "<%= magenta %>",
+    "editorLineNumber.foreground": "<%= dim %>",
+    "editorLineNumber.activeForeground": "<%= fgBright %>",
+    "editorLink.activeForeground": "<%= cyan %>",
+    "editorError.foreground": "<%= red %>",
+    "editorWarning.foreground": "<%= yellow %>",
+    "editorInfo.foreground": "<%= blue %>",
+    "editorHint.foreground": "<%= cyan %>",
+    "editorGutter.background": "<%= bg %>",
+    "editorGutter.modifiedBackground": "<%= yellow %>",
+    "editorGutter.addedBackground": "<%= green %>",
+    "editorGutter.deletedBackground": "<%= red %>",
+
+    "editorOverviewRuler.border": "<%= border %>",
+    "editorOverviewRuler.errorForeground": "<%= red %>",
+    "editorOverviewRuler.warningForeground": "<%= yellow %>",
+    "editorOverviewRuler.infoForeground": "<%= blue %>",
+    "editorOverviewRuler.modifiedForeground": "<%= yellow %>",
+    "editorOverviewRuler.addedForeground": "<%= green %>",
+    "editorOverviewRuler.deletedForeground": "<%= red %>",
+
+    "editorGroup.border": "<%= border %>",
+    "editorGroupHeader.tabsBackground": "<%= surface %>",
+    "editorGroupHeader.noTabsBackground": "<%= surface %>",
+    "editorPane.background": "<%= bg %>",
+
+    "tab.activeBackground": "<%= bg %>",
+    "tab.activeForeground": "<%= fgBright %>",
+    "tab.inactiveBackground": "<%= surface %>",
+    "tab.inactiveForeground": "<%= muted %>",
+    "tab.border": "<%= surface %>",
+    "tab.activeBorder": "<%= bg %>",
+    "tab.activeBorderTop": "<%= green %>",
+    "tab.hoverBackground": "<%= overlay %>",
+    "tab.unfocusedActiveBackground": "<%= bg %>",
+    "tab.unfocusedActiveForeground": "<%= fg %>",
+    "tab.unfocusedInactiveForeground": "<%= dim %>",
+
+    "activityBar.background": "<%= surface %>",
+    "activityBar.foreground": "<%= fg %>",
+    "activityBar.inactiveForeground": "<%= muted %>",
+    "activityBar.activeBorder": "<%= green %>",
+    "activityBar.border": "<%= surface %>",
+    "activityBarBadge.background": "<%= magenta %>",
+    "activityBarBadge.foreground": "<%= bg %>",
+
+    "sideBar.background": "<%= surface %>",
+    "sideBar.foreground": "<%= fg %>",
+    "sideBar.border": "<%= surface %>",
+    "sideBarTitle.foreground": "<%= fgBright %>",
+    "sideBarSectionHeader.background": "<%= surface %>",
+    "sideBarSectionHeader.foreground": "<%= muted %>",
+    "sideBarSectionHeader.border": "<%= overlay %>",
+
+    "list.activeSelectionBackground": "<%= highlight %>",
+    "list.activeSelectionForeground": "<%= fgBright %>",
+    "list.inactiveSelectionBackground": "<%= overlay %>",
+    "list.inactiveSelectionForeground": "<%= fg %>",
+    "list.hoverBackground": "<%= overlay %>",
+    "list.hoverForeground": "<%= fg %>",
+    "list.focusBackground": "<%= highlight %>",
+    "list.focusForeground": "<%= fgBright %>",
+    "list.highlightForeground": "<%= green %>",
+    "list.errorForeground": "<%= red %>",
+    "list.warningForeground": "<%= yellow %>",
+
+    "tree.indentGuidesStroke": "<%= overlay %>",
+
+    "statusBar.background": "<%= surface %>",
+    "statusBar.foreground": "<%= fg %>",
+    "statusBar.border": "<%= surface %>",
+    "statusBar.noFolderBackground": "<%= surface %>",
+    "statusBar.debuggingBackground": "<%= magenta %>",
+    "statusBar.debuggingForeground": "<%= bg %>",
+    "statusBarItem.remoteBackground": "<%= green %>",
+    "statusBarItem.remoteForeground": "<%= bg %>",
+    "statusBarItem.prominentBackground": "<%= overlay %>",
+    "statusBarItem.errorBackground": "<%= red %>",
+    "statusBarItem.errorForeground": "<%= bg %>",
+    "statusBarItem.warningBackground": "<%= yellow %>",
+    "statusBarItem.warningForeground": "<%= bg %>",
+
+    "titleBar.activeBackground": "<%= surface %>",
+    "titleBar.activeForeground": "<%= fg %>",
+    "titleBar.inactiveBackground": "<%= surface %>",
+    "titleBar.inactiveForeground": "<%= muted %>",
+    "titleBar.border": "<%= surface %>",
+
+    "menu.background": "<%= surface %>",
+    "menu.foreground": "<%= fg %>",
+    "menu.selectionBackground": "<%= highlight %>",
+    "menu.selectionForeground": "<%= fgBright %>",
+    "menu.separatorBackground": "<%= border %>",
+    "menubar.selectionBackground": "<%= overlay %>",
+
+    "panel.background": "<%= bg %>",
+    "panel.border": "<%= border %>",
+    "panelTitle.activeForeground": "<%= fgBright %>",
+    "panelTitle.inactiveForeground": "<%= muted %>",
+    "panelTitle.activeBorder": "<%= green %>",
+
+    "input.background": "<%= surface %>",
+    "input.foreground": "<%= fg %>",
+    "input.border": "<%= border %>",
+    "input.placeholderForeground": "<%= muted %>",
+    "inputOption.activeBackground": "<%= highlight %>",
+    "inputOption.activeForeground": "<%= fgBright %>",
+    "inputValidation.errorBackground": "<%= bg %>",
+    "inputValidation.errorBorder": "<%= red %>",
+    "inputValidation.warningBackground": "<%= bg %>",
+    "inputValidation.warningBorder": "<%= yellow %>",
+    "inputValidation.infoBackground": "<%= bg %>",
+    "inputValidation.infoBorder": "<%= blue %>",
+
+    "dropdown.background": "<%= surface %>",
+    "dropdown.foreground": "<%= fg %>",
+    "dropdown.border": "<%= border %>",
+    "dropdown.listBackground": "<%= surface %>",
+
+    "button.background": "<%= green %>",
+    "button.foreground": "<%= bg %>",
+    "button.hoverBackground": "<%= greenBr %>",
+    "button.secondaryBackground": "<%= overlay %>",
+    "button.secondaryForeground": "<%= fg %>",
+    "button.secondaryHoverBackground": "<%= highlight %>",
+
+    "badge.background": "<%= overlay %>",
+    "badge.foreground": "<%= fg %>",
+
+    "progressBar.background": "<%= green %>",
+
+    "scrollbar.shadow": "#00000000",
+    "scrollbarSlider.background": "<%= a(border, '80') %>",
+    "scrollbarSlider.hoverBackground": "<%= a(border, 'aa') %>",
+    "scrollbarSlider.activeBackground": "<%= border %>",
+
+    "breadcrumb.foreground": "<%= muted %>",
+    "breadcrumb.focusForeground": "<%= fg %>",
+    "breadcrumb.activeSelectionForeground": "<%= fgBright %>",
+    "breadcrumbPicker.background": "<%= surface %>",
+
+    "editorWidget.background": "<%= surface %>",
+    "editorWidget.foreground": "<%= fg %>",
+    "editorWidget.border": "<%= border %>",
+    "editorSuggestWidget.background": "<%= surface %>",
+    "editorSuggestWidget.border": "<%= border %>",
+    "editorSuggestWidget.foreground": "<%= fg %>",
+    "editorSuggestWidget.highlightForeground": "<%= green %>",
+    "editorSuggestWidget.selectedBackground": "<%= highlight %>",
+    "editorHoverWidget.background": "<%= surface %>",
+    "editorHoverWidget.border": "<%= border %>",
+
+    "peekView.border": "<%= magenta %>",
+    "peekViewEditor.background": "<%= overlay %>",
+    "peekViewEditor.matchHighlightBackground": "<%= a(magenta, '60') %>",
+    "peekViewResult.background": "<%= surface %>",
+    "peekViewResult.fileForeground": "<%= fg %>",
+    "peekViewResult.lineForeground": "<%= muted %>",
+    "peekViewResult.matchHighlightBackground": "<%= a(magenta, '60') %>",
+    "peekViewResult.selectionBackground": "<%= highlight %>",
+    "peekViewResult.selectionForeground": "<%= fgBright %>",
+    "peekViewTitle.background": "<%= surface %>",
+    "peekViewTitleDescription.foreground": "<%= muted %>",
+    "peekViewTitleLabel.foreground": "<%= fgBright %>",
+
+    "notificationCenter.border": "<%= border %>",
+    "notificationCenterHeader.background": "<%= surface %>",
+    "notificationCenterHeader.foreground": "<%= fg %>",
+    "notifications.background": "<%= surface %>",
+    "notifications.foreground": "<%= fg %>",
+    "notifications.border": "<%= border %>",
+    "notificationsErrorIcon.foreground": "<%= red %>",
+    "notificationsWarningIcon.foreground": "<%= yellow %>",
+    "notificationsInfoIcon.foreground": "<%= blue %>",
+
+    "terminal.background": "<%= bg %>",
+    "terminal.foreground": "<%= fg %>",
+    "terminal.selectionBackground": "<%= highlight %>",
+    "terminalCursor.background": "<%= cursor %>",
+    "terminalCursor.foreground": "<%= cursor %>",
+    "terminal.ansiBlack": "<%= it.ansi.base.black %>",
+    "terminal.ansiRed": "<%= red %>",
+    "terminal.ansiGreen": "<%= green %>",
+    "terminal.ansiYellow": "<%= yellow %>",
+    "terminal.ansiBlue": "<%= blue %>",
+    "terminal.ansiMagenta": "<%= magenta %>",
+    "terminal.ansiCyan": "<%= cyan %>",
+    "terminal.ansiWhite": "<%= fg %>",
+    "terminal.ansiBrightBlack": "<%= it.ansi.bright.black %>",
+    "terminal.ansiBrightRed": "<%= redBr %>",
+    "terminal.ansiBrightGreen": "<%= greenBr %>",
+    "terminal.ansiBrightYellow": "<%= yellowBr %>",
+    "terminal.ansiBrightBlue": "<%= blueBr %>",
+    "terminal.ansiBrightMagenta": "<%= magentaBr %>",
+    "terminal.ansiBrightCyan": "<%= cyanBr %>",
+    "terminal.ansiBrightWhite": "<%= fgBright %>",
+
+    "gitDecoration.modifiedResourceForeground": "<%= yellow %>",
+    "gitDecoration.deletedResourceForeground": "<%= red %>",
+    "gitDecoration.untrackedResourceForeground": "<%= green %>",
+    "gitDecoration.ignoredResourceForeground": "<%= dim %>",
+    "gitDecoration.conflictingResourceForeground": "<%= magenta %>",
+    "gitDecoration.stageModifiedResourceForeground": "<%= yellowBr %>",
+    "gitDecoration.stageDeletedResourceForeground": "<%= redBr %>",
+
+    "diffEditor.insertedTextBackground": "<%= a(green, '20') %>",
+    "diffEditor.removedTextBackground": "<%= a(red, '20') %>",
+    "diffEditor.insertedLineBackground": "<%= a(green, '18') %>",
+    "diffEditor.removedLineBackground": "<%= a(red, '18') %>",
+
+    "merge.currentHeaderBackground": "<%= a(green, '40') %>",
+    "merge.currentContentBackground": "<%= a(green, '20') %>",
+    "merge.incomingHeaderBackground": "<%= a(blue, '40') %>",
+    "merge.incomingContentBackground": "<%= a(blue, '20') %>",
+
+    "minimap.findMatchHighlight": "<%= magenta %>",
+    "minimap.selectionHighlight": "<%= highlight %>",
+    "minimap.errorHighlight": "<%= red %>",
+    "minimap.warningHighlight": "<%= yellow %>",
+    "minimapSlider.background": "<%= a(border, '60') %>",
+    "minimapSlider.hoverBackground": "<%= a(border, '90') %>",
+    "minimapSlider.activeBackground": "<%= border %>",
+
+    "debugToolBar.background": "<%= surface %>",
+    "debugIcon.breakpointForeground": "<%= red %>",
+    "debugIcon.startForeground": "<%= green %>",
+    "debugIcon.pauseForeground": "<%= yellow %>",
+    "debugIcon.stopForeground": "<%= red %>",
+    "debugIcon.stepOverForeground": "<%= blue %>",
+    "debugIcon.continueForeground": "<%= green %>",
+
+    "charts.foreground": "<%= fg %>",
+    "charts.lines": "<%= border %>",
+    "charts.red": "<%= red %>",
+    "charts.blue": "<%= blue %>",
+    "charts.yellow": "<%= yellow %>",
+    "charts.orange": "<%= it.ansi.bright.cyan %>",
+    "charts.green": "<%= green %>",
+    "charts.purple": "<%= magenta %>"
+  },
+  "tokenColors": [
+    {
+      "name": "Comment",
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": { "foreground": "<%= muted %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "Variables",
+      "scope": ["variable", "string constant.other.placeholder"],
+      "settings": { "foreground": "<%= fg %>" }
+    },
+    {
+      "name": "Other keywords",
+      "scope": ["variable.other.object", "variable.other.readwrite"],
+      "settings": { "foreground": "<%= fg %>" }
+    },
+    {
+      "name": "Built-in / language variables",
+      "scope": ["variable.language", "variable.other.constant"],
+      "settings": { "foreground": "<%= red %>" }
+    },
+    {
+      "name": "Parameters",
+      "scope": ["variable.parameter"],
+      "settings": { "foreground": "<%= fgBright %>" }
+    },
+    {
+      "name": "Members",
+      "scope": ["variable.other.property", "variable.other.object.property", "support.variable.property"],
+      "settings": { "foreground": "<%= blue %>" }
+    },
+    {
+      "name": "Colors",
+      "scope": ["constant.other.color"],
+      "settings": { "foreground": "<%= cyanBr %>" }
+    },
+    {
+      "name": "Invalid",
+      "scope": ["invalid", "invalid.illegal"],
+      "settings": { "foreground": "<%= red %>" }
+    },
+    {
+      "name": "Keyword, Storage",
+      "scope": ["keyword", "storage.type", "storage.modifier"],
+      "settings": { "foreground": "<%= magenta %>" }
+    },
+    {
+      "name": "Keyword Control",
+      "scope": ["keyword.control"],
+      "settings": { "foreground": "<%= magenta %>" }
+    },
+    {
+      "name": "Keyword import",
+      "scope": ["keyword.control.import", "keyword.control.from", "keyword.other.import"],
+      "settings": { "foreground": "<%= blue %>" }
+    },
+    {
+      "name": "Operator, Misc",
+      "scope": ["keyword.operator", "constant.other.color", "punctuation"],
+      "settings": { "foreground": "<%= cyan %>" }
+    },
+    {
+      "name": "Tag",
+      "scope": ["entity.name.tag", "markup.heading"],
+      "settings": { "foreground": "<%= magenta %>" }
+    },
+    {
+      "name": "Function, Special Method",
+      "scope": [
+        "entity.name.function",
+        "meta.function-call",
+        "variable.function",
+        "support.function",
+        "keyword.other.special-method"
+      ],
+      "settings": { "foreground": "<%= green %>" }
+    },
+    {
+      "name": "Block Level Variables",
+      "scope": ["meta.block variable.other"],
+      "settings": { "foreground": "<%= red %>" }
+    },
+    {
+      "name": "Other Variable, String Link",
+      "scope": ["support.other.variable", "string.other.link"],
+      "settings": { "foreground": "<%= fg %>" }
+    },
+    {
+      "name": "Number, Constant, Function Argument, Tag Attribute, Embedded",
+      "scope": [
+        "constant.numeric",
+        "constant.language",
+        "support.constant",
+        "constant.character",
+        "constant.escape",
+        "variable.parameter",
+        "keyword.other.unit",
+        "keyword.other"
+      ],
+      "settings": { "foreground": "<%= cyanBr %>" }
+    },
+    {
+      "name": "String, Symbols, Inherited Class, Markup Heading",
+      "scope": [
+        "string",
+        "constant.other.symbol",
+        "constant.other.key",
+        "entity.other.inherited-class",
+        "markup.inline.raw",
+        "meta.group.braces.curly constant.other.object.key.js string.unquoted.label.js"
+      ],
+      "settings": { "foreground": "<%= greenBr %>" }
+    },
+    {
+      "name": "Class, Support",
+      "scope": [
+        "entity.name",
+        "support.type",
+        "support.class",
+        "support.other.namespace.use.php",
+        "meta.use.php",
+        "support.other.namespace.php",
+        "markup.raw.inline",
+        "support.type.sys-types"
+      ],
+      "settings": { "foreground": "<%= yellow %>" }
+    },
+    {
+      "name": "Entity types",
+      "scope": ["support.type", "entity.name.type"],
+      "settings": { "foreground": "<%= yellow %>" }
+    },
+    {
+      "name": "CSS Class and Support",
+      "scope": [
+        "source.css support.type.property-name",
+        "source.sass support.type.property-name",
+        "source.scss support.type.property-name",
+        "source.less support.type.property-name",
+        "source.stylus support.type.property-name",
+        "source.postcss support.type.property-name"
+      ],
+      "settings": { "foreground": "<%= cyan %>" }
+    },
+    {
+      "name": "Sub-methods",
+      "scope": ["entity.name.module.js", "variable.import.parameter.js", "variable.other.class.js"],
+      "settings": { "foreground": "<%= red %>" }
+    },
+    {
+      "name": "Language methods",
+      "scope": ["variable.language"],
+      "settings": { "foreground": "<%= red %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "HTML Attributes",
+      "scope": ["entity.other.attribute-name", "meta.tag.attributes"],
+      "settings": { "foreground": "<%= yellow %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "CSS Classes",
+      "scope": ["entity.other.attribute-name.class"],
+      "settings": { "foreground": "<%= yellow %>" }
+    },
+    {
+      "name": "CSS ID's",
+      "scope": ["source.sass keyword.control"],
+      "settings": { "foreground": "<%= green %>" }
+    },
+    {
+      "name": "Inserted",
+      "scope": ["markup.inserted"],
+      "settings": { "foreground": "<%= green %>" }
+    },
+    {
+      "name": "Deleted",
+      "scope": ["markup.deleted"],
+      "settings": { "foreground": "<%= red %>" }
+    },
+    {
+      "name": "Changed",
+      "scope": ["markup.changed"],
+      "settings": { "foreground": "<%= yellow %>" }
+    },
+    {
+      "name": "Regular Expressions",
+      "scope": ["string.regexp"],
+      "settings": { "foreground": "<%= magentaBr %>" }
+    },
+    {
+      "name": "Escape Characters",
+      "scope": ["constant.character.escape"],
+      "settings": { "foreground": "<%= magentaBr %>" }
+    },
+    {
+      "name": "URL",
+      "scope": ["*url*", "*link*", "*uri*"],
+      "settings": { "fontStyle": "underline" }
+    },
+    {
+      "name": "Decorators",
+      "scope": [
+        "tag.decorator.js entity.name.tag.js",
+        "tag.decorator.js punctuation.definition.tag.js"
+      ],
+      "settings": { "foreground": "<%= yellow %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "ES7 Bind Operator",
+      "scope": ["source.js constant.other.object.key.js string.unquoted.label.js"],
+      "settings": { "foreground": "<%= magenta %>" }
+    },
+    {
+      "name": "JSON Key - Level 0",
+      "scope": ["source.json meta.structure.dictionary.json support.type.property-name.json"],
+      "settings": { "foreground": "<%= magenta %>" }
+    },
+    {
+      "name": "JSON Key - Level 1",
+      "scope": [
+        "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
+      ],
+      "settings": { "foreground": "<%= yellow %>" }
+    },
+    {
+      "name": "JSON Key - Level 2",
+      "scope": [
+        "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
+      ],
+      "settings": { "foreground": "<%= cyan %>" }
+    },
+    {
+      "name": "Markdown - Plain",
+      "scope": ["text.html.markdown", "punctuation.definition.list_item.markdown"],
+      "settings": { "foreground": "<%= fg %>" }
+    },
+    {
+      "name": "Markdown - Markup Raw Inline",
+      "scope": ["text.html.markdown markup.inline.raw.markdown"],
+      "settings": { "foreground": "<%= greenBr %>" }
+    },
+    {
+      "name": "Markdown - Heading",
+      "scope": [
+        "markdown.heading",
+        "markup.heading | markup.heading entity.name",
+        "markup.heading.markdown punctuation.definition.heading.markdown"
+      ],
+      "settings": { "foreground": "<%= green %>", "fontStyle": "bold" }
+    },
+    {
+      "name": "Markup - Italic",
+      "scope": ["markup.italic"],
+      "settings": { "foreground": "<%= magenta %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "Markup - Bold",
+      "scope": ["markup.bold", "markup.bold string"],
+      "settings": { "foreground": "<%= yellow %>", "fontStyle": "bold" }
+    },
+    {
+      "name": "Markup - Bold-Italic",
+      "scope": [
+        "markup.bold markup.italic",
+        "markup.italic markup.bold",
+        "markup.quote markup.bold",
+        "markup.bold markup.italic string",
+        "markup.italic markup.bold string",
+        "markup.quote markup.bold string"
+      ],
+      "settings": { "foreground": "<%= yellow %>", "fontStyle": "bold italic" }
+    },
+    {
+      "name": "Markup - Quote",
+      "scope": ["markup.quote"],
+      "settings": { "foreground": "<%= muted %>", "fontStyle": "italic" }
+    },
+    {
+      "name": "Markup - Link",
+      "scope": ["string.other.link", "markup.underline.link"],
+      "settings": { "foreground": "<%= cyan %>", "fontStyle": "underline" }
+    },
+    {
+      "name": "Markup - Raw Block",
+      "scope": ["markup.raw.block"],
+      "settings": { "foreground": "<%= greenBr %>" }
+    }
+  ]
+}
