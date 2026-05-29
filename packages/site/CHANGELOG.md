@@ -1,3 +1,9 @@
+## 0.2.0-rc.3 (2026-05-29)
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.0-rc.3
+
 ## 0.2.0-rc.2 (2026-05-29)
 
 ### 🌿 New Growth

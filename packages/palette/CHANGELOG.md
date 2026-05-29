@@ -1,3 +1,9 @@
+## 0.2.0-rc.3 (2026-05-29)
+
+### 🌿 New Growth
+
+- **palette:** adjust ansi and surface colors ([335b3fc](https://github.com/sageveil/sageveil/commit/335b3fc))
+
 ## 0.2.0-rc.2 (2026-05-29)
 
 ### 🌿 New Growth
