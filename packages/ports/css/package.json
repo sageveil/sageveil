@@ -1,0 +1,36 @@
+{
+  "name": "@sageveil/css",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/css"
+        ]
+      },
+      "nx-release-publish": {
+        "dependsOn": [
+          "generate"
+        ],
+        "options": {
+          "packageRoot": "dist/ports/css",
+          "access": "public"
+        }
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "CSS",
+    "description": "Sageveil colorscheme as CSS variables, SCSS, a Tailwind v4 theme, and JS/TS tokens.",
+    "tags": [
+      "web",
+      "css"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+:root {
+  --sv-black: <%= it.ansi.base.black %>;
+  --sv-red: <%= it.ansi.base.red %>;
+  --sv-green: <%= it.ansi.base.green %>;
+  --sv-yellow: <%= it.ansi.base.yellow %>;
+  --sv-blue: <%= it.ansi.base.blue %>;
+  --sv-magenta: <%= it.ansi.base.magenta %>;
+  --sv-cyan: <%= it.ansi.base.cyan %>;
+  --sv-white: <%= it.ansi.base.white %>;
+
+  --sv-bright-black: <%= it.ansi.bright.black %>;
+  --sv-bright-red: <%= it.ansi.bright.red %>;
+  --sv-bright-green: <%= it.ansi.bright.green %>;
+  --sv-bright-yellow: <%= it.ansi.bright.yellow %>;
+  --sv-bright-blue: <%= it.ansi.bright.blue %>;
+  --sv-bright-magenta: <%= it.ansi.bright.magenta %>;
+  --sv-bright-cyan: <%= it.ansi.bright.cyan %>;
+  --sv-bright-white: <%= it.ansi.bright.white %>;
+
+  --sv-surface: <%= it.extras.surface %>;
+  --sv-overlay: <%= it.extras.overlay %>;
+  --sv-highlight: <%= it.extras.highlight %>;
+  --sv-border: <%= it.extras.border %>;
+  --sv-muted: <%= it.extras.muted %>;
+  --sv-dim: <%= it.extras.dim %>;
+  --sv-cursor: <%= it.extras.cursor %>;
+  --sv-cursor-text: <%= it.extras.cursor_text %>;
+}

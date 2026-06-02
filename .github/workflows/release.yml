@@ -193,6 +193,7 @@ jobs:
         with:
           node-version-file: package.json
           cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
       - run: pnpm install --frozen-lockfile
       - name: Build selected port
         run: |
@@ -208,6 +209,17 @@ jobs:
             echo "dist/ports/${PORT} missing. Build must place artefacts there."
             exit 1
           }
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          # nx release publish skips any package with "private": true, so ports
+          # that are GitHub-only (private source manifest) are no-ops here.
+          # The css port points packageRoot at its non-private dist manifest.
+          TAG="latest"
+          [[ "${IS_PRERELEASE}" == "true" ]] && TAG="next"
+          pnpm nx release publish --projects="@sageveil/${PORT}" --tag "${TAG}"
       - name: Package release asset
         id: asset
         run: |

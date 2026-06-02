@@ -1,0 +1,32 @@
+/* sageveil colorscheme — Tailwind v4 theme */
+/* Generated from @sageveil/palette. Do not edit by hand. */
+/* Usage: @import "@sageveil/css/tailwind"; then use bg-sv-green, text-sv-muted, etc. */
+
+@theme {
+  --color-sv-black: <%= it.ansi.base.black %>;
+  --color-sv-red: <%= it.ansi.base.red %>;
+  --color-sv-green: <%= it.ansi.base.green %>;
+  --color-sv-yellow: <%= it.ansi.base.yellow %>;
+  --color-sv-blue: <%= it.ansi.base.blue %>;
+  --color-sv-magenta: <%= it.ansi.base.magenta %>;
+  --color-sv-cyan: <%= it.ansi.base.cyan %>;
+  --color-sv-white: <%= it.ansi.base.white %>;
+
+  --color-sv-bright-black: <%= it.ansi.bright.black %>;
+  --color-sv-bright-red: <%= it.ansi.bright.red %>;
+  --color-sv-bright-green: <%= it.ansi.bright.green %>;
+  --color-sv-bright-yellow: <%= it.ansi.bright.yellow %>;
+  --color-sv-bright-blue: <%= it.ansi.bright.blue %>;
+  --color-sv-bright-magenta: <%= it.ansi.bright.magenta %>;
+  --color-sv-bright-cyan: <%= it.ansi.bright.cyan %>;
+  --color-sv-bright-white: <%= it.ansi.bright.white %>;
+
+  --color-sv-surface: <%= it.extras.surface %>;
+  --color-sv-overlay: <%= it.extras.overlay %>;
+  --color-sv-highlight: <%= it.extras.highlight %>;
+  --color-sv-border: <%= it.extras.border %>;
+  --color-sv-muted: <%= it.extras.muted %>;
+  --color-sv-dim: <%= it.extras.dim %>;
+  --color-sv-cursor: <%= it.extras.cursor %>;
+  --color-sv-cursor-text: <%= it.extras.cursor_text %>;
+}
