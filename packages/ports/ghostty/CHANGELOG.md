@@ -1,3 +1,23 @@
+## 0.2.0 (2026-06-02)
+
+### 🌿 New Growth
+
+- **site:** add landing page ([a81a97d](https://github.com/sageveil/sageveil/commit/a81a97d))
+- **ghostty:** add port scaffolding ([54229c7](https://github.com/sageveil/sageveil/commit/54229c7))
+
+### 🍃 Refinements
+
+- **release:** consolidate per-port releases under umbrella version ([4ced1ed](https://github.com/sageveil/sageveil/commit/4ced1ed))
+- drop templater and flatten port packages ([952d9c0](https://github.com/sageveil/sageveil/commit/952d9c0))
+
+### 📚 Knowledge
+
+- **ghostty:** expand README ([8657850](https://github.com/sageveil/sageveil/commit/8657850))
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.0
+
 ## 0.2.0-rc.3 (2026-05-29)
 
 ### 🧱 Updated Dependencies
