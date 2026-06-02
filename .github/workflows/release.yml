@@ -214,9 +214,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          # nx release publish skips any package with "private": true, so ports
-          # that are GitHub-only (private source manifest) are no-ops here.
-          # The css port points packageRoot at its non-private dist manifest.
+          SRC="packages/ports/${PORT}/package.json"
+          HAS_TARGET="$(node -p "Boolean(require('./${SRC}').nx?.targets?.['nx-release-publish'])" 2>/dev/null || echo false)"
+          if [[ "${HAS_TARGET}" != "true" ]]; then
+            echo "${PORT} has no nx-release-publish target; GitHub-only port, skipping npm."
+            exit 0
+          fi
           TAG="latest"
           [[ "${IS_PRERELEASE}" == "true" ]] && TAG="next"
           pnpm nx release publish --projects="@sageveil/${PORT}" --tag "${TAG}"
