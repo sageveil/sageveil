@@ -1,0 +1,56 @@
+// sageveil colorscheme — SCSS variables
+// Generated from @sageveil/palette. Do not edit by hand.
+
+$sv-black: <%= it.ansi.base.black %>;
+$sv-red: <%= it.ansi.base.red %>;
+$sv-green: <%= it.ansi.base.green %>;
+$sv-yellow: <%= it.ansi.base.yellow %>;
+$sv-blue: <%= it.ansi.base.blue %>;
+$sv-magenta: <%= it.ansi.base.magenta %>;
+$sv-cyan: <%= it.ansi.base.cyan %>;
+$sv-white: <%= it.ansi.base.white %>;
+
+$sv-bright-black: <%= it.ansi.bright.black %>;
+$sv-bright-red: <%= it.ansi.bright.red %>;
+$sv-bright-green: <%= it.ansi.bright.green %>;
+$sv-bright-yellow: <%= it.ansi.bright.yellow %>;
+$sv-bright-blue: <%= it.ansi.bright.blue %>;
+$sv-bright-magenta: <%= it.ansi.bright.magenta %>;
+$sv-bright-cyan: <%= it.ansi.bright.cyan %>;
+$sv-bright-white: <%= it.ansi.bright.white %>;
+
+$sv-surface: <%= it.extras.surface %>;
+$sv-overlay: <%= it.extras.overlay %>;
+$sv-highlight: <%= it.extras.highlight %>;
+$sv-border: <%= it.extras.border %>;
+$sv-muted: <%= it.extras.muted %>;
+$sv-dim: <%= it.extras.dim %>;
+$sv-cursor: <%= it.extras.cursor %>;
+$sv-cursor-text: <%= it.extras.cursor_text %>;
+
+$sv-colors: (
+  "black": $sv-black,
+  "red": $sv-red,
+  "green": $sv-green,
+  "yellow": $sv-yellow,
+  "blue": $sv-blue,
+  "magenta": $sv-magenta,
+  "cyan": $sv-cyan,
+  "white": $sv-white,
+  "bright-black": $sv-bright-black,
+  "bright-red": $sv-bright-red,
+  "bright-green": $sv-bright-green,
+  "bright-yellow": $sv-bright-yellow,
+  "bright-blue": $sv-bright-blue,
+  "bright-magenta": $sv-bright-magenta,
+  "bright-cyan": $sv-bright-cyan,
+  "bright-white": $sv-bright-white,
+  "surface": $sv-surface,
+  "overlay": $sv-overlay,
+  "highlight": $sv-highlight,
+  "border": $sv-border,
+  "muted": $sv-muted,
+  "dim": $sv-dim,
+  "cursor": $sv-cursor,
+  "cursor-text": $sv-cursor-text,
+);

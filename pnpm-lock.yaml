@@ -146,6 +146,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/css:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/fzf:
     dependencies:
       '@sageveil/palette':

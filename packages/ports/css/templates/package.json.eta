@@ -1,0 +1,53 @@
+{
+  "name": "@sageveil/css",
+  "version": "<%= it.version %>",
+  "description": "Sageveil colorscheme as CSS custom properties, SCSS variables, a Tailwind v4 theme, and JS/TS tokens.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./css": "./sageveil.css",
+    "./scss": "./_sageveil.scss",
+    "./tailwind": "./theme.css",
+    "./package.json": "./package.json"
+  },
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "style": "./sageveil.css",
+  "sass": "./_sageveil.scss",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "sageveil.css",
+    "_sageveil.scss",
+    "theme.css",
+    "README.md"
+  ],
+  "keywords": [
+    "sageveil",
+    "colorscheme",
+    "theme",
+    "css",
+    "scss",
+    "tailwind",
+    "css-variables",
+    "design-tokens"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sageveil/sageveil.git",
+    "directory": "packages/ports/css"
+  },
+  "homepage": "https://github.com/sageveil/css",
+  "publishConfig": {
+    "access": "public"
+  }
+}
