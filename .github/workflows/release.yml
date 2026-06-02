@@ -46,7 +46,7 @@ jobs:
       release_branch: ${{ github.ref_name }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
@@ -57,11 +57,11 @@ jobs:
           git checkout -B "${{ github.ref_name }}" "${{ github.sha }}"
           git branch --set-upstream-to="origin/${{ github.ref_name }}" "${{ github.ref_name }}"
       - name: Set up pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093
         with:
           run_install: false
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version-file: package.json
           cache: pnpm
@@ -182,14 +182,14 @@ jobs:
       IS_PRERELEASE: ${{ matrix.entry.isPrerelease }}
     steps:
       - name: Checkout monorepo at umbrella tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           token: ${{ secrets.PAT }}
           ref: ${{ needs.version.outputs.umbrella_tag }}
-      - uses: pnpm/action-setup@v6
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093
         with:
           run_install: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version-file: package.json
           cache: pnpm
