@@ -36,21 +36,21 @@ export function buildPortLinks(input: {
   const isDefaultMonorepo = resolvedRepoUrl === DEFAULT_REPO_URL;
   const owner = githubRepo?.owner ?? 'sageveil';
   const repoBase = `https://github.com/${owner}/${input.slug}`;
+  const tag = `v${input.version}`;
 
   if (isDefaultMonorepo) {
     return {
       codeUrl: `${resolvedRepoUrl}/tree/main/packages/ports/${input.slug}`,
-      releaseUrl: `${repoBase}/releases/tag/${input.version}`,
-      downloadUrl: `${repoBase}/releases/download/${input.version}/sageveil-${input.slug}-${input.version}.zip`,
+      releaseUrl: `${repoBase}/releases/tag/${tag}`,
+      downloadUrl: `${repoBase}/releases/download/${tag}/sageveil-${input.slug}-${input.version}.zip`,
     };
   }
 
   return {
     codeUrl: repoBase,
-    releaseUrl: `${repoBase}/releases/tag/${input.version}`,
-    downloadUrl: `${repoBase}/releases/download/${input.version}/sageveil-${input.slug}-${input.version}.zip`,
+    releaseUrl: `${repoBase}/releases/tag/${tag}`,
+    downloadUrl: `${repoBase}/releases/download/${tag}/sageveil-${input.slug}-${input.version}.zip`,
   };
 }
 
 export const defaultRepoUrl = DEFAULT_REPO_URL;
-

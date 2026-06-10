@@ -10,10 +10,11 @@ describe('buildPortLinks', () => {
     });
 
     expect(links).toEqual({
-      codeUrl: 'https://github.com/sageveil/sageveil/tree/main/packages/ports/tmux',
-      releaseUrl: 'https://github.com/sageveil/tmux/releases/tag/0.2.1',
+      codeUrl:
+        'https://github.com/sageveil/sageveil/tree/main/packages/ports/tmux',
+      releaseUrl: 'https://github.com/sageveil/tmux/releases/tag/v0.2.1',
       downloadUrl:
-        'https://github.com/sageveil/tmux/releases/download/0.2.1/sageveil-tmux-0.2.1.zip',
+        'https://github.com/sageveil/tmux/releases/download/v0.2.1/sageveil-tmux-0.2.1.zip',
     });
   });
 
@@ -26,9 +27,9 @@ describe('buildPortLinks', () => {
 
     expect(links).toEqual({
       codeUrl: 'https://github.com/acme/tmux',
-      releaseUrl: 'https://github.com/acme/tmux/releases/tag/0.2.1',
+      releaseUrl: 'https://github.com/acme/tmux/releases/tag/v0.2.1',
       downloadUrl:
-        'https://github.com/acme/tmux/releases/download/0.2.1/sageveil-tmux-0.2.1.zip',
+        'https://github.com/acme/tmux/releases/download/v0.2.1/sageveil-tmux-0.2.1.zip',
     });
   });
 
@@ -39,11 +40,13 @@ describe('buildPortLinks', () => {
     });
 
     expect(links.codeUrl).toBe(
-      'https://github.com/sageveil/sageveil/tree/main/packages/ports/nvim'
+      'https://github.com/sageveil/sageveil/tree/main/packages/ports/nvim',
     );
-    expect(links.releaseUrl).toBe('https://github.com/sageveil/nvim/releases/tag/1.0.0');
+    expect(links.releaseUrl).toBe(
+      'https://github.com/sageveil/nvim/releases/tag/v1.0.0',
+    );
     expect(links.downloadUrl).toBe(
-      'https://github.com/sageveil/nvim/releases/download/1.0.0/sageveil-nvim-1.0.0.zip'
+      'https://github.com/sageveil/nvim/releases/download/v1.0.0/sageveil-nvim-1.0.0.zip',
     );
   });
 });
