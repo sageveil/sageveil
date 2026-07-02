@@ -42,25 +42,13 @@ export async function render(job) {
     job.templateFiles ?? (await discoverTemplates(job.templateDir));
   const eta = new Eta({ views: job.templateDir, autoTrim: false });
   await mkdir(outputDir, { recursive: true });
-  const results = await Promise.allSettled(
-    templateFiles.map((file) => renderFile(eta, outputDir, file, job.ctx)),
+  await Promise.all(
+    templateFiles.map((file) =>
+      renderFile(eta, outputDir, file, job.ctx).catch((cause) => {
+        throw new Error(`Failed to render template "${file}"`, { cause });
+      }),
+    ),
   );
-
-  const failures = results
-    .map((result, index) => ({ result, index }))
-    .filter(({ result }) => result.status === 'rejected')
-    .map(({ result, index }) => ({
-      reason: result.reason,
-      file: templateFiles[index],
-    }));
-
-  failures.forEach(({ reason, file }) => {
-    console.error(`Failed to render template "${file}":`, reason);
-  });
-
-  if (failures.length) {
-    throw new Error(JSON.stringify(failures.map((f) => f.reason)));
-  }
 }
 
 async function renderFile(eta, outputDir, filename, ctx) {

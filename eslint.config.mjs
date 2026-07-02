@@ -17,26 +17,7 @@ export default [
       '@nx/enforce-module-boundaries': [
         'error',
         {
-          enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
-          depConstraints: [
-            {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: [
-      'packages/site/**/*.{ts,tsx,cts,mts,js,jsx,cjs,mjs}',
-    ],
-    rules: {
-      '@nx/enforce-module-boundaries': [
-        'error',
-        {
+          // false: the site app imports @sageveil/palette, a non-buildable lib.
           enforceBuildableLibDependency: false,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
@@ -48,19 +29,5 @@ export default [
         },
       ],
     },
-  },
-  {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.cts',
-      '**/*.mts',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.cjs',
-      '**/*.mjs',
-    ],
-    // Override or add rules here
-    rules: {},
   },
 ];

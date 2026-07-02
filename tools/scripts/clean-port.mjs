@@ -20,14 +20,14 @@ async function readJson(path) {
   return JSON.parse(contents);
 }
 
-function stripScope(packageName) {
-  const parts = packageName.split('/');
-  return parts.length > 1 ? parts[1] : parts[0];
-}
-
 async function main() {
   const pkg = await readJson(join(projectRoot, 'package.json'));
-  const targetDir = join(workspaceRoot, 'dist', 'ports', stripScope(pkg.name));
+  const targetDir = join(
+    workspaceRoot,
+    'dist',
+    'ports',
+    pkg.name.split('/').at(-1),
+  );
   await rm(targetDir, { recursive: true, force: true });
   console.log(`Cleaned ${relative(workspaceRoot, targetDir)}`);
 }

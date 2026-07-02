@@ -14,18 +14,13 @@ const workspaceRoot = process.env.NX_WORKSPACE_ROOT
   : resolve('.');
 const projectRoot = join(workspaceRoot, projectRootArg);
 
-function stripScope(packageName) {
-  const parts = packageName.split('/');
-  return parts.length > 1 ? parts[1] : parts[0];
-}
-
 async function main() {
   const pkgJsonPath = join(projectRoot, 'package.json');
   const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'));
   const packageName = pkgJson.name;
   const version = pkgJson.version;
 
-  const abbreviatedName = stripScope(packageName);
+  const abbreviatedName = packageName.split('/').at(-1);
   const buildRoot = join(workspaceRoot, 'dist', 'ports', abbreviatedName);
 
   await rm(buildRoot, { recursive: true, force: true });
