@@ -212,6 +212,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/pi:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/slack:
     dependencies:
       '@sageveil/palette':

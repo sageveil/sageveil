@@ -1,0 +1,143 @@
+<%
+const bg = it.ansi.base.black;
+const fg = it.ansi.base.white;
+const fgBright = it.ansi.bright.white;
+const surface = it.extras.surface;
+const overlay = it.extras.overlay;
+const highlight = it.extras.highlight;
+const border = it.extras.border;
+const muted = it.extras.muted;
+const dim = it.extras.dim;
+const cursor = it.extras.cursor;
+const cursorText = it.extras.cursor_text;
+
+const red = it.ansi.base.red;
+const green = it.ansi.base.green;
+const yellow = it.ansi.base.yellow;
+const blue = it.ansi.base.blue;
+const magenta = it.ansi.base.magenta;
+const cyan = it.ansi.base.cyan;
+
+const redBr = it.ansi.bright.red;
+const greenBr = it.ansi.bright.green;
+const yellowBr = it.ansi.bright.yellow;
+const blueBr = it.ansi.bright.blue;
+const magentaBr = it.ansi.bright.magenta;
+const cyanBr = it.ansi.bright.cyan;
+
+const parse = (hex) =>
+  hex
+    .slice(1)
+    .match(/.{2}/g)
+    .map((part) => Number.parseInt(part, 16));
+const channel = (value) => value.toString(16).padStart(2, '0').toUpperCase();
+const mix = (fg, bg, alpha) => {
+  const foreground = parse(fg);
+  const background = parse(bg);
+  const mixed = foreground.map((value, index) =>
+    Math.round(value * alpha + background[index] * (1 - alpha)),
+  );
+  return `#${mixed.map(channel).join('')}`;
+};
+
+const customBg = mix(magenta, bg, 0.16);
+const successBg = mix(green, bg, 0.16);
+const errorBg = mix(red, bg, 0.18);
+const warningBg = mix(yellow, bg, 0.12);
+%>{
+  "$schema": "https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
+  "name": "sageveil",
+  "vars": {
+    "black": "<%= bg %>",
+    "text": "<%= fg %>",
+    "brightText": "<%= fgBright %>",
+    "surface": "<%= surface %>",
+    "overlay": "<%= overlay %>",
+    "highlight": "<%= highlight %>",
+    "border": "<%= border %>",
+    "muted": "<%= muted %>",
+    "dim": "<%= dim %>",
+    "cursor": "<%= cursor %>",
+    "cursorText": "<%= cursorText %>",
+    "red": "<%= red %>",
+    "green": "<%= green %>",
+    "yellow": "<%= yellow %>",
+    "blue": "<%= blue %>",
+    "magenta": "<%= magenta %>",
+    "cyan": "<%= cyan %>",
+    "brightRed": "<%= redBr %>",
+    "brightGreen": "<%= greenBr %>",
+    "brightYellow": "<%= yellowBr %>",
+    "brightBlue": "<%= blueBr %>",
+    "brightMagenta": "<%= magentaBr %>",
+    "brightCyan": "<%= cyanBr %>",
+    "customBg": "<%= customBg %>",
+    "successBg": "<%= successBg %>",
+    "errorBg": "<%= errorBg %>",
+    "warningBg": "<%= warningBg %>"
+  },
+  "colors": {
+    "accent": "brightGreen",
+    "border": "border",
+    "borderAccent": "brightGreen",
+    "borderMuted": "border",
+    "success": "green",
+    "error": "red",
+    "warning": "brightYellow",
+    "muted": "muted",
+    "dim": "dim",
+    "text": "text",
+    "thinkingText": "muted",
+
+    "selectedBg": "highlight",
+    "userMessageBg": "surface",
+    "userMessageText": "text",
+    "customMessageBg": "customBg",
+    "customMessageText": "text",
+    "customMessageLabel": "brightMagenta",
+    "toolPendingBg": "overlay",
+    "toolSuccessBg": "successBg",
+    "toolErrorBg": "errorBg",
+    "toolTitle": "brightText",
+    "toolOutput": "muted",
+
+    "mdHeading": "brightYellow",
+    "mdLink": "brightCyan",
+    "mdLinkUrl": "dim",
+    "mdCode": "brightGreen",
+    "mdCodeBlock": "text",
+    "mdCodeBlockBorder": "border",
+    "mdQuote": "muted",
+    "mdQuoteBorder": "border",
+    "mdHr": "border",
+    "mdListBullet": "green",
+
+    "toolDiffAdded": "brightGreen",
+    "toolDiffRemoved": "brightRed",
+    "toolDiffContext": "muted",
+
+    "syntaxComment": "dim",
+    "syntaxKeyword": "magenta",
+    "syntaxFunction": "green",
+    "syntaxVariable": "text",
+    "syntaxString": "yellow",
+    "syntaxNumber": "brightCyan",
+    "syntaxType": "blue",
+    "syntaxOperator": "cyan",
+    "syntaxPunctuation": "muted",
+
+    "thinkingOff": "border",
+    "thinkingMinimal": "dim",
+    "thinkingLow": "green",
+    "thinkingMedium": "cyan",
+    "thinkingHigh": "magenta",
+    "thinkingXhigh": "brightRed",
+
+    "bashMode": "brightYellow"
+  },
+  "export": {
+    "pageBg": "black",
+    "cardBg": "surface",
+    "infoBg": "warningBg"
+  }
+}

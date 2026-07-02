@@ -1,0 +1,28 @@
+{
+  "name": "@sageveil/pi",
+  "version": "<%= it.version %>",
+  "description": "Sageveil TUI theme for Pi Coding Agent.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-theme",
+    "theme",
+    "colorscheme",
+    "sageveil"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sageveil/pi.git"
+  },
+  "homepage": "https://github.com/sageveil/pi",
+  "files": [
+    "themes/sageveil.json",
+    "README.md"
+  ],
+  "pi": {
+    "themes": [
+      "./themes"
+    ]
+  }
+}

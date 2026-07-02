@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/pi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/pi"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "Pi Coding Agent",
+    "description": "Sageveil TUI theme for Pi Coding Agent.",
+    "tags": [
+      "cli",
+      "agent"
+    ]
+  }
+}
