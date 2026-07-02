@@ -1,3 +1,13 @@
+## 0.2.1 (2026-07-02)
+
+### 🪴 Repairs
+
+- **site:** correct links to port releases ([28aa407](https://github.com/sageveil/sageveil/commit/28aa407))
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.1
+
 ## 0.2.0 (2026-06-02)
 
 ### 🌿 New Growth

@@ -1,3 +1,13 @@
+## 0.2.1 (2026-07-02)
+
+### 🌿 New Growth
+
+- **nvim:** align highlight groups colors ([ada9429](https://github.com/sageveil/sageveil/commit/ada9429))
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.1
+
 ## 0.2.0 (2026-06-02)
 
 ### 🌿 New Growth
