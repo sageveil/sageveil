@@ -1,3 +1,9 @@
+## 0.2.2 (2026-07-08)
+
+### 🌿 New Growth
+
+- **tmux:** refine status line styling ([662ab01](https://github.com/sageveil/sageveil/commit/662ab01))
+
 ## 0.2.1 (2026-07-02)
 
 ### 🧱 Updated Dependencies
