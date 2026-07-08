@@ -221,6 +221,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/starship:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/text-mate:
     dependencies:
       '@sageveil/palette':

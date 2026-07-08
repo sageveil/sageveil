@@ -32,9 +32,9 @@ One source of truth. Every port grows from these colors.
 
 ## 🌿 Ports
 
-Sageveil already grows in **19** places:
+Sageveil already grows in **20** places:
 
-`alacritty` · `css` · `fzf` · `ghostty` · `glamour` · `helix` · `ish` · `iterm2` · `k9s` · `kitty` · `nvim` · `obsidian` · `pi` · `slack` · `text-mate` · `tmux` · `vscode` · `wezterm` · `zed`
+`alacritty` · `css` · `fzf` · `ghostty` · `glamour` · `helix` · `ish` · `iterm2` · `k9s` · `kitty` · `nvim` · `obsidian` · `pi` · `slack` · `starship` · `text-mate` · `tmux` · `vscode` · `wezterm` · `zed`
 
 Don't see your tool? [Grow a new one](#create-a-new-port). 🪴
 

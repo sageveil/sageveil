@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/starship",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/starship"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "starship",
+    "description": "A calm, minimal Sageveil prompt theme for Starship.",
+    "tags": [
+      "terminal",
+      "prompt"
+    ]
+  }
+}

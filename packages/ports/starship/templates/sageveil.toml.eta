@@ -1,0 +1,194 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+[ 󰌪 ](bg:magenta fg:black)[](fg:magenta) \
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$lua\
+$nodejs\
+$nim\
+$rust\
+$scala\
+$conda\
+$python\
+$nix_shell\
+$zig\
+$line_break\
+$character"""
+
+palette = "sageveil"
+
+[palettes.sageveil]
+black = "<%= it.ansi.base.black %>"
+red = "<%= it.ansi.base.red %>"
+green = "<%= it.ansi.base.green %>"
+yellow = "<%= it.ansi.base.yellow %>"
+blue = "<%= it.ansi.base.blue %>"
+magenta = "<%= it.ansi.base.magenta %>"
+cyan = "<%= it.ansi.base.cyan %>"
+white = "<%= it.ansi.base.white %>"
+bright_black = "<%= it.ansi.bright.black %>"
+bright_red = "<%= it.ansi.bright.red %>"
+bright_green = "<%= it.ansi.bright.green %>"
+bright_yellow = "<%= it.ansi.bright.yellow %>"
+bright_blue = "<%= it.ansi.bright.blue %>"
+bright_magenta = "<%= it.ansi.bright.magenta %>"
+bright_cyan = "<%= it.ansi.bright.cyan %>"
+bright_white = "<%= it.ansi.bright.white %>"
+surface = "<%= it.extras.surface %>"
+overlay = "<%= it.extras.overlay %>"
+highlight = "<%= it.extras.highlight %>"
+border = "<%= it.extras.border %>"
+muted = "<%= it.extras.muted %>"
+dim = "<%= it.extras.dim %>"
+
+[character]
+success_symbol = "[❯](fg:green)"
+error_symbol = "[❯](fg:red)"
+vimcmd_symbol = "[](fg:yellow)"
+
+[directory]
+format = "[ 󰝰 $path$read_only ]($style)"
+style = "fg:green"
+truncation_length = 3
+truncation_symbol = ""
+read_only = " 󰌾"
+repo_root_style = "bold fg:bright_green"
+repo_root_format = "[ 󰊢 $before_root_path]($style)[$repo_root]($repo_root_style)[$path$read_only ]($style)"
+
+[directory.substitutions]
+Documents = "󰈙"
+Downloads = " "
+Music = " "
+Pictures = " "
+
+[fill]
+style = "fg:border"
+symbol = "·"
+
+[git_branch]
+format = "[ $symbol $branch ]($style)"
+style = "fg:bright_magenta"
+symbol = ""
+
+[git_status]
+disabled = false
+format = "($all_status( $ahead_behind) )"
+style = "fg:yellow"
+up_to_date = ""
+untracked = "[?${count}](fg:dim)"
+stashed = "[$](fg:blue)"
+modified = "[!${count}](fg:yellow)"
+renamed = "[»${count}](fg:cyan)"
+deleted = "[✘${count}](fg:red)"
+staged = "[+${count}](fg:green)"
+ahead = "[⇡${count}](fg:cyan)"
+diverged = "[⇡${ahead_count}](fg:cyan)[⇣${behind_count}](fg:magenta)"
+behind = "[⇣${count}](fg:magenta)"
+
+[nix_shell]
+format = "[ $symbol$name]($style)"
+heuristic = true
+style = "fg:blue"
+symbol = " "
+
+[zig]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+# Languages
+
+[c]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[elixir]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[elm]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[golang]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[haskell]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[java]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[julia]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[lua]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[nodejs]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = "󰎙 "
+
+[nim]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = "󰆥 "
+
+[rust]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[scala]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[python]
+style = "fg:blue"
+format = "[ $symbol$version]($style)"
+disabled = false
+symbol = " "
+
+[conda]
+style = "fg:blue"
+format = "[ $symbol$environment]($style)"
+disabled = false
+symbol = "🅒 "
