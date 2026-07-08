@@ -1,5 +1,8 @@
 name: Release
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       specifier:
@@ -33,6 +36,9 @@ on:
         default: false
 permissions:
   contents: write
+concurrency:
+  group: release-main
+  cancel-in-progress: false
 jobs:
   version:
     runs-on: ubuntu-latest
@@ -79,11 +85,11 @@ jobs:
           node tools/scripts/release-snapshot-versions.mjs > /tmp/before.json
       - name: Run nx release
         env:
-          SPECIFIER: ${{ inputs.specifier }}
-          PREID: ${{ inputs.preid }}
-          DRY_RUN: ${{ inputs.dry_run }}
-          FIRST_RELEASE: ${{ inputs.first_release }}
-          VERBOSE: ${{ inputs.verbose }}
+          SPECIFIER: ${{ inputs.specifier || 'conventional' }}
+          PREID: ${{ inputs.preid || '' }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
+          FIRST_RELEASE: ${{ inputs.first_release || false }}
+          VERBOSE: ${{ inputs.verbose || false }}
         run: |
           set -euo pipefail
           args=(--skip-publish)
