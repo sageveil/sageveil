@@ -13,7 +13,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sageveil/pi.git"
+    "url": "https://github.com/sageveil/sageveil.git",
+    "directory": "packages/ports/pi"
   },
   "homepage": "https://github.com/sageveil/pi",
   "files": [
@@ -24,5 +25,8 @@
     "themes": [
       "./themes"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

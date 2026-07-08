@@ -13,6 +13,16 @@
           "{workspaceRoot}/dist/ports/pi"
         ]
       },
+      "nx-release-publish": {
+        "executor": "@nx/js:release-publish",
+        "dependsOn": [
+          "generate"
+        ],
+        "options": {
+          "packageRoot": "dist/ports/pi",
+          "access": "public"
+        }
+      },
       "clean": {}
     }
   },

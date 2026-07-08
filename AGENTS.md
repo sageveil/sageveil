@@ -26,6 +26,7 @@ Run commands from the repo root.
 - `pnpm nx run <project>:typecheck`: TypeScript typecheck for a project.
 - `pnpm nx g @sageveil/nx:port --name <port>`: generate a new port.
 - `pnpm nx run-many -t test` / `pnpm nx run-many -t lint`: run targets across projects.
+- See `docs/npm-publishing.md` when making a port publishable to npm.
 
 ## Architecture
 

@@ -13,6 +13,12 @@ The sageveil Pi Coding Agent port provides a calm dark TUI theme for Pi's chat U
 
 ## Get the theme
 
+## Install
+
+```bash
+npm install -g @sageveil/pi
+```
+
 ### Prebuilt releases
 
 Download the theme from the dedicated repository: <https://github.com/sageveil/pi>.
@@ -41,7 +47,8 @@ pi install git:github.com/sageveil/pi
 1. Install the package:
 
    ```bash
-   pi install git:github.com/sageveil/pi
+   npm install -g @sageveil/pi
+   # or: pi install git:github.com/sageveil/pi
    ```
 
 2. Select **sageveil** from `/settings`, or set it in `~/.pi/agent/settings.json`:
