@@ -1,15 +1,18 @@
 # Repository Guidelines
 
+## About
+
+sageveil is a minimalist low-contrast, green-tinted colorscheme organized as an Nx + pnpm monorepo. It generates theme files for terminals, editors, and other tools from a shared palette using templates.
+
 ## Project Structure & Module Organization
 
-This is an Nx + pnpm monorepo for the Sageveil color scheme.
-
-- `packages/palette`: shared color tokens and helpers.
+- `packages/palette`: shared color tokens and helpers; exports the `sageveil` palette.
 - `tools/scripts`: shared build/render scripts used by Nx targets.
-- `packages/ports/<port>`: port-specific templates and assets (e.g. `nvim`, `tmux`).
+- `packages/ports/<port>`: port-specific templates and assets (for example `nvim`, `tmux`).
+- `packages/nx`: custom Nx generator (`@sageveil/nx:port`) for new port packages.
+- `packages/site`: React + Tailwind showcase site.
 - `assets`: repo images and preview assets.
-- `tools/scripts`: shared build/clean/render scripts used by Nx targets.
-- `dist/ports/<port>`: generated artifacts from `generate` targets.
+- `dist/ports/<port>`: generated artifacts from `generate` targets; not committed.
 
 ## Build, Test, and Development Commands
 
@@ -17,14 +20,54 @@ Run commands from the repo root.
 
 - `pnpm install`: install workspace dependencies (Node >= 24.10.0, pnpm >= 10.18.3).
 - `pnpm nx run <port>:generate`: build a port (example: `pnpm nx run tmux:generate`).
+- `pnpm nx run <project>:test`: run tests for a project.
+- `pnpm nx run <project>:test --testFile=src/lib/<name>.spec.ts`: run one test file.
 - `pnpm nx run <project>:lint`: ESLint checks for code-bearing projects.
 - `pnpm nx run <project>:typecheck`: TypeScript typecheck for a project.
+- `pnpm nx g @sageveil/nx:port --name <port>`: generate a new port.
+- `pnpm nx run-many -t test` / `pnpm nx run-many -t lint`: run targets across projects.
+
+## Architecture
+
+### Packages
+
+- `packages/palette`: single source of truth for colors. Exports `sageveil` with `ansi.base`, `ansi.bright`, and `extras` (`surface`, `overlay`, `highlight`, `border`, `muted`, `dim`, `cursor`, `cursor_text`).
+- `tools/scripts/render.mjs`: Eta-based rendering engine. `render()` takes a `RenderJob`, injects the full `sageveil` palette as template context, and writes output to the target directory. `.eta` suffixes are stripped from output filenames.
+- `packages/ports/*`: template-only packages. Templates live in `templates/`. The `generate` Nx target runs `tools/scripts/build-port.ts`, discovers templates, renders them, and writes output to `dist/ports/<name>/`.
+
+### Port structure
+
+```text
+packages/ports/<name>/
+  templates/
+    sageveil.<ext>[.eta]
+  package.json
+```
+
+Port `package.json` files include `sageveil` metadata such as `displayName`, `description`, and `tags`.
+
+### Template context
+
+Templates receive the full `sageveil` palette object:
+
+- `it.ansi.base.<color>`: base ANSI colors (`black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `white`).
+- `it.ansi.bright.<color>`: bright ANSI variants.
+- `it.extras.*`: extra UI colors.
+
+### Build pipeline
+
+The `generate` target invokes `tools/scripts/build-port.mjs <projectRoot>`, which:
+
+1. Sets the output directory to `dist/ports/<abbreviatedName>`.
+2. Auto-discovers templates in `templates/` and renders them through `tools/scripts/render.mjs`.
+3. Passes the port `version` from `package.json` as template context.
+4. Copies `README.md` and `assets/` to the output directory if present.
 
 ## Coding Style & Naming Conventions
 
 - Use TypeScript/ESM modules as shown in `packages/*/src`.
-- Format with Prettier (single quotes). Use `nx ...:lint` for packages that contain real TS/JS logic.
-- Nx enforces module boundaries; prefer importing via package entry points.
+- Format with Prettier (single quotes). Use Nx lint targets for packages with TS/JS logic.
+- Nx enforces module boundaries; prefer importing through package entry points.
 - Tests use `*.spec.ts` or `*.test.ts` naming under `src/`.
 - Port folders are lowercase and match their target app name.
 
@@ -32,17 +75,22 @@ Run commands from the repo root.
 
 Vitest is configured per code-bearing package via `vite.config.ts`.
 
-- Place tests in the package-local test directories for code-bearing packages.
+- Place tests in package-local test directories for code-bearing packages.
 - Run with `pnpm nx test <project>` or `pnpm nx run <project>:test` where a test target exists.
-- Coverage output (when enabled) goes to `<package>/test-output/vitest/coverage`.
+- Coverage output, when enabled, goes to `<package>/test-output/vitest/coverage`.
+- Port packages are content-only and currently do not carry package-local tests.
+
+## Release
+
+Releases use `nx release` with conventional commits. Per-package version bumps land as `{projectName}@{version}` tags in the monorepo. Each release cycle is wrapped in one umbrella `vX.Y.Z` GitHub release whose body aggregates changed ports' changelog entries; the umbrella bump is derived from the largest port bump. After the umbrella release, `release.yml` publishes changed port assets to downstream repos under `https://github.com/sageveil/<port>`. Prereleases push to an orphan commit downstream so `main` only moves for stable versions.
 
 ## Commit & Pull Request Guidelines
 
 Commits follow Conventional Commits with scopes enforced by commitlint.
 
 - Examples: `feat(nvim): add new highlight group`, `fix(palette): correct ANSI token`.
-- Scopes should match Nx projects (e.g. `palette`, `nx`, `site`, `ports/<port>`) or `release`.
-- PRs should describe the port(s) affected, key design changes, and any generated artifacts.
+- Scopes should match Nx projects (for example `palette`, `nx`, `site`, `ports/<port>`) or `release`.
+- PRs should describe affected ports, key design changes, and generated artifacts.
 
 ## Security & Configuration Tips
 
