@@ -20,10 +20,7 @@
     "displayName": "GNOME Terminal",
     "description": "Sageveil colors for GNOME Terminal.",
     "tags": [
-      "terminal",
-      "emulator",
-      "gnome",
-      "linux"
+      "terminal"
     ]
   }
 }

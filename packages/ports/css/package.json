@@ -30,8 +30,7 @@
     "displayName": "CSS",
     "description": "Sageveil colorscheme as CSS variables, SCSS, a Tailwind v4 theme, and JS/TS tokens.",
     "tags": [
-      "web",
-      "css"
+      "web"
     ]
   }
 }

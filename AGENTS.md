@@ -47,6 +47,10 @@ packages/ports/<name>/
 
 Port `package.json` files include `sageveil` metadata such as `displayName`, `description`, and `tags`.
 
+### Port tags
+
+Use exactly one broad tag per port: `terminal`, `editor`, `cli`, `app`, or `web`. Do not add platform, implementation, or product-name tags.
+
 ### Template context
 
 Templates receive the full `sageveil` palette object:

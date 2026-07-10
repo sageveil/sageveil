@@ -20,10 +20,7 @@
     "displayName": "Konsole",
     "description": "Sageveil colors for the KDE Konsole terminal.",
     "tags": [
-      "terminal",
-      "emulator",
-      "kde",
-      "linux"
+      "terminal"
     ]
   }
 }

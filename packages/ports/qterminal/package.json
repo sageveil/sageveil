@@ -20,10 +20,7 @@
     "displayName": "QTerminal",
     "description": "Sageveil colors for QTerminal and QTermWidget.",
     "tags": [
-      "terminal",
-      "emulator",
-      "lxqt",
-      "linux"
+      "terminal"
     ]
   }
 }

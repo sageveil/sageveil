@@ -20,9 +20,7 @@
     "displayName": "foot",
     "description": "Sageveil colors for the foot Wayland terminal.",
     "tags": [
-      "terminal",
-      "emulator",
-      "wayland"
+      "terminal"
     ]
   }
 }

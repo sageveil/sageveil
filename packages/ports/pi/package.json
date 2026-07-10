@@ -30,8 +30,7 @@
     "displayName": "Pi Coding Agent",
     "description": "Sageveil TUI theme for Pi Coding Agent.",
     "tags": [
-      "cli",
-      "agent"
+      "cli"
     ]
   }
 }

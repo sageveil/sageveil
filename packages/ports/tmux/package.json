@@ -7,8 +7,7 @@
     "displayName": "tmux",
     "description": "Statusline and pane styling with Sageveil balance for tmux.",
     "tags": [
-      "terminal",
-      "multiplexer"
+      "terminal"
     ]
   },
   "dependencies": {

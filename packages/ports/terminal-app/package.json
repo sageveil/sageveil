@@ -20,9 +20,7 @@
     "displayName": "Terminal.app",
     "description": "Sageveil profile colors for macOS Terminal.",
     "tags": [
-      "terminal",
-      "emulator",
-      "macos"
+      "terminal"
     ]
   }
 }

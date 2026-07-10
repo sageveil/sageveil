@@ -7,8 +7,7 @@
     "displayName": "Kitty",
     "description": "Sageveil tones tuned for the kitty terminal.",
     "tags": [
-      "terminal",
-      "emulator"
+      "terminal"
     ]
   },
   "dependencies": {

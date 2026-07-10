@@ -20,8 +20,7 @@
     "displayName": "iSH",
     "description": "Sageveil terminal colors adapted for iSH on iOS.",
     "tags": [
-      "terminal",
-      "emulator"
+      "terminal"
     ]
   }
 }

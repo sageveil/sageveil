@@ -7,8 +7,7 @@
     "displayName": "Alacritty",
     "description": "A focused, low-glare palette tuned for the Alacritty terminal.",
     "tags": [
-      "terminal",
-      "emulator"
+      "terminal"
     ]
   },
   "dependencies": {

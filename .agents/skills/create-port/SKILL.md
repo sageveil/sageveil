@@ -29,7 +29,7 @@ pnpm nx g @sageveil/nx:port --name <port> --displayName <display-name>
 4. Update `packages/ports/<port>/package.json`:
    - `sageveil.displayName`
    - `sageveil.description`
-   - `sageveil.tags`
+   - `sageveil.tags`: exactly one of `terminal`, `editor`, `cli`, `app`, or `web`. Do not use platform, implementation, or product-name tags.
 
 5. Update `packages/ports/<port>/README.md`:
    - overview

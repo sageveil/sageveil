@@ -20,10 +20,7 @@
     "displayName": "XFCE Terminal",
     "description": "Sageveil colors for XFCE Terminal.",
     "tags": [
-      "terminal",
-      "emulator",
-      "xfce",
-      "linux"
+      "terminal"
     ]
   }
 }
