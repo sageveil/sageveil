@@ -1,0 +1,29 @@
+{
+  "name": "@sageveil/gnome-terminal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/gnome-terminal"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "GNOME Terminal",
+    "description": "Sageveil colors for GNOME Terminal.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "gnome",
+      "linux"
+    ]
+  }
+}

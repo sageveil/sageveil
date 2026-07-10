@@ -1,0 +1,29 @@
+{
+  "name": "@sageveil/qterminal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/qterminal"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "QTerminal",
+    "description": "Sageveil colors for QTerminal and QTermWidget.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "lxqt",
+      "linux"
+    ]
+  }
+}

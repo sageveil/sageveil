@@ -1,0 +1,29 @@
+<% const hex = value => value.slice(1); -%>
+# -*- conf -*-
+# Sageveil
+
+[colors-dark]
+background=<%= hex(it.ansi.base.black) %>
+foreground=<%= hex(it.ansi.base.white) %>
+
+regular0=<%= hex(it.ansi.base.black) %>
+regular1=<%= hex(it.ansi.base.red) %>
+regular2=<%= hex(it.ansi.base.green) %>
+regular3=<%= hex(it.ansi.base.yellow) %>
+regular4=<%= hex(it.ansi.base.blue) %>
+regular5=<%= hex(it.ansi.base.magenta) %>
+regular6=<%= hex(it.ansi.base.cyan) %>
+regular7=<%= hex(it.ansi.base.white) %>
+
+bright0=<%= hex(it.ansi.bright.black) %>
+bright1=<%= hex(it.ansi.bright.red) %>
+bright2=<%= hex(it.ansi.bright.green) %>
+bright3=<%= hex(it.ansi.bright.yellow) %>
+bright4=<%= hex(it.ansi.bright.blue) %>
+bright5=<%= hex(it.ansi.bright.magenta) %>
+bright6=<%= hex(it.ansi.bright.cyan) %>
+bright7=<%= hex(it.ansi.bright.white) %>
+
+selection-foreground=<%= hex(it.ansi.base.white) %>
+selection-background=<%= hex(it.extras.highlight) %>
+cursor=<%= hex(it.extras.cursor_text) %> <%= hex(it.extras.cursor) %>

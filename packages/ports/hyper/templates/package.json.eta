@@ -1,0 +1,27 @@
+{
+  "name": "@sageveil/hyper",
+  "version": "<%= it.version %>",
+  "description": "Sageveil colors for the Hyper terminal.",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "keywords": [
+    "hyper",
+    "hyper-plugin",
+    "hyper-theme",
+    "sageveil",
+    "colorscheme"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sageveil/sageveil.git",
+    "directory": "packages/ports/hyper"
+  },
+  "homepage": "https://github.com/sageveil/hyper",
+  "publishConfig": {
+    "access": "public"
+  }
+}

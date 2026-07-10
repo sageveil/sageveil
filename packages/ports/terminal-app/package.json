@@ -1,0 +1,28 @@
+{
+  "name": "@sageveil/terminal-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/terminal-app"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "Terminal.app",
+    "description": "Sageveil profile colors for macOS Terminal.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "macos"
+    ]
+  }
+}

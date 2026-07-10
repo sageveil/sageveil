@@ -1,0 +1,29 @@
+{
+  "name": "@sageveil/konsole",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/konsole"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "Konsole",
+    "description": "Sageveil colors for the KDE Konsole terminal.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "kde",
+      "linux"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@sageveil/hyper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/hyper"
+        ]
+      },
+      "nx-release-publish": {
+        "executor": "@nx/js:release-publish",
+        "dependsOn": [
+          "generate"
+        ],
+        "options": {
+          "packageRoot": "dist/ports/hyper",
+          "access": "public"
+        }
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "Hyper",
+    "description": "Sageveil colors for the Hyper terminal.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "hyper",
+      "npm"
+    ]
+  }
+}

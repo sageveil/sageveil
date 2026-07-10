@@ -1,0 +1,65 @@
+<% const rgb = (hex) => hex.slice(1).match(/../g).map((part) => Number.parseInt(part, 16)).join(','); %>
+[Background]
+Color=<%= rgb(it.ansi.base.black) %>
+
+[BackgroundIntense]
+Color=<%= rgb(it.ansi.bright.black) %>
+
+[Foreground]
+Color=<%= rgb(it.ansi.base.white) %>
+
+[ForegroundIntense]
+Color=<%= rgb(it.ansi.bright.white) %>
+Bold=true
+
+[Color0]
+Color=<%= rgb(it.ansi.base.black) %>
+
+[Color0Intense]
+Color=<%= rgb(it.ansi.bright.black) %>
+
+[Color1]
+Color=<%= rgb(it.ansi.base.red) %>
+
+[Color1Intense]
+Color=<%= rgb(it.ansi.bright.red) %>
+
+[Color2]
+Color=<%= rgb(it.ansi.base.green) %>
+
+[Color2Intense]
+Color=<%= rgb(it.ansi.bright.green) %>
+
+[Color3]
+Color=<%= rgb(it.ansi.base.yellow) %>
+
+[Color3Intense]
+Color=<%= rgb(it.ansi.bright.yellow) %>
+
+[Color4]
+Color=<%= rgb(it.ansi.base.blue) %>
+
+[Color4Intense]
+Color=<%= rgb(it.ansi.bright.blue) %>
+
+[Color5]
+Color=<%= rgb(it.ansi.base.magenta) %>
+
+[Color5Intense]
+Color=<%= rgb(it.ansi.bright.magenta) %>
+
+[Color6]
+Color=<%= rgb(it.ansi.base.cyan) %>
+
+[Color6Intense]
+Color=<%= rgb(it.ansi.bright.cyan) %>
+
+[Color7]
+Color=<%= rgb(it.ansi.base.white) %>
+
+[Color7Intense]
+Color=<%= rgb(it.ansi.bright.white) %>
+
+[General]
+Description=Sageveil
+Opacity=1

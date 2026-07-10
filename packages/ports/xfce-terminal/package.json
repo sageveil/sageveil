@@ -1,0 +1,29 @@
+{
+  "name": "@sageveil/xfce-terminal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/xfce-terminal"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "XFCE Terminal",
+    "description": "Sageveil colors for XFCE Terminal.",
+    "tags": [
+      "terminal",
+      "emulator",
+      "xfce",
+      "linux"
+    ]
+  }
+}
