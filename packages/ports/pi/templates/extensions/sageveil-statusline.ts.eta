@@ -1,4 +1,7 @@
-import type { ExtensionAPI } from '@earendil-works/pi-coding-agent';
+import {
+  createLocalBashOperations,
+  type ExtensionAPI,
+} from '@earendil-works/pi-coding-agent';
 import { truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
 import { basename } from 'node:path';
 
@@ -52,6 +55,7 @@ export default function (pi: ExtensionAPI) {
   const detailed = process.env.SAGEVEIL_STATUSLINE === 'detailed';
   let gitRoot: string | undefined;
   let gitStatus = emptyGitStatus();
+  let requestRender: (() => void) | undefined;
 
   const refreshGitStatus = async (cwd: string) => {
     if (!gitRoot) return;
@@ -60,11 +64,28 @@ export default function (pi: ExtensionAPI) {
       ['status', '--porcelain=v2', '--branch', '--show-stash'],
       { cwd, timeout: 1000 },
     );
-    if (result.code === 0) gitStatus = parseGitStatus(result.stdout);
+    if (result.code !== 0) return;
+    const next = parseGitStatus(result.stdout);
+    if (JSON.stringify(next) === JSON.stringify(gitStatus)) return;
+    gitStatus = next;
+    requestRender?.();
   };
 
   pi.on('tool_execution_end', async (_event, ctx) => {
     await refreshGitStatus(ctx.cwd);
+  });
+
+  pi.on('user_bash', (_event, ctx) => {
+    const local = createLocalBashOperations();
+    return {
+      operations: {
+        async exec(command, cwd, options) {
+          const result = await local.exec(command, cwd, options);
+          await refreshGitStatus(ctx.cwd);
+          return result;
+        },
+      },
+    };
   });
 
   pi.on('session_start', async (_event, ctx) => {
@@ -83,6 +104,7 @@ export default function (pi: ExtensionAPI) {
         // Colors are resolved on every render, so there is no cache to clear.
       },
       render(width: number): string[] {
+        requestRender = () => tui.requestRender();
         const separator = theme.fg('border', '  ');
         const branch = footerData.getGitBranch();
         const statuses = Array.from(footerData.getExtensionStatuses().values());
