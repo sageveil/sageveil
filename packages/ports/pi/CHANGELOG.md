@@ -1,3 +1,13 @@
+## 0.2.2 (2026-07-11)
+
+### 🌿 New Growth
+
+- **pi:** add matching statusline ([5c10e2b](https://github.com/sageveil/sageveil/commit/5c10e2b))
+
+### 🪴 Repairs
+
+- **pi:** refresh statusline git state ([c8d6321](https://github.com/sageveil/sageveil/commit/c8d6321))
+
 ## 0.2.1 (2026-07-08)
 
 ### 🌿 New Growth
