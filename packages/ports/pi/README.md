@@ -9,7 +9,7 @@
 
 ## Overview
 
-The sageveil Pi Coding Agent port provides a calm dark TUI theme for Pi's chat UI, markdown rendering, tool boxes, diffs, syntax highlighting, thinking-level borders, and HTML export.
+The sageveil Pi Coding Agent port provides a calm dark TUI theme and matching statusline. The statusline shows the repository root name (or current folder outside Git), Git branch and file-status counts, context usage, and active model. Statuses from other extensions appear on a separate line.
 
 ## Get the theme
 
@@ -38,7 +38,8 @@ pi install git:github.com/sageveil/pi
 ## Generated files
 
 - `themes/sageveil.json` – Pi theme file
-- `package.json` – Pi package manifest declaring the theme
+- `extensions/sageveil-statusline.ts` – matching statusline extension
+- `package.json` – Pi package manifest declaring both resources
 
 ## Apply sageveil
 
@@ -51,7 +52,7 @@ pi install git:github.com/sageveil/pi
    # or: pi install git:github.com/sageveil/pi
    ```
 
-2. Select **sageveil** from `/settings`, or set it in `~/.pi/agent/settings.json`:
+2. The statusline loads automatically. Select **sageveil** from `/settings`, or set it in `~/.pi/agent/settings.json`:
 
    ```json
    {
@@ -59,13 +60,24 @@ pi install git:github.com/sageveil/pi
    }
    ```
 
-### Local theme file
+### Statusline
 
-Copy or symlink the generated theme into Pi's global theme directory:
+Reasoning models include the current thinking level beside the model name. To add cumulative token usage, cache statistics, and cost on a detail line, start Pi with:
 
 ```bash
-mkdir -p ~/.pi/agent/themes
+SAGEVEIL_STATUSLINE=detailed pi
+```
+
+The default compact view omits that detail line and only shows context usage after it exceeds 75%.
+
+### Local theme file
+
+Copy or symlink the generated theme and extension into Pi's global directories:
+
+```bash
+mkdir -p ~/.pi/agent/{extensions,themes}
 cp dist/ports/pi/themes/sageveil.json ~/.pi/agent/themes/sageveil.json
+cp dist/ports/pi/extensions/sageveil-statusline.ts ~/.pi/agent/extensions/sageveil-statusline.ts
 ```
 
 Then select `sageveil` from `/settings`.

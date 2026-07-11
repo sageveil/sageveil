@@ -6,6 +6,8 @@ minimumReleaseAge: 3
 strictPeerDependencies: false
 autoInstallPeers: true
 allowBuilds:
+  '@google/genai': false
   '@swc/core': true
   esbuild: true
   nx: true
+  protobufjs: false

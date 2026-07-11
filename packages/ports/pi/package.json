@@ -28,9 +28,13 @@
   },
   "sageveil": {
     "displayName": "Pi Coding Agent",
-    "description": "Sageveil TUI theme for Pi Coding Agent.",
+    "description": "Sageveil TUI theme and statusline for Pi Coding Agent.",
     "tags": [
       "cli"
     ]
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.80.6",
+    "@earendil-works/pi-tui": "^0.80.6"
   }
 }
