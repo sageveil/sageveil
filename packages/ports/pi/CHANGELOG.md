@@ -1,3 +1,9 @@
+## 0.2.3 (2026-07-12)
+
+### 🌿 New Growth
+
+- **pi:** add configurable editor and statusline ([#4](https://github.com/sageveil/sageveil/pull/4))
+
 ## 0.2.2 (2026-07-11)
 
 ### 🌿 New Growth
