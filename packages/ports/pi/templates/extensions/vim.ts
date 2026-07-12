@@ -19,7 +19,9 @@ export class VimEditor extends CustomEditor {
 
   handleInput(data: string): void {
     if (matchesKey(data, 'escape')) {
-      if (this.mode === 'insert') this.setMode('normal');
+      if (this.mode === 'insert' && this.isShowingAutocomplete())
+        super.handleInput(data);
+      else if (this.mode === 'insert') this.setMode('normal');
       else super.handleInput(data);
       return;
     }

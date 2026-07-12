@@ -16,7 +16,7 @@ The sageveil Pi Coding Agent port provides a calm dark TUI theme and configurabl
 ## Install
 
 ```bash
-npm install -g @sageveil/pi
+pi install npm:@sageveil/pi
 ```
 
 ### Prebuilt releases
@@ -50,11 +50,11 @@ pi install git:github.com/sageveil/pi
 1. Install the package:
 
    ```bash
-   npm install -g @sageveil/pi
+   pi install npm:@sageveil/pi
    # or: pi install git:github.com/sageveil/pi
    ```
 
-2. The statusline loads automatically. Select **sageveil** from `/settings`, or set it in `~/.pi/agent/settings.json`:
+2. Pi automatically loads the package's statusline extension and makes its theme available. Select **sageveil** from `/settings`, or set it in `~/.pi/agent/settings.json`:
 
    ```json
    {
