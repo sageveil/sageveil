@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/sageveil/pi",
   "files": [
-    "extensions/sageveil-statusline.ts",
+    "extensions",
     "themes/sageveil.json",
     "README.md"
   ],
@@ -28,7 +28,7 @@
   },
   "pi": {
     "extensions": [
-      "./extensions"
+      "./extensions/sageveil-statusline.ts"
     ],
     "themes": [
       "./themes"

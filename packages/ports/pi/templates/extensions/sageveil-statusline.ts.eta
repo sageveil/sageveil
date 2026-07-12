@@ -1,9 +1,13 @@
 import {
   createLocalBashOperations,
+  getAgentDir,
   type ExtensionAPI,
 } from '@earendil-works/pi-coding-agent';
 import { truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
-import { basename } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { basename, join } from 'node:path';
+import { enableFuzzyFiles } from './fuzzy-files.ts';
+import { VimEditor, type VimMode } from './vim.ts';
 
 <% const ansi = (hex) => hex.slice(1).match(/../g).map((part) => Number.parseInt(part, 16)).join(';'); -%>
 const piIcon =
@@ -14,6 +18,100 @@ const formatTokens = (tokens: number) => {
   if (tokens < 1_000_000) return `${Math.round(tokens / 1000)}k`;
   if (tokens < 10_000_000) return `${(tokens / 1_000_000).toFixed(1)}M`;
   return `${Math.round(tokens / 1_000_000)}M`;
+};
+
+type StatuslineConfig = {
+  icon: boolean;
+  vimMode: boolean;
+  directory: boolean;
+  gitBranch: boolean;
+  gitStatus: boolean;
+  context: boolean | 'auto';
+  model: boolean;
+  usage: boolean;
+  extensionStatuses: boolean;
+};
+
+type SageveilConfig = {
+  vim: boolean;
+  fuzzyFiles: boolean;
+  statusline: StatuslineConfig;
+};
+
+const defaults: SageveilConfig = {
+  vim: false,
+  fuzzyFiles: false,
+  statusline: {
+    icon: true,
+    vimMode: true,
+    directory: true,
+    gitBranch: true,
+    gitStatus: true,
+    context: 'auto',
+    model: true,
+    usage: false,
+    extensionStatuses: true,
+  },
+};
+
+const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string }> => {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(await readFile(join(getAgentDir(), 'sageveil.json'), 'utf8'));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT')
+      return { config: defaults };
+    return { config: defaults, warning: 'sageveil: invalid sageveil.json; using defaults' };
+  }
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return { config: defaults, warning: 'sageveil: invalid sageveil.json; using defaults' };
+  }
+
+  const values = parsed as Record<string, unknown>;
+  let invalid = false;
+  const boolean = (value: unknown, fallback: boolean) => {
+    if (value === undefined) return fallback;
+    if (typeof value === 'boolean') return value;
+    invalid = true;
+    return fallback;
+  };
+  const statusline =
+    values.statusline === undefined
+      ? {}
+      : values.statusline && typeof values.statusline === 'object' && !Array.isArray(values.statusline)
+        ? values.statusline as Record<string, unknown>
+        : (invalid = true, {});
+  const statuslineDefaults = defaults.statusline;
+  const context = statusline.context;
+  if (context !== undefined && context !== true && context !== false && context !== 'auto')
+    invalid = true;
+
+  return {
+    config: {
+      vim: boolean(values.vim, defaults.vim),
+      fuzzyFiles: boolean(values.fuzzyFiles, defaults.fuzzyFiles),
+      statusline: {
+        icon: boolean(statusline.icon, statuslineDefaults.icon),
+        vimMode: boolean(statusline.vimMode, statuslineDefaults.vimMode),
+        directory: boolean(statusline.directory, statuslineDefaults.directory),
+        gitBranch: boolean(statusline.gitBranch, statuslineDefaults.gitBranch),
+        gitStatus: boolean(statusline.gitStatus, statuslineDefaults.gitStatus),
+        context: context === true || context === false || context === 'auto'
+          ? context
+          : statuslineDefaults.context,
+        model: boolean(statusline.model, statuslineDefaults.model),
+        usage: boolean(statusline.usage, statuslineDefaults.usage),
+        extensionStatuses: boolean(
+          statusline.extensionStatuses,
+          statuslineDefaults.extensionStatuses,
+        ),
+      },
+    },
+    ...(invalid && {
+      warning: 'sageveil: invalid sageveil.json fields; using defaults for those fields',
+    }),
+  };
 };
 
 const emptyGitStatus = () => ({
@@ -52,10 +150,10 @@ const parseGitStatus = (output: string) => {
 };
 
 export default function (pi: ExtensionAPI) {
-  const detailed = process.env.SAGEVEIL_STATUSLINE === 'detailed';
   let gitRoot: string | undefined;
   let gitStatus = emptyGitStatus();
   let requestRender: (() => void) | undefined;
+  let vimMode: VimMode | undefined;
 
   const refreshGitStatus = async (cwd: string) => {
     if (!gitRoot) return;
@@ -89,6 +187,23 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on('session_start', async (_event, ctx) => {
+    const { config, warning } = await readConfig();
+    if (warning) ctx.ui.notify(warning, 'warning');
+
+    if (config.vim) {
+      vimMode = 'insert';
+      ctx.ui.setEditorComponent((tui, theme, keybindings) => {
+        const editor = new VimEditor(tui, theme, keybindings);
+        editor.onModeChange = (mode) => {
+          vimMode = mode;
+          tui.requestRender();
+        };
+        return editor;
+      });
+    }
+
+    if (config.fuzzyFiles) await enableFuzzyFiles(pi, ctx);
+
     gitRoot = await pi
       .exec('git', ['rev-parse', '--show-toplevel'], {
         cwd: ctx.cwd,
@@ -107,7 +222,9 @@ export default function (pi: ExtensionAPI) {
         requestRender = () => tui.requestRender();
         const separator = theme.fg('border', '  ');
         const branch = footerData.getGitBranch();
-        const statuses = Array.from(footerData.getExtensionStatuses().values());
+        const statuses = config.statusline.extensionStatuses
+          ? Array.from(footerData.getExtensionStatuses().values())
+          : [];
         const gitStatusText = [
           gitStatus.untracked && theme.fg('dim', `?${gitStatus.untracked}`),
           gitStatus.stashed && theme.fg('syntaxType', `$${gitStatus.stashed}`),
@@ -123,13 +240,16 @@ export default function (pi: ExtensionAPI) {
           .filter(Boolean)
           .join(' ');
         const left = [
-          piIcon,
-          theme.fg(
+          config.statusline.icon && piIcon,
+          config.statusline.vimMode && vimMode &&
+            theme.fg(vimMode === 'insert' ? 'success' : 'warning', vimMode.toUpperCase()),
+          config.statusline.directory && theme.fg(
             'accent',
             `${gitRoot ? '󰊢' : '󰝰'} ${basename(gitRoot ?? ctx.cwd)}`,
           ),
-          branch && theme.fg('customMessageLabel', ` ${branch}`),
-          gitStatusText,
+          config.statusline.gitBranch && branch &&
+            theme.fg('customMessageLabel', ` ${branch}`),
+          config.statusline.gitStatus && gitStatusText,
         ]
           .filter(Boolean)
           .join(separator);
@@ -140,9 +260,10 @@ export default function (pi: ExtensionAPI) {
           : '?%/?';
         const model = ctx.model?.id ?? 'no model';
         const right = [
-          (detailed || (usage?.percent ?? 0) > 75) &&
+          (config.statusline.context === true ||
+            (config.statusline.context === 'auto' && (usage?.percent ?? 0) > 75)) &&
             theme.fg('muted', context),
-          theme.fg(
+          config.statusline.model && theme.fg(
             'dim',
             ctx.model?.reasoning
               ? `${model} • ${pi.getThinkingLevel()}`
@@ -153,13 +274,12 @@ export default function (pi: ExtensionAPI) {
           .join(separator);
 
         let detailLine = '';
-        if (detailed) {
+        if (config.statusline.usage) {
           let input = 0;
           let output = 0;
           let cacheRead = 0;
           let cacheWrite = 0;
           let cost = 0;
-          let cacheHitRate: number | undefined;
 
           for (const entry of ctx.sessionManager.getEntries()) {
             if (entry.type !== 'message' || entry.message.role !== 'assistant')
@@ -170,12 +290,12 @@ export default function (pi: ExtensionAPI) {
             cacheRead += usage.cacheRead;
             cacheWrite += usage.cacheWrite;
             cost += usage.cost.total;
-            const promptTokens =
-              usage.input + usage.cacheRead + usage.cacheWrite;
-            cacheHitRate = promptTokens
-              ? (usage.cacheRead / promptTokens) * 100
-              : undefined;
           }
+
+          const promptTokens = input + cacheRead + cacheWrite;
+          const cacheHitRate = promptTokens
+            ? (cacheRead / promptTokens) * 100
+            : undefined;
 
           detailLine = theme.fg(
             'dim',
@@ -194,6 +314,12 @@ export default function (pi: ExtensionAPI) {
 
         detailLine = truncateToWidth(detailLine, width);
         const statusLine = truncateToWidth(statuses.join(separator), width);
+
+        if (!right) {
+          return [truncateToWidth(left, width), detailLine, statusLine].filter(
+            Boolean,
+          );
+        }
 
         if (visibleWidth(right) >= width) {
           return [truncateToWidth(right, width), detailLine, statusLine].filter(

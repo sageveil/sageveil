@@ -9,7 +9,7 @@
 
 ## Overview
 
-The sageveil Pi Coding Agent port provides a calm dark TUI theme and matching statusline. The statusline shows the repository root name (or current folder outside Git), Git branch and file-status counts, context usage, and active model. Statuses from other extensions appear on a separate line.
+The sageveil Pi Coding Agent port provides a calm dark TUI theme and configurable matching statusline.
 
 ## Get the theme
 
@@ -38,8 +38,10 @@ pi install git:github.com/sageveil/pi
 ## Generated files
 
 - `themes/sageveil.json` – Pi theme file
-- `extensions/sageveil-statusline.ts` – matching statusline extension
-- `package.json` – Pi package manifest declaring both resources
+- `extensions/sageveil-statusline.ts` – statusline extension entrypoint
+- `extensions/vim.ts` – optional Vim editor support
+- `extensions/fuzzy-files.ts` – optional fuzzy `@` file completion
+- `package.json` – Pi package manifest declaring the extension entrypoint and theme
 
 ## Apply sageveil
 
@@ -62,22 +64,39 @@ pi install git:github.com/sageveil/pi
 
 ### Statusline
 
-Reasoning models include the current thinking level beside the model name. To add cumulative token usage, cache statistics, and cost on a detail line, start Pi with:
+Optional global settings live in `~/.pi/agent/sageveil.json`:
 
-```bash
-SAGEVEIL_STATUSLINE=detailed pi
+```json
+{
+  "vim": false,
+  "fuzzyFiles": false,
+  "statusline": {
+    "icon": true,
+    "vimMode": true,
+    "directory": true,
+    "gitBranch": true,
+    "gitStatus": true,
+    "context": "auto",
+    "model": true,
+    "usage": false,
+    "extensionStatuses": true
+  }
+}
 ```
 
-The default compact view omits that detail line and only shows context usage after it exceeds 75%.
+All fields are optional; omitted fields use these defaults. `vim` enables INSERT/NORMAL editing, while `vimMode` only shows or hides its statusline label. `fuzzyFiles` uses `fd` to fuzzy-complete `@` file paths.
+
+The statusline fields only control visibility and retain their displayed order; there is no `statusline.enabled` setting. `gitBranch` and `gitStatus` are independent. `icon` controls the Pi icon; `directory` controls the repository root name (or current folder); `model` includes the thinking level for reasoning models; and `extensionStatuses` controls the separate extension-status line. `usage` shows cumulative input, output, cache, and cost details. `context` accepts `true`, `false`, or `"auto"`: `true` always shows context usage, `false` never does, and `"auto"` shows it above 75%. Invalid known field types emit a warning and use their defaults; valid configured fields remain honored.
 
 ### Local theme file
 
 Copy or symlink the generated theme and extension into Pi's global directories:
 
 ```bash
-mkdir -p ~/.pi/agent/{extensions,themes}
+mkdir -p ~/.pi/agent/{extensions/sageveil,themes}
 cp dist/ports/pi/themes/sageveil.json ~/.pi/agent/themes/sageveil.json
-cp dist/ports/pi/extensions/sageveil-statusline.ts ~/.pi/agent/extensions/sageveil-statusline.ts
+cp dist/ports/pi/extensions/sageveil-statusline.ts ~/.pi/agent/extensions/sageveil/index.ts
+cp dist/ports/pi/extensions/{vim,fuzzy-files}.ts ~/.pi/agent/extensions/sageveil/
 ```
 
 Then select `sageveil` from `/settings`.
