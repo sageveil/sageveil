@@ -1,3 +1,10 @@
+## 0.2.2 (2026-07-17)
+
+### 🌿 New Growth
+
+- **starship:** add background job indicator ([4ce0f27](https://github.com/sageveil/sageveil/commit/4ce0f27))
+- **starship:** add SSH hostname indicator ([707674f](https://github.com/sageveil/sageveil/commit/707674f))
+
 ## 0.2.1 (2026-07-09)
 
 ### 🪴 Repairs
