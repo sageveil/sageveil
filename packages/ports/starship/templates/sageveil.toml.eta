@@ -2,6 +2,7 @@
 
 format = """
 [ 󰌪 ](bg:magenta fg:black)[](fg:magenta) \
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -55,6 +56,12 @@ dim = "<%= it.extras.dim %>"
 success_symbol = "[❯](fg:green)"
 error_symbol = "[❯](fg:red)"
 vimcmd_symbol = "[](fg:yellow)"
+
+[hostname]
+ssh_only = true
+format = "[ $ssh_symbol$hostname ]($style)"
+ssh_symbol = "󰌢 "
+style = "fg:bright_magenta"
 
 [directory]
 format = "[ 󰝰 $path$read_only ]($style)"
