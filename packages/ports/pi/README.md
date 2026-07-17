@@ -11,6 +11,8 @@
 
 The sageveil Pi Coding Agent port provides a calm dark TUI theme and configurable matching statusline.
 
+![Sageveil Pi Coding Agent](https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/packages/ports/pi/assets/pi.png)
+
 ## Get the theme
 
 ## Install

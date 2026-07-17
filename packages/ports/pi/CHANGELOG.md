@@ -1,3 +1,9 @@
+## 0.2.4 (2026-07-13)
+
+### 📚 Knowledge
+
+- **pi:** add port screenshot ([d3f9139](https://github.com/sageveil/sageveil/commit/d3f9139))
+
 ## 0.2.3 (2026-07-12)
 
 ### 🌿 New Growth
