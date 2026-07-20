@@ -1,3 +1,9 @@
+## 0.2.2 (2026-07-20)
+
+### 🪴 Repairs
+
+- **nx:** start generated ports at 0.0.0 ([43a471b](https://github.com/sageveil/sageveil/commit/43a471b))
+
 ## 0.2.1 (2026-07-02)
 
 This was a version bump only for @sageveil/nx to align it with other projects, there were no code changes.
