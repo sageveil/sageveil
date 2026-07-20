@@ -233,6 +233,12 @@ importers:
         specifier: workspace:*
         version: link:../../palette
 
+  packages/ports/opencode:
+    dependencies:
+      '@sageveil/palette':
+        specifier: workspace:*
+        version: link:../../palette
+
   packages/ports/pi:
     dependencies:
       '@sageveil/palette':

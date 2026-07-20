@@ -1,0 +1,26 @@
+{
+  "name": "@sageveil/opencode",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sageveil/palette": "workspace:*"
+  },
+  "nx": {
+    "targets": {
+      "generate": {
+        "outputs": [
+          "{workspaceRoot}/dist/ports/opencode"
+        ]
+      },
+      "clean": {}
+    }
+  },
+  "sageveil": {
+    "displayName": "OpenCode",
+    "description": "A calm, low-contrast theme for the OpenCode TUI.",
+    "tags": [
+      "cli"
+    ]
+  }
+}
