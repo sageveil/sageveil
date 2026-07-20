@@ -1,3 +1,9 @@
+## 0.2.1 (2026-07-20)
+
+### 📚 Knowledge
+
+- **opencode:** add port screenshot ([72b9872](https://github.com/sageveil/sageveil/commit/72b9872))
+
 ## 0.2.0 (2026-07-20)
 
 ### 🌿 New Growth
