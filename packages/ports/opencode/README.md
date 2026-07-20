@@ -11,7 +11,7 @@
 
 The sageveil OpenCode port provides a calm terminal palette that matches the rest of the ecosystem.
 
-![Sageveil OpenCode](https://raw.githubusercontent.com/sageveil/sageveil/refs/heads/main/packages/ports/opencode/assets/opencode.png)
+![Sageveil OpenCode](https://raw.githubusercontent.com/sageveil/sageveil/main/packages/ports/opencode/assets/opencode.png)
 
 ## Get the theme
 
