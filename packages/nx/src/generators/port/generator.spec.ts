@@ -39,6 +39,7 @@ describe('port generator', () => {
       tree,
       'packages/ports/ghostty-plus/package.json',
     );
+    expect(portPackageJson.version).toBe('0.0.0');
     expect(portPackageJson.sageveil).toEqual({
       displayName: 'Ghostty Plus',
       description: 'Custom Ghostty theme.',
