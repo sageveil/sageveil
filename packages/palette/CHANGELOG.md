@@ -1,3 +1,9 @@
+## 0.2.2 (2026-07-21)
+
+### 🌿 New Growth
+
+- **palette:** publish package to npm ([38a01fb](https://github.com/sageveil/sageveil/commit/38a01fb))
+
 ## 0.2.1 (2026-07-02)
 
 This was a version bump only for @sageveil/palette to align it with other projects, there were no code changes.
