@@ -1,3 +1,13 @@
+## 0.2.5 (2026-07-21)
+
+### 🌿 New Growth
+
+- ⚠️  **pi:** remove editor extensions ([245ea10](https://github.com/sageveil/sageveil/commit/245ea10))
+
+### ⚠️  Breaking Changes
+
+- **pi:** remove editor extensions  ([245ea10](https://github.com/sageveil/sageveil/commit/245ea10))
+
 ## 0.2.4 (2026-07-13)
 
 ### 📚 Knowledge
