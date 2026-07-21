@@ -150,7 +150,8 @@ jobs:
         run: |
           node tools/scripts/release-aggregate-changelog.mjs \
             /tmp/release-out/changed-ports.json \
-            /tmp/release-out/aggregated.md
+            /tmp/release-out/aggregated.md \
+            "${{ steps.palette.outputs.version }}"
       - name: Amend release commit with umbrella bump
         if: ${{ steps.check.outputs.made_changes == 'true' && steps.derive.outputs.changed_ports != '[]' }}
         env:

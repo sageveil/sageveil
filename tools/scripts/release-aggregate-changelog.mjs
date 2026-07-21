@@ -9,10 +9,11 @@ const workspaceRoot = path.resolve(path.dirname(__filename), '../..');
 
 const changedJsonPath = process.argv[2];
 const outPath = process.argv[3];
+const paletteVersion = process.argv[4];
 
 if (!changedJsonPath || !outPath) {
   console.error(
-    'Usage: release-aggregate-changelog.mjs <changed-ports.json> <out.md>',
+    'Usage: release-aggregate-changelog.mjs <changed-ports.json> <out.md> [palette-version]',
   );
   process.exit(1);
 }
@@ -36,9 +37,26 @@ function extractTopSection(markdown) {
     .trim();
 }
 
+const packages = changed.map(({ port, version }) => ({
+  name: port,
+  version,
+  changelogPath: path.join(
+    workspaceRoot,
+    'packages/ports',
+    port,
+    'CHANGELOG.md',
+  ),
+}));
+if (paletteVersion) {
+  packages.unshift({
+    name: 'palette',
+    version: paletteVersion,
+    changelogPath: path.join(workspaceRoot, 'packages/palette/CHANGELOG.md'),
+  });
+}
+
 const sections = [];
-for (const { port, version } of changed) {
-  const changelogPath = path.join(workspaceRoot, 'packages/ports', port, 'CHANGELOG.md');
+for (const { name, version, changelogPath } of packages) {
   let body = '';
   try {
     const raw = await readFile(changelogPath, 'utf8');
@@ -46,12 +64,14 @@ for (const { port, version } of changed) {
   } catch {
     body = '_No changelog entry generated._';
   }
-  sections.push(`## ${port} ${version}\n\n${body}`);
+  sections.push(`## ${name} ${version}\n\n${body}`);
 }
 
 const aggregated = sections.length
   ? sections.join('\n\n')
-  : '_No port changes in this release._';
+  : '_No package changes in this release._';
 
 await writeFile(outPath, `${aggregated}\n`, 'utf8');
-console.log(`Wrote aggregated changelog (${sections.length} ports) to ${outPath}`);
+console.log(
+  `Wrote aggregated changelog (${sections.length} packages) to ${outPath}`,
+);
