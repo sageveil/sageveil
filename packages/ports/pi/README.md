@@ -41,8 +41,6 @@ pi install git:github.com/sageveil/pi
 
 - `themes/sageveil.json` – Pi theme file
 - `extensions/sageveil-statusline.ts` – statusline extension entrypoint
-- `extensions/vim.ts` – optional Vim editor support
-- `extensions/fuzzy-files.ts` – optional fuzzy `@` file completion
 - `package.json` – Pi package manifest declaring the extension entrypoint and theme
 
 ## Apply sageveil
@@ -70,11 +68,8 @@ Optional global settings live in `~/.pi/agent/sageveil.json`:
 
 ```json
 {
-  "vim": false,
-  "fuzzyFiles": false,
   "statusline": {
     "icon": true,
-    "vimMode": true,
     "directory": true,
     "gitBranch": true,
     "gitStatus": true,
@@ -86,7 +81,7 @@ Optional global settings live in `~/.pi/agent/sageveil.json`:
 }
 ```
 
-All fields are optional; omitted fields use these defaults. `vim` enables INSERT/NORMAL editing, while `vimMode` only shows or hides its statusline label. `fuzzyFiles` uses `fd` to fuzzy-complete `@` file paths.
+All fields are optional; omitted fields use these defaults.
 
 The statusline fields only control visibility and retain their displayed order; there is no `statusline.enabled` setting. `gitBranch` and `gitStatus` are independent. `icon` controls the Pi icon; `directory` controls the repository root name (or current folder); `model` includes the thinking level for reasoning models; and `extensionStatuses` controls the separate extension-status line. `usage` shows cumulative input, output, cache, and cost details. `context` accepts `true`, `false`, or `"auto"`: `true` always shows context usage, `false` never does, and `"auto"` shows it above 75%. Invalid known field types emit a warning and use their defaults; valid configured fields remain honored.
 
@@ -98,7 +93,6 @@ Copy or symlink the generated theme and extension into Pi's global directories:
 mkdir -p ~/.pi/agent/{extensions/sageveil,themes}
 cp dist/ports/pi/themes/sageveil.json ~/.pi/agent/themes/sageveil.json
 cp dist/ports/pi/extensions/sageveil-statusline.ts ~/.pi/agent/extensions/sageveil/index.ts
-cp dist/ports/pi/extensions/{vim,fuzzy-files}.ts ~/.pi/agent/extensions/sageveil/
 ```
 
 Then select `sageveil` from `/settings`.
