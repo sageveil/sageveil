@@ -47,6 +47,7 @@ jobs:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     outputs:
       changed_ports: ${{ steps.derive.outputs.changed_ports }}
+      palette_version: ${{ steps.palette.outputs.version }}
       umbrella_tag: ${{ steps.derive.outputs.umbrella_tag }}
       umbrella_bump: ${{ steps.derive.outputs.umbrella_bump }}
       release_branch: ${{ github.ref_name }}
@@ -120,6 +121,15 @@ jobs:
           else
             echo "made_changes=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Detect palette release
+        if: ${{ steps.check.outputs.made_changes == 'true' }}
+        id: palette
+        run: |
+          set -euo pipefail
+          if git tag --points-at HEAD --list '@sageveil/palette@*' | grep -q .; then
+            VERSION=$(node -p "require('./packages/palette/package.json').version")
+            echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          fi
       - name: Derive umbrella version and changed ports
         if: ${{ steps.check.outputs.made_changes == 'true' }}
         id: derive
@@ -171,6 +181,35 @@ jobs:
           gh release create "${UMBRELLA_TAG}" \
             --title "${UMBRELLA_TAG}" \
             --notes-file /tmp/release-out/aggregated.md
+  publish-palette:
+    needs: version
+    if: ${{ needs.version.outputs.palette_version != '' }}
+    runs-on: ubuntu-latest
+    environment: protected
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      VERSION: ${{ needs.version.outputs.palette_version }}
+    steps:
+      - name: Checkout palette release tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: '@sageveil/palette@${{ needs.version.outputs.palette_version }}'
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093
+        with:
+          run_install: false
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version-file: package.json
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm install --frozen-lockfile
+      - name: Publish palette to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          TAG="latest"
+          [[ "${VERSION}" == *-* ]] && TAG="next"
+          pnpm nx release publish --projects="@sageveil/palette" --tag "${TAG}"
   publish-ports:
     needs: version
     if: ${{ needs.version.outputs.changed_ports != '[]' && needs.version.outputs.changed_ports != '' }}
