@@ -47,6 +47,9 @@
     "directory": "packages/ports/css"
   },
   "homepage": "https://github.com/sageveil/css",
+  "dependencies": {
+    "@sageveil/palette": "^0.2.2"
+  },
   "publishConfig": {
     "access": "public"
   }

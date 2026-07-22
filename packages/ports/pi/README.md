@@ -87,15 +87,14 @@ The statusline fields only control visibility and retain their displayed order; 
 
 ### Local theme file
 
-Copy or symlink the generated theme and extension into Pi's global directories:
+Copy or symlink the generated theme into Pi's global themes directory:
 
 ```bash
-mkdir -p ~/.pi/agent/{extensions/sageveil,themes}
+mkdir -p ~/.pi/agent/themes
 cp dist/ports/pi/themes/sageveil.json ~/.pi/agent/themes/sageveil.json
-cp dist/ports/pi/extensions/sageveil-statusline.ts ~/.pi/agent/extensions/sageveil/index.ts
 ```
 
-Then select `sageveil` from `/settings`.
+Then select `sageveil` from `/settings`. Install `@sageveil/pi` to use its statusline; it requires the palette package.
 
 To load the generated file without installing it, pass it on startup and then select `sageveil` from `/settings`:
 

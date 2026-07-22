@@ -22,6 +22,9 @@
     "themes/sageveil.json",
     "README.md"
   ],
+  "dependencies": {
+    "@sageveil/palette": "^0.2.2"
+  },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
     "@earendil-works/pi-tui": "*"
