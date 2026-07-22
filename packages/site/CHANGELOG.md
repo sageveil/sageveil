@@ -1,3 +1,9 @@
+## 0.2.3 (2026-07-22)
+
+### 🪴 Repairs
+
+- **site:** build palette dependency ([7d9c04d](https://github.com/sageveil/sageveil/commit/7d9c04d))
+
 ## 0.2.2 (2026-07-21)
 
 ### 🧱 Updated Dependencies
