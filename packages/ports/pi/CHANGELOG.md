@@ -1,3 +1,9 @@
+## 0.2.7 (2026-07-22)
+
+### 🍃 Refinements
+
+- **ports:** import published palette ([b7f4c48](https://github.com/sageveil/sageveil/commit/b7f4c48))
+
 ## 0.2.6 (2026-07-21)
 
 ### 🧱 Updated Dependencies
