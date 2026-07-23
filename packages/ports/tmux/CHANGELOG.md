@@ -1,3 +1,9 @@
+## 0.2.4 (2026-07-23)
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.3
+
 ## 0.2.3 (2026-07-21)
 
 ### 🧱 Updated Dependencies

@@ -1,3 +1,9 @@
+## 0.2.3 (2026-07-23)
+
+### 🪴 Repairs
+
+- **palette:** build before packing ([fd92dd1](https://github.com/sageveil/sageveil/commit/fd92dd1))
+
 ## 0.2.2 (2026-07-21)
 
 ### 🌿 New Growth
