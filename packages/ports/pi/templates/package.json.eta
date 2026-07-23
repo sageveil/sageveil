@@ -23,7 +23,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@sageveil/palette": "^0.2.2"
+    "@sageveil/palette": "^0.2.3"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
