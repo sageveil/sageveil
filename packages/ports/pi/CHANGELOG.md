@@ -1,3 +1,9 @@
+## 0.2.10 (2026-07-23)
+
+### 🪴 Repairs
+
+- **pi:** require fixed palette package ([0b29295](https://github.com/sageveil/sageveil/commit/0b29295))
+
 ## 0.2.9 (2026-07-23)
 
 ### 🧱 Updated Dependencies
