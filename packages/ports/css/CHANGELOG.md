@@ -1,3 +1,9 @@
+## 0.1.7 (2026-07-23)
+
+### 🪴 Repairs
+
+- **css:** require fixed palette package ([b298677](https://github.com/sageveil/sageveil/commit/b298677))
+
 ## 0.1.6 (2026-07-23)
 
 ### 🧱 Updated Dependencies
