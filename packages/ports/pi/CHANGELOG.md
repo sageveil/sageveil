@@ -1,3 +1,9 @@
+## 0.2.8 (2026-07-23)
+
+### 🍃 Refinements
+
+- **ports:** remove stale template extensions ([27f2f86](https://github.com/sageveil/sageveil/commit/27f2f86))
+
 ## 0.2.7 (2026-07-22)
 
 ### 🍃 Refinements
