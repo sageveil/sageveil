@@ -27,6 +27,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "prepack": "pnpm nx run palette:build"
+  },
   "dependencies": {},
   "nx": {
     "targets": {
