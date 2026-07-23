@@ -204,6 +204,8 @@ jobs:
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
       - run: pnpm install --frozen-lockfile
+      - name: Build palette
+        run: pnpm nx run palette:build
       - name: Publish palette to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
