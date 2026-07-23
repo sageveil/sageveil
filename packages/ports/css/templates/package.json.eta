@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/sageveil/css",
   "dependencies": {
-    "@sageveil/palette": "^0.2.2"
+    "@sageveil/palette": "^0.2.3"
   },
   "publishConfig": {
     "access": "public"
