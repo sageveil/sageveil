@@ -1,3 +1,9 @@
+## 0.2.5 (2026-08-02)
+
+### 🌿 New Growth
+
+- **tmux:** add remote session indicator ([26ee18e](https://github.com/sageveil/sageveil/commit/26ee18e))
+
 ## 0.2.4 (2026-07-23)
 
 ### 🧱 Updated Dependencies
