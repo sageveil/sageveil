@@ -1,3 +1,9 @@
+## 0.2.6 (2026-08-02)
+
+### 🪴 Repairs
+
+- **tmux:** show remote indicator before session ([120fdc8](https://github.com/sageveil/sageveil/commit/120fdc8))
+
 ## 0.2.5 (2026-08-02)
 
 ### 🌿 New Growth
