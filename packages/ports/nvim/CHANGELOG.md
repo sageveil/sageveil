@@ -1,3 +1,9 @@
+## 0.2.4 (2026-08-25)
+
+### 🪴 Repairs
+
+- **nvim:** distinguish insert mode ([24254bc](https://github.com/sageveil/sageveil/commit/24254bc))
+
 ## 0.2.3 (2026-07-23)
 
 ### 🧱 Updated Dependencies
