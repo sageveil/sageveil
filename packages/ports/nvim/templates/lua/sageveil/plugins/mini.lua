@@ -156,7 +156,7 @@ return function(opts)
 		MiniStatuslineFilename = { fg = palette.muted },
 		MiniStatuslineInactive = { fg = palette.dim },
 		MiniStatuslineModeCommand = { fg = palette.red, bold = bold },
-		MiniStatuslineModeInsert = { fg = palette.green, bold = bold },
+		MiniStatuslineModeInsert = { fg = palette.yellow_bright, bold = bold },
 		MiniStatuslineModeNormal = { fg = palette.cyan, bold = bold },
 		MiniStatuslineModeOther = { fg = palette.blue, bold = bold },
 		MiniStatuslineModeReplace = { fg = palette.yellow, bold = bold },

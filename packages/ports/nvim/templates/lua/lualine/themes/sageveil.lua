@@ -14,7 +14,7 @@ return {
 		c = { bg = bg, fg = p.muted, gui = italic },
 	},
 	insert = {
-		a = { bg = bg, fg = p.green, gui = bold },
+		a = { bg = bg, fg = p.yellow_bright, gui = bold },
 	},
 	visual = {
 		a = { bg = bg, fg = p.magenta, gui = bold },
