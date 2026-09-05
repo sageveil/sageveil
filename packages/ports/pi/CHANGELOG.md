@@ -1,3 +1,9 @@
+## 0.2.11 (2026-09-05)
+
+### 🌿 New Growth
+
+- **pi:** show session name in statusline ([752ad70](https://github.com/sageveil/sageveil/commit/752ad70))
+
 ## 0.2.10 (2026-07-23)
 
 ### 🪴 Repairs
