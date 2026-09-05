@@ -23,6 +23,7 @@ const formatTokens = (tokens: number) => {
 type StatuslineConfig = {
   icon: boolean;
   directory: boolean;
+  sessionName: boolean;
   gitBranch: boolean;
   gitStatus: boolean;
   context: boolean | 'auto';
@@ -39,6 +40,7 @@ const defaults: SageveilConfig = {
   statusline: {
     icon: true,
     directory: true,
+    sessionName: true,
     gitBranch: true,
     gitStatus: true,
     context: 'auto',
@@ -86,6 +88,10 @@ const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string 
       statusline: {
         icon: boolean(statusline.icon, statuslineDefaults.icon),
         directory: boolean(statusline.directory, statuslineDefaults.directory),
+        sessionName: boolean(
+          statusline.sessionName,
+          statuslineDefaults.sessionName,
+        ),
         gitBranch: boolean(statusline.gitBranch, statuslineDefaults.gitBranch),
         gitStatus: boolean(statusline.gitStatus, statuslineDefaults.gitStatus),
         context: context === true || context === false || context === 'auto'
@@ -201,6 +207,7 @@ export default function (pi: ExtensionAPI) {
         const statuses = config.statusline.extensionStatuses
           ? Array.from(footerData.getExtensionStatuses().values())
           : [];
+        const sessionName = ctx.sessionManager.getSessionName();
         const gitStatusText = [
           gitStatus.untracked && theme.fg('dim', `?${gitStatus.untracked}`),
           gitStatus.stashed && theme.fg('syntaxType', `$${gitStatus.stashed}`),
@@ -286,7 +293,27 @@ export default function (pi: ExtensionAPI) {
           );
         }
 
-        detailLine = truncateToWidth(detailLine, width);
+        const displayedSessionName = config.statusline.sessionName && sessionName
+          ? theme.fg('dim', sessionName)
+          : '';
+        if (detailLine) {
+          const shortSessionName = truncateToWidth(
+            displayedSessionName,
+            Math.max(0, width - visibleWidth(detailLine) - 1),
+            '…',
+          );
+          detailLine =
+            shortSessionName +
+            ' '.repeat(
+              Math.max(
+                0,
+                width - visibleWidth(shortSessionName) - visibleWidth(detailLine),
+              ),
+            ) +
+            truncateToWidth(detailLine, width);
+        } else {
+          detailLine = truncateToWidth(displayedSessionName, width);
+        }
         const statusLine = truncateToWidth(statuses.join(separator), width);
 
         if (!right) {

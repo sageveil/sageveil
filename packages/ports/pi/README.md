@@ -71,6 +71,7 @@ Optional global settings live in `~/.pi/agent/sageveil.json`:
   "statusline": {
     "icon": true,
     "directory": true,
+    "sessionName": true,
     "gitBranch": true,
     "gitStatus": true,
     "context": "auto",
@@ -83,7 +84,7 @@ Optional global settings live in `~/.pi/agent/sageveil.json`:
 
 All fields are optional; omitted fields use these defaults.
 
-The statusline fields only control visibility and retain their displayed order; there is no `statusline.enabled` setting. `gitBranch` and `gitStatus` are independent. `icon` controls the Pi icon; `directory` controls the repository root name (or current folder); `model` includes the thinking level for reasoning models; and `extensionStatuses` controls the separate extension-status line. `usage` shows cumulative input, output, cache, and cost details. `context` accepts `true`, `false`, or `"auto"`: `true` always shows context usage, `false` never does, and `"auto"` shows it above 75%. Invalid known field types emit a warning and use their defaults; valid configured fields remain honored.
+The statusline fields only control visibility and retain their displayed order; there is no `statusline.enabled` setting. `gitBranch` and `gitStatus` are independent. `icon` controls the Pi icon; `directory` controls the repository root name (or current folder); `sessionName` shows the name set by `/name` or `--name` on the left of the usage row; `model` includes the thinking level for reasoning models; and `extensionStatuses` controls the separate extension-status line. `usage` shows cumulative input, output, cache, and cost details. `context` accepts `true`, `false`, or `"auto"`: `true` always shows context usage, `false` never does, and `"auto"` shows it above 75%. Invalid known field types emit a warning and use their defaults; valid configured fields remain honored.
 
 ### Local theme file
 
