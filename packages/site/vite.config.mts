@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 const base = process.env.BASE_PATH ?? '/';
 
 export default defineConfig(() => ({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/site',
   base,
   server: {

@@ -55,3 +55,9 @@ vitest.config.*.timestamp*
 
 # generated site data
 packages/site/src/data/ports.json
+
+.claude/worktrees
+.claude/settings.local.json
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs

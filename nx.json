@@ -9,7 +9,6 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
-      "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
@@ -20,7 +19,6 @@
   "release": {
     "projects": ["packages/ports/*", "packages/palette", "packages/nx", "packages/site"],
     "projectsRelationship": "independent",
-    "releaseTagPattern": "{projectName}@{version}",
     "version": {
       "conventionalCommits": true,
       "fallbackCurrentVersionResolver": "disk"
@@ -80,6 +78,9 @@
           }
         }
       }
+    },
+    "releaseTag": {
+      "pattern": "{projectName}@{version}"
     }
   },
   "plugins": [
@@ -174,5 +175,6 @@
       }
     }
   },
-  "nxCloudId": "698cfadcff8c4b3d8f90d279"
+  "nxCloudId": "698cfadcff8c4b3d8f90d279",
+  "analytics": false
 }

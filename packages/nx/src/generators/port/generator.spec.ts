@@ -1,5 +1,5 @@
 import { readJson } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing.js';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { describe, expect, it } from 'vitest';
 import generator from './generator.js';
 
