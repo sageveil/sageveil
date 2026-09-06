@@ -38,7 +38,9 @@
 "ui.help" = { fg = "fg", bg = "surface" }
 
 "ui.menu" = { fg = "fg", bg = "surface" }
-"ui.menu.selected" = { fg = "fg_bright", bg = "highlight", modifiers = ["bold"] }
+"ui.menu.selected" = { fg = "fg_bright", bg = "highlight", modifiers = [
+  "bold",
+] }
 "ui.menu.scroll" = { fg = "muted", bg = "surface" }
 
 "ui.virtual.ruler" = { bg = "surface" }

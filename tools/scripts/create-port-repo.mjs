@@ -20,7 +20,9 @@ const positional = args.filter((a) => !a.startsWith('--'));
 const port = positional[0];
 
 if (!port) {
-  console.error('Usage: node tools/scripts/create-port-repo.mjs <port> [--private] [--dry-run]');
+  console.error(
+    'Usage: node tools/scripts/create-port-repo.mjs <port> [--private] [--dry-run]',
+  );
   process.exit(1);
 }
 
@@ -39,7 +41,12 @@ if (run('gh', ['--version']).status !== 0) {
 }
 
 // Port source exists?
-const pkgPath = path.join(workspaceRoot, 'packages/ports', port, 'package.json');
+const pkgPath = path.join(
+  workspaceRoot,
+  'packages/ports',
+  port,
+  'package.json',
+);
 try {
   await access(pkgPath);
 } catch {
@@ -58,7 +65,14 @@ if (run('gh', ['repo', 'view', repo]).status === 0) {
   process.exit(0);
 }
 
-const createArgs = ['repo', 'create', repo, visibility, '--description', description];
+const createArgs = [
+  'repo',
+  'create',
+  repo,
+  visibility,
+  '--description',
+  description,
+];
 
 if (dryRun) {
   console.log(`[dry-run] gh ${createArgs.join(' ')}`);

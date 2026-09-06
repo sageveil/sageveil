@@ -38,7 +38,7 @@ describe('sageveil palette', () => {
     expectedAnsiVariants.forEach((variant) => {
       expect(sageveil.ansi).toHaveProperty(variant);
       expect(typeof sageveil.ansi[variant as keyof typeof sageveil.ansi]).toBe(
-        'object'
+        'object',
       );
     });
   });

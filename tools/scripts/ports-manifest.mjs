@@ -9,7 +9,7 @@ const workspaceRoot = path.resolve(__dirname, '../..');
 const portsRoot = path.join(workspaceRoot, 'packages/ports');
 const outputPath = path.join(
   workspaceRoot,
-  'packages/site/src/data/ports.json'
+  'packages/site/src/data/ports.json',
 );
 
 const titleCase = (value) =>
@@ -51,6 +51,6 @@ await writeFile(outputPath, `${JSON.stringify(ports, null, 2)}\n`, 'utf8');
 console.log(
   `Generated ${ports.length} ports -> ${path.relative(
     workspaceRoot,
-    outputPath
-  )}`
+    outputPath,
+  )}`,
 );

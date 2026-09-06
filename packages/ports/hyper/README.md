@@ -15,7 +15,7 @@ hyper i @sageveil/hyper
 Or add the plugin manually to `~/.hyper.js`:
 
 ```js
-plugins: ['@sageveil/hyper']
+plugins: ['@sageveil/hyper'];
 ```
 
 ## Build from the monorepo

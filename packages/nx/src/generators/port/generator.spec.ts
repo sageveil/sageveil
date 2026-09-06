@@ -31,7 +31,7 @@ describe('port generator', () => {
     expect(tree.exists('packages/ports/ghostty-plus/vite.config.ts')).toBe(
       false,
     );
-    expect(tree.exists('packages/ports/ghostty-plus/eslint.config.mjs')).toBe(
+    expect(tree.exists('packages/ports/ghostty-plus/.oxlintrc.json')).toBe(
       false,
     );
 

@@ -1,6 +1,18 @@
 {
   "name": "@sageveil/palette",
   "version": "0.2.3",
+  "homepage": "https://github.com/sageveil/sageveil/tree/main/packages/palette",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sageveil/sageveil.git",
+    "directory": "packages/palette"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,18 +24,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts",
-    "README.md"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sageveil/sageveil.git",
-    "directory": "packages/palette"
-  },
-  "homepage": "https://github.com/sageveil/sageveil/tree/main/packages/palette",
   "publishConfig": {
     "access": "public"
   },

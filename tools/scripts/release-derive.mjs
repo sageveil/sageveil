@@ -60,7 +60,11 @@ for (const [port, newVersion] of Object.entries(after)) {
   const oldVersion = before[port];
   if (!oldVersion || oldVersion === newVersion) continue;
   const bump = classifyBump(oldVersion, newVersion);
-  changed.push({ port, version: newVersion, isPrerelease: newVersion.includes('-') });
+  changed.push({
+    port,
+    version: newVersion,
+    isPrerelease: newVersion.includes('-'),
+  });
   if (BUMP_RANK[bump] > BUMP_RANK[umbrellaBump]) umbrellaBump = bump;
 }
 
@@ -68,7 +72,9 @@ const rootPkgPath = path.join(workspaceRoot, 'package.json');
 const rootPkg = JSON.parse(await readFile(rootPkgPath, 'utf8'));
 const currentUmbrella = rootPkg.version;
 const nextUmbrella =
-  umbrellaBump === 'none' ? currentUmbrella : bumpVersion(currentUmbrella, umbrellaBump);
+  umbrellaBump === 'none'
+    ? currentUmbrella
+    : bumpVersion(currentUmbrella, umbrellaBump);
 
 if (changed.length > 0) {
   rootPkg.version = nextUmbrella;
@@ -82,8 +88,16 @@ await writeFile(
   `${JSON.stringify(changed)}\n`,
   'utf8',
 );
-await writeFile(path.join(outDir, 'umbrella-version.txt'), `${nextUmbrella}\n`, 'utf8');
-await writeFile(path.join(outDir, 'umbrella-bump.txt'), `${umbrellaBump}\n`, 'utf8');
+await writeFile(
+  path.join(outDir, 'umbrella-version.txt'),
+  `${nextUmbrella}\n`,
+  'utf8',
+);
+await writeFile(
+  path.join(outDir, 'umbrella-bump.txt'),
+  `${umbrellaBump}\n`,
+  'utf8',
+);
 
 console.log(
   `Changed ports: ${changed.length} | umbrella ${currentUmbrella} -> ${nextUmbrella} (${umbrellaBump})`,

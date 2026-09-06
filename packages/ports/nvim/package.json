@@ -3,13 +3,6 @@
   "version": "0.2.4",
   "private": true,
   "type": "module",
-  "sageveil": {
-    "displayName": "Neovim",
-    "description": "Sageveil highlights tuned for Neovim editing focus.",
-    "tags": [
-      "editor"
-    ]
-  },
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
@@ -22,5 +15,12 @@
       },
       "clean": {}
     }
+  },
+  "sageveil": {
+    "displayName": "Neovim",
+    "description": "Sageveil highlights tuned for Neovim editing focus.",
+    "tags": [
+      "editor"
+    ]
   }
 }

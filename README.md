@@ -19,16 +19,16 @@
 
 One source of truth. Every port grows from these colors.
 
-| | Base | | Bright |
-| --- | --- | --- | --- |
-| ![](https://placehold.co/14/101310/101310.png) `black` | `#101310` | ![](https://placehold.co/14/262F26/262F26.png) `black` | `#262F26` |
-| ![](https://placehold.co/14/9A6B6B/9A6B6B.png) `red` | `#9A6B6B` | ![](https://placehold.co/14/B08585/B08585.png) `red` | `#B08585` |
-| ![](https://placehold.co/14/959C70/959C70.png) `green` | `#959C70` | ![](https://placehold.co/14/9C9F7F/9C9F7F.png) `green` | `#9C9F7F` |
-| ![](https://placehold.co/14/A69966/A69966.png) `yellow` | `#A69966` | ![](https://placehold.co/14/C6B67E/C6B67E.png) `yellow` | `#C6B67E` |
-| ![](https://placehold.co/14/8A8493/8A8493.png) `blue` | `#8A8493` | ![](https://placehold.co/14/A39DAC/A39DAC.png) `blue` | `#A39DAC` |
+|                                                          | Base      |                                                          | Bright    |
+| -------------------------------------------------------- | --------- | -------------------------------------------------------- | --------- |
+| ![](https://placehold.co/14/101310/101310.png) `black`   | `#101310` | ![](https://placehold.co/14/262F26/262F26.png) `black`   | `#262F26` |
+| ![](https://placehold.co/14/9A6B6B/9A6B6B.png) `red`     | `#9A6B6B` | ![](https://placehold.co/14/B08585/B08585.png) `red`     | `#B08585` |
+| ![](https://placehold.co/14/959C70/959C70.png) `green`   | `#959C70` | ![](https://placehold.co/14/9C9F7F/9C9F7F.png) `green`   | `#9C9F7F` |
+| ![](https://placehold.co/14/A69966/A69966.png) `yellow`  | `#A69966` | ![](https://placehold.co/14/C6B67E/C6B67E.png) `yellow`  | `#C6B67E` |
+| ![](https://placehold.co/14/8A8493/8A8493.png) `blue`    | `#8A8493` | ![](https://placehold.co/14/A39DAC/A39DAC.png) `blue`    | `#A39DAC` |
 | ![](https://placehold.co/14/876F7F/876F7F.png) `magenta` | `#876F7F` | ![](https://placehold.co/14/947E8D/947E8D.png) `magenta` | `#947E8D` |
-| ![](https://placehold.co/14/7F9476/7F9476.png) `cyan` | `#7F9476` | ![](https://placehold.co/14/9AAB90/9AAB90.png) `cyan` | `#9AAB90` |
-| ![](https://placehold.co/14/A8AFA6/A8AFA6.png) `white` | `#A8AFA6` | ![](https://placehold.co/14/C3CDC0/C3CDC0.png) `white` | `#C3CDC0` |
+| ![](https://placehold.co/14/7F9476/7F9476.png) `cyan`    | `#7F9476` | ![](https://placehold.co/14/9AAB90/9AAB90.png) `cyan`    | `#9AAB90` |
+| ![](https://placehold.co/14/A8AFA6/A8AFA6.png) `white`   | `#A8AFA6` | ![](https://placehold.co/14/C3CDC0/C3CDC0.png) `white`   | `#C3CDC0` |
 
 ## 🌿 Ports
 

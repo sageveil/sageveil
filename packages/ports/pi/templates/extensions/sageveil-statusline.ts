@@ -9,9 +9,12 @@ import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 
 const ansi = (hex: string) =>
-  hex.slice(1).match(/../g)!.map((part) => Number.parseInt(part, 16)).join(';');
-const piIcon =
-  `\x1b[38;2;${ansi(sageveil.ansi.base.black)};48;2;${ansi(sageveil.ansi.base.magenta)}m π \x1b[49;38;2;${ansi(sageveil.ansi.base.magenta)}m\x1b[39m`;
+  hex
+    .slice(1)
+    .match(/../g)!
+    .map((part) => Number.parseInt(part, 16))
+    .join(';');
+const piIcon = `\x1b[38;2;${ansi(sageveil.ansi.base.black)};48;2;${ansi(sageveil.ansi.base.magenta)}m π \x1b[49;38;2;${ansi(sageveil.ansi.base.magenta)}m\x1b[39m`;
 const formatTokens = (tokens: number) => {
   if (tokens < 1000) return tokens.toString();
   if (tokens < 10_000) return `${(tokens / 1000).toFixed(1)}k`;
@@ -50,18 +53,29 @@ const defaults: SageveilConfig = {
   },
 };
 
-const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string }> => {
+const readConfig = async (): Promise<{
+  config: SageveilConfig;
+  warning?: string;
+}> => {
   let parsed: unknown;
   try {
-    parsed = JSON.parse(await readFile(join(getAgentDir(), 'sageveil.json'), 'utf8'));
+    parsed = JSON.parse(
+      await readFile(join(getAgentDir(), 'sageveil.json'), 'utf8'),
+    );
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT')
       return { config: defaults };
-    return { config: defaults, warning: 'sageveil: invalid sageveil.json; using defaults' };
+    return {
+      config: defaults,
+      warning: 'sageveil: invalid sageveil.json; using defaults',
+    };
   }
 
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    return { config: defaults, warning: 'sageveil: invalid sageveil.json; using defaults' };
+    return {
+      config: defaults,
+      warning: 'sageveil: invalid sageveil.json; using defaults',
+    };
   }
 
   const values = parsed as Record<string, unknown>;
@@ -75,12 +89,19 @@ const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string 
   const statusline =
     values.statusline === undefined
       ? {}
-      : values.statusline && typeof values.statusline === 'object' && !Array.isArray(values.statusline)
-        ? values.statusline as Record<string, unknown>
-        : (invalid = true, {});
+      : values.statusline &&
+          typeof values.statusline === 'object' &&
+          !Array.isArray(values.statusline)
+        ? (values.statusline as Record<string, unknown>)
+        : ((invalid = true), {});
   const statuslineDefaults = defaults.statusline;
   const context = statusline.context;
-  if (context !== undefined && context !== true && context !== false && context !== 'auto')
+  if (
+    context !== undefined &&
+    context !== true &&
+    context !== false &&
+    context !== 'auto'
+  )
     invalid = true;
 
   return {
@@ -94,9 +115,10 @@ const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string 
         ),
         gitBranch: boolean(statusline.gitBranch, statuslineDefaults.gitBranch),
         gitStatus: boolean(statusline.gitStatus, statuslineDefaults.gitStatus),
-        context: context === true || context === false || context === 'auto'
-          ? context
-          : statuslineDefaults.context,
+        context:
+          context === true || context === false || context === 'auto'
+            ? context
+            : statuslineDefaults.context,
         model: boolean(statusline.model, statuslineDefaults.model),
         usage: boolean(statusline.usage, statuslineDefaults.usage),
         extensionStatuses: boolean(
@@ -106,7 +128,8 @@ const readConfig = async (): Promise<{ config: SageveilConfig; warning?: string 
       },
     },
     ...(invalid && {
-      warning: 'sageveil: invalid sageveil.json fields; using defaults for those fields',
+      warning:
+        'sageveil: invalid sageveil.json fields; using defaults for those fields',
     }),
   };
 };
@@ -224,11 +247,13 @@ export default function (pi: ExtensionAPI) {
           .join(' ');
         const left = [
           config.statusline.icon && piIcon,
-          config.statusline.directory && theme.fg(
-            'accent',
-            `${gitRoot ? '󰊢' : '󰝰'} ${basename(gitRoot ?? ctx.cwd)}`,
-          ),
-          config.statusline.gitBranch && branch &&
+          config.statusline.directory &&
+            theme.fg(
+              'accent',
+              `${gitRoot ? '󰊢' : '󰝰'} ${basename(gitRoot ?? ctx.cwd)}`,
+            ),
+          config.statusline.gitBranch &&
+            branch &&
             theme.fg('customMessageLabel', ` ${branch}`),
           config.statusline.gitStatus && gitStatusText,
         ]
@@ -242,14 +267,16 @@ export default function (pi: ExtensionAPI) {
         const model = ctx.model?.id ?? 'no model';
         const right = [
           (config.statusline.context === true ||
-            (config.statusline.context === 'auto' && (usage?.percent ?? 0) > 75)) &&
+            (config.statusline.context === 'auto' &&
+              (usage?.percent ?? 0) > 75)) &&
             theme.fg('muted', context),
-          config.statusline.model && theme.fg(
-            'dim',
-            ctx.model?.reasoning
-              ? `${model} • ${pi.getThinkingLevel()}`
-              : model,
-          ),
+          config.statusline.model &&
+            theme.fg(
+              'dim',
+              ctx.model?.reasoning
+                ? `${model} • ${pi.getThinkingLevel()}`
+                : model,
+            ),
         ]
           .filter(Boolean)
           .join(separator);
@@ -293,9 +320,10 @@ export default function (pi: ExtensionAPI) {
           );
         }
 
-        const displayedSessionName = config.statusline.sessionName && sessionName
-          ? theme.fg('dim', sessionName)
-          : '';
+        const displayedSessionName =
+          config.statusline.sessionName && sessionName
+            ? theme.fg('dim', sessionName)
+            : '';
         if (detailLine) {
           const shortSessionName = truncateToWidth(
             displayedSessionName,
@@ -307,7 +335,9 @@ export default function (pi: ExtensionAPI) {
             ' '.repeat(
               Math.max(
                 0,
-                width - visibleWidth(shortSessionName) - visibleWidth(detailLine),
+                width -
+                  visibleWidth(shortSessionName) -
+                  visibleWidth(detailLine),
               ),
             ) +
             truncateToWidth(detailLine, width);

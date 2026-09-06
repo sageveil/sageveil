@@ -21,7 +21,7 @@ Download the shell snippets from the dedicated repository: <https://github.com/s
 ### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
-2. Render the snippets: `pnpm nx run fzf:generate` 
+2. Render the snippets: `pnpm nx run fzf:generate`
 3. The files land in `dist/ports/fzf/`
 
 ## Generated files

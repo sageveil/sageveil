@@ -8,7 +8,7 @@ status: ongoing
 
 # The Verdant Archive
 
-> *"To name a thing is to begin to lose it."*
+> _"To name a thing is to begin to lose it."_
 
 ## On Observation
 
@@ -20,14 +20,14 @@ This is a note about the ones who stop.
 
 ## Field Notes
 
-- Lichen grows *toward* nothing; it simply grows
+- Lichen grows _toward_ nothing; it simply grows
 - The colour of still water is not blue — it is the colour of whatever is above it
 - **Fog** is not the absence of a view; it is a view of absence
 
 ### Species Encountered
 
 | Name              | Notes                          |
-|-------------------|--------------------------------|
+| ----------------- | ------------------------------ |
 | Usnea barbata     | beard lichen, north-facing oak |
 | Marchantia sp.    | liverwort, damp stone wall     |
 | Cladonia uncialis | reindeer lichen, open heath    |
@@ -52,4 +52,4 @@ def veil(n: int) -> list[int]:
 
 ---
 
-*Last updated: [[2026-03-06]]*
+_Last updated: [[2026-03-06]]_

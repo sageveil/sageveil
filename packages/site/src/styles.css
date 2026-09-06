@@ -7,7 +7,11 @@
   /* Surfaces */
   --sv-card: color-mix(in srgb, var(--sv-surface) 86%, var(--sv-base-black));
   --sv-band: color-mix(in srgb, var(--sv-base-black) 80%, var(--sv-surface));
-  --sv-band-alt: color-mix(in srgb, var(--sv-base-black) 92%, var(--sv-overlay));
+  --sv-band-alt: color-mix(
+    in srgb,
+    var(--sv-base-black) 92%,
+    var(--sv-overlay)
+  );
   --sv-hairline: color-mix(in srgb, var(--sv-border) 35%, transparent);
   --sv-hairline-strong: color-mix(in srgb, var(--sv-border) 55%, transparent);
 
@@ -17,7 +21,11 @@
 
   /* Accent (green-led, magenta sparing) */
   --sv-accent: var(--sv-bright-green);
-  --sv-accent-ink: color-mix(in srgb, var(--sv-base-black) 80%, var(--sv-base-green));
+  --sv-accent-ink: color-mix(
+    in srgb,
+    var(--sv-base-black) 80%,
+    var(--sv-base-green)
+  );
   --sv-accent-soft: color-mix(in srgb, var(--sv-base-green) 14%, transparent);
   --sv-accent-line: color-mix(in srgb, var(--sv-base-green) 40%, transparent);
   --sv-spark: var(--sv-base-magenta);
@@ -26,7 +34,11 @@
 
   /* Terminal / syntax tokens */
   --sv-term-bg: color-mix(in srgb, var(--sv-base-black) 88%, var(--sv-surface));
-  --sv-term-bar: color-mix(in srgb, var(--sv-surface) 80%, var(--sv-base-black));
+  --sv-term-bar: color-mix(
+    in srgb,
+    var(--sv-surface) 80%,
+    var(--sv-base-black)
+  );
   --sv-syn-comment: var(--sv-dim);
   --sv-syn-string: var(--sv-base-yellow);
   --sv-syn-keyword: var(--sv-base-magenta);
@@ -50,7 +62,8 @@ body {
   margin: 0;
   font-family: 'Space Grotesk', system-ui, sans-serif;
   color: var(--sv-base-white);
-  background: radial-gradient(
+  background:
+    radial-gradient(
       120% 80% at 50% -10%,
       color-mix(in srgb, var(--sv-base-green) 8%, transparent),
       transparent 60%

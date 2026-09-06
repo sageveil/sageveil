@@ -6,6 +6,10 @@
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.80.6",
+    "@earendil-works/pi-tui": "^0.80.6"
+  },
   "nx": {
     "targets": {
       "generate": {
@@ -32,9 +36,5 @@
     "tags": [
       "cli"
     ]
-  },
-  "devDependencies": {
-    "@earendil-works/pi-coding-agent": "^0.80.6",
-    "@earendil-works/pi-tui": "^0.80.6"
   }
 }

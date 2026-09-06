@@ -15,7 +15,9 @@
         }
       },
       "typecheck": {
-        "dependsOn": ["generate-ports"]
+        "dependsOn": [
+          "generate-ports"
+        ]
       },
       "build": {
         "dependsOn": [

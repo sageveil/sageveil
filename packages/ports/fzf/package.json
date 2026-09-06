@@ -3,13 +3,6 @@
   "version": "0.2.3",
   "private": true,
   "type": "module",
-  "sageveil": {
-    "displayName": "fzf",
-    "description": "Fast fuzzy search with Sageveil accents for fzf.",
-    "tags": [
-      "cli"
-    ]
-  },
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
@@ -22,5 +15,12 @@
       },
       "clean": {}
     }
+  },
+  "sageveil": {
+    "displayName": "fzf",
+    "description": "Fast fuzzy search with Sageveil accents for fzf.",
+    "tags": [
+      "cli"
+    ]
   }
 }

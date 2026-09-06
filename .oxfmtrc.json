@@ -1,0 +1,14 @@
+{
+  "printWidth": 80,
+  "singleQuote": true,
+  "sortTailwindcss": {
+    "stylesheet": "packages/site/src/styles.css"
+  },
+  "ignorePatterns": [
+    "dist",
+    "coverage",
+    ".nx/cache",
+    ".nx/workspace-data",
+    ".nx/self-healing"
+  ]
+}

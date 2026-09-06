@@ -3,13 +3,6 @@
   "version": "0.2.6",
   "private": true,
   "type": "module",
-  "sageveil": {
-    "displayName": "tmux",
-    "description": "Statusline and pane styling with Sageveil balance for tmux.",
-    "tags": [
-      "terminal"
-    ]
-  },
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
@@ -22,5 +15,12 @@
       },
       "clean": {}
     }
+  },
+  "sageveil": {
+    "displayName": "tmux",
+    "description": "Statusline and pane styling with Sageveil balance for tmux.",
+    "tags": [
+      "terminal"
+    ]
   }
 }

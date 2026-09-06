@@ -22,7 +22,7 @@ Run commands from the repo root.
 - `pnpm nx run <port>:generate`: build a port (example: `pnpm nx run tmux:generate`).
 - `pnpm nx run <project>:test`: run tests for a project.
 - `pnpm nx run <project>:test --testFile=src/lib/<name>.spec.ts`: run one test file.
-- `pnpm nx run <project>:lint`: ESLint checks for code-bearing projects.
+- `pnpm nx run <project>:lint`: Oxlint checks for code-bearing projects.
 - `pnpm nx run <project>:typecheck`: TypeScript typecheck for a project.
 - `pnpm nx g @sageveil/nx:port --name <port>`: generate a new port.
 - `pnpm nx run-many -t test` / `pnpm nx run-many -t lint`: run targets across projects.
@@ -71,7 +71,7 @@ The `generate` target invokes `tools/scripts/build-port.mjs <projectRoot>`, whic
 ## Coding Style & Naming Conventions
 
 - Use TypeScript/ESM modules as shown in `packages/*/src`.
-- Format with Prettier (single quotes). Use Nx lint targets for packages with TS/JS logic.
+- Format with Oxfmt (single quotes). Use Nx lint targets for packages with TS/JS logic.
 - Nx enforces module boundaries; prefer importing through package entry points.
 - Tests use `*.spec.ts` or `*.test.ts` naming under `src/`.
 - Port folders are lowercase and match their target app name.

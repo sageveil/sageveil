@@ -1,6 +1,6 @@
-import express, { Request, Response, NextFunction } from "express";
-import { z } from "zod";
-import { db } from "./db";
+import express, { Request, Response, NextFunction } from 'express';
+import { z } from 'zod';
+import { db } from './db';
 
 const CreatePostSchema = z.object({
   title: z.string().min(1).max(120),
@@ -20,12 +20,12 @@ interface Post extends CreatePost {
 
 const router = express.Router();
 
-router.get("/posts", async (req: Request, res: Response) => {
-  const { tag, limit = "20", offset = "0" } = req.query;
+router.get('/posts', async (req: Request, res: Response) => {
+  const { tag, limit = '20', offset = '0' } = req.query;
 
   const posts = await db.post.findMany({
     where: tag ? { tags: { has: String(tag) } } : undefined,
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     take: Math.min(Number(limit), 100),
     skip: Number(offset),
   });
@@ -33,7 +33,7 @@ router.get("/posts", async (req: Request, res: Response) => {
   res.json({ data: posts, count: posts.length });
 });
 
-router.post("/posts", requireAuth, async (req: Request, res: Response) => {
+router.post('/posts', requireAuth, async (req: Request, res: Response) => {
   const parsed = CreatePostSchema.safeParse(req.body);
   if (!parsed.success) {
     res.status(422).json({ error: parsed.error.flatten() });
@@ -47,20 +47,24 @@ router.post("/posts", requireAuth, async (req: Request, res: Response) => {
   res.status(201).json(post);
 });
 
-router.delete("/posts/:id", requireAuth, async (req: Request, res: Response) => {
-  const post = await db.post.findUnique({ where: { id: req.params.id } });
+router.delete(
+  '/posts/:id',
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const post = await db.post.findUnique({ where: { id: req.params.id } });
 
-  if (!post) {
-    res.status(404).json({ error: "not found" });
-    return;
-  }
-  if (post.authorId !== req.user.id) {
-    res.status(403).json({ error: "forbidden" });
-    return;
-  }
+    if (!post) {
+      res.status(404).json({ error: 'not found' });
+      return;
+    }
+    if (post.authorId !== req.user.id) {
+      res.status(403).json({ error: 'forbidden' });
+      return;
+    }
 
-  await db.post.delete({ where: { id: req.params.id } });
-  res.status(204).send();
-});
+    await db.post.delete({ where: { id: req.params.id } });
+    res.status(204).send();
+  },
+);
 
 export default router;

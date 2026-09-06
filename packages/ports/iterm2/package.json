@@ -3,13 +3,6 @@
   "version": "0.2.3",
   "private": true,
   "type": "module",
-  "sageveil": {
-    "displayName": "iTerm2",
-    "description": "Sageveil tones for the iTerm2 macOS terminal.",
-    "tags": [
-      "terminal"
-    ]
-  },
   "dependencies": {
     "@sageveil/palette": "workspace:*"
   },
@@ -22,5 +15,12 @@
       },
       "clean": {}
     }
+  },
+  "sageveil": {
+    "displayName": "iTerm2",
+    "description": "Sageveil tones for the iTerm2 macOS terminal.",
+    "tags": [
+      "terminal"
+    ]
   }
 }

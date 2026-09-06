@@ -24,7 +24,7 @@ Install the colorscheme directly from <https://github.com/sageveil/nvim>. The re
 ### Build from the monorepo
 
 1. Install dependencies once: `pnpm install`
-2. Render the runtime files: `pnpm nx run nvim:generate` 
+2. Render the runtime files: `pnpm nx run nvim:generate`
 3. The files land in `dist/ports/nvim/`
 
 ## Apply sageveil
