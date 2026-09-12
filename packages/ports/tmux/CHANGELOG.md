@@ -1,3 +1,9 @@
+## 0.2.7 (2026-09-12)
+
+### 🪴 Repairs
+
+- **tmux:** place remote host before session name ([8096b00](https://github.com/sageveil/sageveil/commit/8096b00))
+
 ## 0.2.6 (2026-08-02)
 
 ### 🪴 Repairs
