@@ -1,3 +1,9 @@
+## 0.2.5 (2026-09-22)
+
+### 🪴 Repairs
+
+- **obsidian:** prepare theme for community directory ([758068f](https://github.com/sageveil/sageveil/commit/758068f))
+
 ## 0.2.4 (2026-09-22)
 
 ### 🪴 Repairs
