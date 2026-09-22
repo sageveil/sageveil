@@ -1,55 +1,37 @@
 ---
 title: The Verdant Archive
-tags: [field-notes, observation, lichen]
-created: 2026-03-01
-updated: 2026-03-06
-status: ongoing
+tags: [demo, field-notes, sageveil]
+status: in progress
 ---
 
 # The Verdant Archive
 
-> _"To name a thing is to begin to lose it."_
+> [!quote] Quiet observations
+> Quiet places reveal details that busy rooms tend to hide.
 
-## On Observation
+## Morning Notes
 
-There is a particular quality to **early morning light** — the way it sits on surfaces without insisting. Most people walk past it. A few stop and write it down.
+The archive opens before sunrise, while the paths are still empty and the air is cool. **Soft morning light** settles across the shelves and makes every label easier to read.
 
-This is a note about the ones who stop.
+Each entry records a small change in the landscape. Visit the [[Field Journal]] or review the `sageveil` palette for more detail.
 
----
+### Observations
 
-## Field Notes
+- Record changes in color, shape, and texture
+- Compare each sample with earlier notes
+- File completed entries before the end of the day
 
-- Lichen grows _toward_ nothing; it simply grows
-- The colour of still water is not blue — it is the colour of whatever is above it
-- **Fog** is not the absence of a view; it is a view of absence
+| Specimen | Location | Status |
+| --- | --- | --- |
+| Lichen | North wall | Cataloged |
+| Moss | River path | Pending |
+| Fern | Lower grove | Observed |
 
-### Species Encountered
+## Tasks
 
-| Name              | Notes                          |
-| ----------------- | ------------------------------ |
-| Usnea barbata     | beard lichen, north-facing oak |
-| Marchantia sp.    | liverwort, damp stone wall     |
-| Cladonia uncialis | reindeer lichen, open heath    |
+- [x] Record the morning light
+- [ ] Catalog the remaining samples
+- [ ] Return before dusk
 
----
-
-## A Small Script
-
-```python
-def veil(n: int) -> list[int]:
-    """Return the shadow sequence up to n."""
-    return [x for x in range(n) if x % 3 != 0]
-```
-
----
-
-## Unresolved
-
-- [ ] Identify the grey-green at grid ref SE 402 817
-- [x] Cross-reference with [[Pale Atlas, Vol. II]]
-- [ ] Ask R. about the moss on the lychgate
-
----
-
-_Last updated: [[2026-03-06]]_
+> [!tip]
+> Small details become visible when everything else grows quiet.
