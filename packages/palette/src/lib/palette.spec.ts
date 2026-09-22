@@ -28,6 +28,32 @@ const expectedExtrasKeys = [
 ];
 
 describe('sageveil palette', () => {
+  it('keeps text and both greens readable across UI backgrounds', () => {
+    const luminance = (hex: string) => {
+      const channels = [1, 3, 5].map((offset) => {
+        const value = parseInt(hex.slice(offset, offset + 2), 16) / 255;
+        return value <= 0.04045
+          ? value / 12.92
+          : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+    };
+
+    const { base, bright } = sageveil.ansi;
+    const { surface, overlay, highlight } = sageveil.extras;
+    for (const background of [base.black, surface, overlay, highlight]) {
+      for (const foreground of [base.white, base.green, bright.green]) {
+        expect(
+          (luminance(foreground) + 0.05) / (luminance(background) + 0.05),
+        ).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+    expect(luminance(base.black)).toBeLessThan(luminance(surface));
+    expect(luminance(surface)).toBeLessThan(luminance(overlay));
+    expect(luminance(overlay)).toBeLessThan(luminance(highlight));
+    expect(luminance(base.green)).toBeLessThan(luminance(bright.green));
+  });
+
   it('should have the correct top-level structure', () => {
     expect(sageveil).toHaveProperty('ansi');
     expect(sageveil).toHaveProperty('extras');

@@ -61,7 +61,7 @@ Registers `sv-*` colors in the theme (`bg-sv-green`, `text-sv-muted`, `border-sv
 ```ts
 import { sageveil } from '@sageveil/css';
 
-console.log(sageveil.ansi.base.green); // #959C70
+console.log(sageveil.ansi.base.green); // #90976B
 ```
 
 ## Available colors

@@ -1,6 +1,6 @@
 set -Ux FZF_DEFAULT_OPTS "
-	--color=fg:<%= it.extras.muted %>,bg:<%= it.extras.overlay %>,hl:<%= it.ansi.bright.white %>
-	--color=fg+:<%= it.extras.muted %>,bg+:<%= it.extras.highlight %>,hl+:<%= it.ansi.bright.white %>
-	--color=border:<%= it.extras.border %>,header:<%= it.ansi.base.green %>,gutter:<%= it.extras.surface %>
-	--color=spinner:<%= it.ansi.base.yellow %>,info:<%= it.ansi.base.blue %>,separator:<%= it.extras.border %>
-	--color=pointer:<%= it.ansi.base.magenta %>,marker:<%= it.extras.highlight %>,prompt:<%= it.extras.muted %>"
+	--color=fg:<%= it.ansi.base.white %>,bg:<%= it.ansi.base.black %>,hl:<%= it.ansi.base.green %>
+	--color=fg+:<%= it.ansi.base.white %>,bg+:<%= it.extras.highlight %>,hl+:<%= it.ansi.bright.green %>
+	--color=border:<%= it.extras.border %>,header:<%= it.extras.muted %>,gutter:<%= it.ansi.base.black %>
+	--color=spinner:<%= it.ansi.base.green %>,info:<%= it.extras.muted %>,separator:<%= it.extras.border %>
+	--color=pointer:<%= it.ansi.bright.green %>,marker:<%= it.ansi.base.green %>,prompt:<%= it.ansi.base.green %>"
