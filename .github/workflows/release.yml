@@ -253,6 +253,7 @@ jobs:
           pnpm nx run "${PORT}:generate"
       - name: Verify artifacts
         run: |
+          set -euo pipefail
           test -d "dist/ports/${PORT}" || {
             echo "dist/ports/${PORT} missing. Build must place artefacts there."
             exit 1
@@ -305,23 +306,23 @@ jobs:
             rsync -a --delete --exclude '.git/' "${GITHUB_WORKSPACE}/dist/ports/${PORT}/" "$PUB_DIR/"
             git -C "$PUB_DIR" add -A
             git -C "$PUB_DIR" commit --allow-empty -m "chore(release): ${VERSION}"
-            git -C "$PUB_DIR" tag -f "v${VERSION}"
-            git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+            git -C "$PUB_DIR" tag -f "${VERSION}"
+            git -C "$PUB_DIR" push origin "refs/tags/${VERSION}"
           else
             rsync -a --delete --exclude '.git/' "${GITHUB_WORKSPACE}/dist/ports/${PORT}/" "$PUB_DIR/"
             git -C "$PUB_DIR" add -A
             if git -C "$PUB_DIR" diff --cached --quiet; then
               echo "No content changes for ${PORT} ${VERSION}; ensuring tag exists"
-              if ! git -C "$PUB_DIR" rev-parse -q --verify "refs/tags/v${VERSION}" >/dev/null; then
-                git -C "$PUB_DIR" tag "v${VERSION}"
-                git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+              if ! git -C "$PUB_DIR" rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+                git -C "$PUB_DIR" tag "${VERSION}"
+                git -C "$PUB_DIR" push origin "refs/tags/${VERSION}"
               fi
             else
               git -C "$PUB_DIR" commit -m "chore(release): ${VERSION}"
               git -C "$PUB_DIR" branch -M main
               git -C "$PUB_DIR" push origin main
-              git -C "$PUB_DIR" tag -f "v${VERSION}"
-              git -C "$PUB_DIR" push origin "refs/tags/v${VERSION}"
+              git -C "$PUB_DIR" tag -f "${VERSION}"
+              git -C "$PUB_DIR" push origin "refs/tags/${VERSION}"
             fi
           fi
       - name: Extract per-port release notes
@@ -333,7 +334,7 @@ jobs:
           if [[ -f "$CHANGELOG" ]]; then
             awk '/^## /{c++} c==1' "$CHANGELOG" | tail -n +2 > "$NOTES_FILE"
           else
-            echo "Release ${PORT} v${VERSION}" > "$NOTES_FILE"
+            echo "Release ${PORT} ${VERSION}" > "$NOTES_FILE"
           fi
           echo "notes_file=${NOTES_FILE}" >> "$GITHUB_OUTPUT"
       - name: Create downstream GitHub release
@@ -342,23 +343,27 @@ jobs:
         run: |
           set -euo pipefail
           DEST_REPO="${ORG}/${PORT}"
-          TITLE="${PORT} v${VERSION}"
+          TITLE="${PORT} ${VERSION}"
           PRE=""
           [[ "${IS_PRERELEASE}" == "true" ]] && PRE="--prerelease"
-          if ! gh release create "v${VERSION}" \
+          if ! gh release create "${VERSION}" \
                 --repo "${DEST_REPO}" \
                 --title "${TITLE}" \
                 --notes-file "${{ steps.notes.outputs.notes_file }}" \
                 ${PRE}; then
-            gh release edit "v${VERSION}" \
+            gh release edit "${VERSION}" \
               --repo "${DEST_REPO}" \
               --title "${TITLE}" \
               --notes-file "${{ steps.notes.outputs.notes_file }}" \
               ${PRE}
           fi
-          gh release upload "v${VERSION}" "${{ steps.asset.outputs.asset_path }}" \
+          ASSETS=("${{ steps.asset.outputs.asset_path }}")
+          for file in manifest.json theme.css; do
+            [[ -f "dist/ports/${PORT}/${file}" ]] && ASSETS+=("dist/ports/${PORT}/${file}")
+          done
+          gh release upload "${VERSION}" "${ASSETS[@]}" \
             --repo "${DEST_REPO}" \
             --clobber
       - name: Summary
         run: |
-          echo "Published ${PORT} v${VERSION} to https://github.com/${ORG}/${PORT}"
+          echo "Published ${PORT} ${VERSION} to https://github.com/${ORG}/${PORT}"
