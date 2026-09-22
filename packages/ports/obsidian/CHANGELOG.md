@@ -1,3 +1,13 @@
+## 0.2.6 (2026-09-22)
+
+### 🪴 Repairs
+
+- **obsidian:** update community preview ([7b4350f](https://github.com/sageveil/sageveil/commit/7b4350f))
+
+### 📚 Knowledge
+
+- **obsidian:** refresh theme preview ([7585b10](https://github.com/sageveil/sageveil/commit/7585b10))
+
 ## 0.2.5 (2026-09-22)
 
 ### 🪴 Repairs
