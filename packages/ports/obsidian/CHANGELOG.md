@@ -1,3 +1,9 @@
+## 0.2.7 (2026-09-22)
+
+### 🪴 Repairs
+
+- **obsidian:** document community installation ([a33b6c5](https://github.com/sageveil/sageveil/commit/a33b6c5))
+
 ## 0.2.6 (2026-09-22)
 
 ### 🪴 Repairs
