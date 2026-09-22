@@ -1,3 +1,13 @@
+## 0.2.4 (2026-09-22)
+
+### 🪴 Repairs
+
+- darken palette and refine fzf and obsidian themes ([16243fe](https://github.com/sageveil/sageveil/commit/16243fe))
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.4
+
 ## 0.2.3 (2026-07-23)
 
 ### 🧱 Updated Dependencies

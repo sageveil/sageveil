@@ -1,3 +1,9 @@
+## 0.2.12 (2026-09-22)
+
+### 🧱 Updated Dependencies
+
+- Updated @sageveil/palette to 0.2.4
+
 ## 0.2.11 (2026-09-05)
 
 ### 🌿 New Growth
