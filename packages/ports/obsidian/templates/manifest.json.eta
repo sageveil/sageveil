@@ -3,5 +3,5 @@
   "version": "<%= it.version %>",
   "minAppVersion": "1.6.0",
   "author": "sageveil",
-  "authorUrl": "https://github.com/sageveil/obsidian"
+  "authorUrl": "https://github.com/sageveil"
 }
