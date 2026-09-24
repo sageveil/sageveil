@@ -367,7 +367,7 @@ main() {
     queue_global_option status-right "$final_right"
 
     queue_window_option clock-mode-colour "${sageveil_red}"
-    queue_window_option mode-style "fg=${sageveil_dyellow}"
+    queue_window_option mode-style "bg=${sageveil_highlight}"
 
     tmux "${command_queue[@]}"
 }
