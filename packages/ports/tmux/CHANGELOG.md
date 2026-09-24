@@ -1,3 +1,9 @@
+## 0.2.9 (2026-09-24)
+
+### 🪴 Repairs
+
+- **tmux:** highlight copy-mode selections ([199568a](https://github.com/sageveil/sageveil/commit/199568a))
+
 ## 0.2.8 (2026-09-22)
 
 ### 🧱 Updated Dependencies
