@@ -53,17 +53,11 @@ main() {
     sageveil_fg="<%= it.ansi.base.white %>"
     sageveil_muted_fg="<%= it.extras.muted %>"
     sageveil_red="<%= it.ansi.base.red %>"
-    sageveil_dyellow="<%= it.ansi.base.yellow %>"
-    sageveil_byellow="<%= it.ansi.bright.yellow %>"
+    sageveil_yellow="<%= it.ansi.base.yellow %>"
     sageveil_green="<%= it.ansi.base.green %>"
-    sageveil_cyan="<%= it.ansi.base.cyan %>"
-    sageveil_magenta="<%= it.ansi.base.magenta %>"
     sageveil_border="<%= it.extras.border %>"
-    sageveil_blue="<%= it.ansi.base.blue %>"
-    sageveil_bblue="<%= it.ansi.bright.blue %>"
-    sageveil_bcyan="<%= it.ansi.bright.cyan %>"
-    sageveil_bmagenta="<%= it.ansi.bright.magenta %>"
     sageveil_bgreen="<%= it.ansi.bright.green %>"
+    sageveil_magenta="<%= it.ansi.base.magenta %>"
     sageveil_bred="<%= it.ansi.bright.red %>"
     sageveil_surface="<%= it.extras.surface %>"
     sageveil_overlay="<%= it.extras.overlay %>"
@@ -89,12 +83,12 @@ main() {
     queue_global_option pane-border-style "fg=$sageveil_border"
     queue_global_option pane-active-border-style "fg=$sageveil_green"
     queue_global_option pane-border-lines "$pane_border_lines"
-    queue_global_option display-panes-active-colour "${sageveil_bblue}"
-    queue_global_option display-panes-colour "${sageveil_bmagenta}"
+    queue_global_option display-panes-active-colour "${sageveil_bgreen}"
+    queue_global_option display-panes-colour "${sageveil_muted_fg}"
 
-    queue_window_option window-status-style "fg=${sageveil_dim},bg=${sageveil_bg}"
-    queue_window_option window-status-activity-style "fg=${sageveil_magenta},bg=${sageveil_bg}"
-    queue_window_option window-status-current-style "fg=${sageveil_green},bg=${sageveil_bg}"
+    queue_window_option window-status-style "fg=${sageveil_muted_fg},bg=${sageveil_bg},none"
+    queue_window_option window-status-activity-style "fg=${sageveil_yellow},bg=${sageveil_bg},bold"
+    queue_window_option window-status-current-style "fg=${sageveil_bg},bg=${sageveil_green},bold"
 
     # Shows tmux session name
     local show_session
@@ -232,38 +226,38 @@ main() {
     left_separator="$(read_tmux_setting "@sv_left_separator" "$default_separator")"
 
     local session_icon_segment
-    readonly session_icon_segment="#[fg=$sageveil_bg,bg=$sageveil_magenta]  $current_session_icon  #[fg=$sageveil_magenta,bg=$sageveil_bg] "
+    readonly session_icon_segment="#[fg=$sageveil_magenta,bg=$sageveil_bg] $current_session_icon "
 
     local session_name_segment
-    readonly session_name_segment="#[fg=$sageveil_green,bg=$sageveil_bg]#S "
+    readonly session_name_segment="#[fg=$sageveil_fg,bg=$sageveil_bg]#S "
 
     local session_count_segment
-    readonly session_count_segment="#[fg=$sageveil_blue]$session_count_icon #{server_sessions}$default_separator"
+    readonly session_count_segment="#[fg=$sageveil_muted_fg]$session_count_icon #{server_sessions}$default_separator"
 
     local ssh_indicator_segment=""
     if [[ "$show_ssh_indicator" == "on" ]] && tmux show-environment -g SSH_CONNECTION >/dev/null 2>&1; then
-        ssh_indicator_segment="#[fg=$sageveil_cyan]SSH$default_separator"
-        [[ "$show_ssh_hostname" == "on" ]] && ssh_indicator_segment="#[fg=$sageveil_bmagenta]󰌢 #H$default_separator"
+        ssh_indicator_segment="#[fg=$sageveil_yellow]SSH$default_separator"
+        [[ "$show_ssh_hostname" == "on" ]] && ssh_indicator_segment="#[fg=$sageveil_yellow]󰌢 #H$default_separator"
     fi
     readonly ssh_indicator_segment
 
     local user_segment
-    readonly user_segment="#[fg=$sageveil_blue]$username_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_magenta]#(whoami)"
+    readonly user_segment="#[fg=$sageveil_dim]$username_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_muted_fg]#(whoami)"
 
     local host_segment
-    readonly host_segment="$default_separator#[fg=$sageveil_magenta]$hostname_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_blue]#H"
+    readonly host_segment="$default_separator#[fg=$sageveil_dim]$hostname_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_muted_fg]#H"
 
     local date_time_segment
-    readonly date_time_segment="$default_separator#[fg=$sageveil_cyan]$date_time_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_cyan]$date_time_format"
+    readonly date_time_segment="$default_separator#[fg=$sageveil_dim]$date_time_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_muted_fg]$date_time_format"
 
     local directory_segment
-    readonly directory_segment="$default_separator#[fg=$sageveil_magenta]$current_folder_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_magenta]#{b:pane_current_path}"
+    readonly directory_segment="$default_separator#[fg=$sageveil_dim]$current_folder_icon#[fg=$sageveil_border]$right_separator#[fg=$sageveil_muted_fg]#{b:pane_current_path}"
 
     local prefix_indicator_segment
     readonly prefix_indicator_segment="#{?client_prefix,#[fg=$sageveil_red]$prefix_icon$default_separator,}"
 
     local zoom_indicator_segment
-    readonly zoom_indicator_segment="#{?window_zoomed_flag,#[fg=$sageveil_blue]$zoom_icon$default_separator,}"
+    readonly zoom_indicator_segment="#{?window_zoomed_flag,#[fg=$sageveil_green]$zoom_icon$default_separator,}"
 
     ### WINDOW STATUS
     local win_sep=":"
@@ -279,8 +273,8 @@ main() {
     fi
 
     # Custom window status that goes between the number and the window name
-    local window_segment_format="#[fg=$sageveil_dim]#I#[fg=$sageveil_border]$win_sep#[fg=$sageveil_muted_fg]#$win_name"
-    local current_window_segment_format="#[fg=$sageveil_bgreen]#I#[fg=$sageveil_border]$win_sep#[fg=$sageveil_bgreen]#$win_name"
+    local window_segment_format=" #I$win_sep#$win_name "
+    local current_window_segment_format="$window_segment_format"
 
     # Left status segments (order-sensitive)
     local -a left_segments=()

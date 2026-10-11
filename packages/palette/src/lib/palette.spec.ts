@@ -28,7 +28,20 @@ const expectedExtrasKeys = [
 ];
 
 describe('sageveil palette', () => {
-  it('keeps text and both greens readable across UI backgrounds', () => {
+  it('uses warm stone and wood instead of blue and cyan hues', () => {
+    const rgb = (hex: string) =>
+      [1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16));
+    for (const variant of Object.values(sageveil.ansi)) {
+      const [stoneR, stoneG, stoneB] = rgb(variant.blue);
+      expect(stoneG).toBeGreaterThanOrEqual(stoneR);
+      expect(stoneR).toBeGreaterThan(stoneB);
+      const [woodR, woodG, woodB] = rgb(variant.cyan);
+      expect(woodR).toBeGreaterThan(woodG);
+      expect(woodG).toBeGreaterThan(woodB);
+    }
+  });
+
+  it('keeps text, greens, and bright wood readable across UI backgrounds', () => {
     const luminance = (hex: string) => {
       const channels = [1, 3, 5].map((offset) => {
         const value = parseInt(hex.slice(offset, offset + 2), 16) / 255;
@@ -42,7 +55,7 @@ describe('sageveil palette', () => {
     const { base, bright } = sageveil.ansi;
     const { surface, overlay, highlight } = sageveil.extras;
     for (const background of [base.black, surface, overlay, highlight]) {
-      for (const foreground of [base.white, base.green, bright.green]) {
+      for (const foreground of [base.white, base.green, bright.green, bright.cyan]) {
         expect(
           (luminance(foreground) + 0.05) / (luminance(background) + 0.05),
         ).toBeGreaterThanOrEqual(4.5);
@@ -52,6 +65,9 @@ describe('sageveil palette', () => {
     expect(luminance(surface)).toBeLessThan(luminance(overlay));
     expect(luminance(overlay)).toBeLessThan(luminance(highlight));
     expect(luminance(base.green)).toBeLessThan(luminance(bright.green));
+    expect(
+      (luminance(bright.green) + 0.05) / (luminance(base.black) + 0.05),
+    ).toBeGreaterThanOrEqual(6);
   });
 
   it('should have the correct top-level structure', () => {

@@ -5,6 +5,8 @@ const surface = it.extras.surface;
 const muted = it.extras.muted;
 const dim = it.extras.dim;
 const highlight = it.extras.highlight;
+const border = it.extras.border;
+const green_bright = it.ansi.bright.green;
 const magenta = it.ansi.base.magenta;
 const cyan = it.ansi.base.cyan;
 const green = it.ansi.base.green;
@@ -17,7 +19,7 @@ k9s:
   body:
     fgColor: '<%= white %>'
     bgColor: '<%= black %>'
-    logoColor: '<%= magenta %>'
+    logoColor: '<%= green %>'
   prompt:
     fgColor: '<%= white %>'
     bgColor: '<%= surface %>'
@@ -32,20 +34,20 @@ k9s:
     title:
       fgColor: '<%= green %>'
       bgColor: '<%= black %>'
-      highlightColor: '<%= magenta %>'
+      highlightColor: '<%= green_bright %>'
       counterColor: '<%= yellow %>'
       filterColor: '<%= green %>'
     border:
-      fgColor: '<%= magenta %>'
-      focusColor: '<%= cyan %>'
+      fgColor: '<%= border %>'
+      focusColor: '<%= green %>'
     menu:
       fgColor: '<%= white %>'
       keyColor: '<%= cyan %>'
       numKeyColor: '<%= magenta_bright %>'
     crumbs:
       fgColor: '<%= black %>'
-      bgColor: '<%= magenta %>'
-      activeColor: '<%= magenta_bright %>'
+      bgColor: '<%= green %>'
+      activeColor: '<%= green_bright %>'
     status:
       newColor: '<%= cyan %>'
       modifyColor: '<%= cyan %>'
@@ -62,8 +64,8 @@ k9s:
     table:
       fgColor: '<%= white %>'
       bgColor: '<%= black %>'
-      cursorFgColor: '<%= surface %>'
-      cursorBgColor: '<%= black %>'
+      cursorFgColor: '<%= black %>'
+      cursorBgColor: '<%= green_bright %>'
       markColor: '<%= magenta %>'
       header:
         fgColor: '<%= yellow %>'
@@ -110,6 +112,6 @@ k9s:
     buttonFgColor: '<%= black %>'
     buttonBgColor: '<%= white %>'
     buttonFocusFgColor: '<%= black %>'
-    buttonFocusBgColor: '<%= magenta %>'
+    buttonFocusBgColor: '<%= green_bright %>'
     labelFgColor: '<%= magenta_bright %>'
     fieldFgColor: '<%= white %>'

@@ -1,14 +1,14 @@
 export type AnsiName =
-  | 'black'
-  | 'red'
-  | 'green'
-  | 'yellow'
-  | 'blue'
-  | 'magenta'
-  | 'cyan'
-  | 'white';
+  | "black"
+  | "red"
+  | "green"
+  | "yellow"
+  | "blue"
+  | "magenta"
+  | "cyan"
+  | "white";
 
-export type AnsiVariant = 'base' | 'bright';
+export type AnsiVariant = "base" | "bright";
 
 export type AnsiSet<T extends string = string> = Record<AnsiName, T>;
 export type AnsiPalette<T extends string = string> = {
@@ -18,23 +18,23 @@ export type AnsiPalette<T extends string = string> = {
 
 export const ansi: AnsiPalette<string> = {
   base: {
-    black: '#0F120F',
-    red: '#9A6B6B',
-    green: '#90976B',
-    yellow: '#A09360',
-    blue: '#8A8493',
-    magenta: '#876f7f',
-    cyan: '#7C9173',
-    white: '#A8AFA6',
+    black: "#0F120F",
+    red: "#A07868",
+    green: "#7F8660",
+    yellow: "#A09360",
+    blue: "#929087",
+    magenta: "#907E87",
+    cyan: "#9D8B73",
+    white: "#A8AFA6",
   },
   bright: {
-    black: '#262F26',
-    red: '#B08585',
-    green: '#959878',
-    yellow: '#BCAE76',
-    blue: '#A39DAC',
-    magenta: '#947e8d',
-    cyan: '#94A58A',
-    white: '#c3cdc0',
+    black: "#262F26",
+    red: "#B88E7B",
+    green: "#838a6B",
+    yellow: "#BCAE76",
+    blue: "#ADAAA0",
+    magenta: "#99858F",
+    cyan: "#B8A388",
+    white: "#C3CDC0",
   },
 };

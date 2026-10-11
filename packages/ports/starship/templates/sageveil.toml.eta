@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 format = """
-[ 󰌪 ](bg:magenta fg:black)[](fg:magenta) \
+[ 󰌪 ](fg:bright_magenta)\
 $hostname\
 $directory\
 $git_branch\
@@ -62,7 +62,7 @@ vimcmd_symbol = "[](fg:yellow)"
 ssh_only = true
 format = "[ $ssh_symbol$hostname ]($style)"
 ssh_symbol = "󰌢 "
-style = "fg:bright_magenta"
+style = "fg:magenta"
 
 [directory]
 format = "[ 󰝰 $path$read_only ]($style)"
@@ -70,7 +70,7 @@ style = "fg:green"
 truncation_length = 3
 truncation_symbol = ""
 read_only = " 󰌾"
-repo_root_style = "bold fg:bright_green"
+repo_root_style = "bold fg:blue"
 repo_root_format = "[ 󰊢 $before_root_path]($style)[$repo_root]($repo_root_style)[$path$read_only ]($style)"
 
 [directory.substitutions]
@@ -90,7 +90,7 @@ number_threshold = 1
 
 [git_branch]
 format = "[ $symbol $branch ]($style)"
-style = "fg:bright_magenta"
+style = "fg:magenta"
 symbol = ""
 
 [git_status]
