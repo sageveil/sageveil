@@ -60,7 +60,7 @@ All options are standard tmux global options. Set them **before** you source `sa
 | `@sv_show_user`                | `""` (off) | Set to `on` to show the current UNIX user on the right.                                      |
 | `@sv_show_host`                | `""` (off) | Set to `on` to show the hostname on the right.                                               |
 | `@sv_show_date_time`           | `on`       | Render the clock segment. Set to `""` to hide it.                                            |
-| `@sv_show_directory`           | `on`       | Display the active pane's working directory. Set to `""` to hide it.                         |
+| `@sv_show_directory`           | `""` (off) | Set to `on` to display the active pane's working directory.                                  |
 | `@sv_directory_as_window_name` | `""` (off) | Set to `on` to use the active pane directory as the window title.                            |
 | `@sv_only_windows`             | `""` (off) | Set to `on` to hide the left/right status bars and show only the window list.                |
 

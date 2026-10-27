@@ -8,7 +8,7 @@ return function(opts)
 	return {
 		-- Headings (icon color)
 		RenderMarkdownH1 = { fg = palette.green_bright, bold = bold },
-		RenderMarkdownH2 = { fg = palette.magenta, bold = bold },
+		RenderMarkdownH2 = { fg = palette.yellow, bold = bold },
 		RenderMarkdownH3 = { fg = palette.green, bold = bold },
 		RenderMarkdownH4 = { fg = palette.cyan, bold = bold },
 		RenderMarkdownH5 = { fg = palette.blue, bold = bold },
@@ -16,7 +16,7 @@ return function(opts)
 
 		-- Heading background lines (blended into black)
 		RenderMarkdownH1Bg = { bg = palette.green_bright, blend = 30 },
-		RenderMarkdownH2Bg = { bg = palette.magenta, blend = 30 },
+		RenderMarkdownH2Bg = { bg = palette.yellow, blend = 30 },
 		RenderMarkdownH3Bg = { bg = palette.green, blend = 30 },
 		RenderMarkdownH4Bg = { bg = palette.cyan, blend = 30 },
 		RenderMarkdownH5Bg = { bg = palette.blue, blend = 30 },

@@ -127,7 +127,7 @@ main() {
 
     # Shows truncated current working directory
     local show_directory
-    show_directory="$(read_tmux_setting "@sv_show_directory" "on")"
+    show_directory="$(read_tmux_setting "@sv_show_directory" "")"
 
     # Show icon then prefix is active
     local show_prefix_indicator
@@ -226,7 +226,7 @@ main() {
     left_separator="$(read_tmux_setting "@sv_left_separator" "$default_separator")"
 
     local session_icon_segment
-    readonly session_icon_segment="#[fg=$sageveil_magenta,bg=$sageveil_bg] $current_session_icon "
+    readonly session_icon_segment="#[fg=$sageveil_fg,bg=$sageveil_bg] $current_session_icon "
 
     local session_name_segment
     readonly session_name_segment="#[fg=$sageveil_fg,bg=$sageveil_bg]#S "

@@ -138,7 +138,7 @@ local function set_highlights()
 		["@markup.link.markdown_inline"] = { fg = palette.magenta_bright, underline = true },
 		["@markup.heading"] = { fg = palette.white, bold = bold },
 		["@markup.heading.1"] = { fg = palette.green_bright, bold = bold },
-		["@markup.heading.2"] = { fg = palette.magenta, bold = bold },
+		["@markup.heading.2"] = { fg = palette.yellow, bold = bold },
 		["@markup.heading.3"] = { fg = palette.green, bold = bold },
 		["@markup.heading.4"] = { fg = palette.cyan, bold = bold },
 		["@markup.heading.5"] = { fg = palette.blue, bold = bold },

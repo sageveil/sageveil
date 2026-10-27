@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 format = """
-[ 󰌪 ](fg:bright_magenta)\
+[ 󰌪 ](fg:magenta)\
 $hostname\
 $directory\
 $git_branch\
@@ -70,7 +70,7 @@ style = "fg:green"
 truncation_length = 3
 truncation_symbol = ""
 read_only = " 󰌾"
-repo_root_style = "bold fg:blue"
+repo_root_style = "fg:green"
 repo_root_format = "[ 󰊢 $before_root_path]($style)[$repo_root]($repo_root_style)[$path$read_only ]($style)"
 
 [directory.substitutions]

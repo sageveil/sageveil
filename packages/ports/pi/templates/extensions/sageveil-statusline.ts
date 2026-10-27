@@ -226,19 +226,20 @@ export default function (pi: ExtensionAPI) {
         const gitStatusText = [
           gitStatus.untracked && theme.fg('dim', `?${gitStatus.untracked}`),
           gitStatus.stashed && theme.fg('syntaxType', `$${gitStatus.stashed}`),
-          gitStatus.modified && theme.fg('warning', `!${gitStatus.modified}`),
+          gitStatus.modified &&
+            theme.fg('syntaxString', `!${gitStatus.modified}`),
           gitStatus.renamed &&
             theme.fg('syntaxOperator', `»${gitStatus.renamed}`),
           gitStatus.deleted && theme.fg('error', `✘${gitStatus.deleted}`),
           gitStatus.staged && theme.fg('success', `+${gitStatus.staged}`),
           gitStatus.ahead && theme.fg('syntaxOperator', `⇡${gitStatus.ahead}`),
           gitStatus.behind &&
-            theme.fg('customMessageLabel', `⇣${gitStatus.behind}`),
+            theme.fg('syntaxKeyword', `⇣${gitStatus.behind}`),
         ]
           .filter(Boolean)
           .join(' ');
         const left = [
-          config.statusline.icon && theme.fg('customMessageLabel', 'π'),
+          config.statusline.icon && theme.fg('syntaxKeyword', ' π'),
           config.statusline.directory &&
             theme.fg(
               'success',
@@ -246,7 +247,7 @@ export default function (pi: ExtensionAPI) {
             ),
           config.statusline.gitBranch &&
             branch &&
-            theme.fg('muted', ` ${branch}`),
+            theme.fg('syntaxKeyword', ` ${branch}`),
           config.statusline.gitStatus && gitStatusText,
         ]
           .filter(Boolean)
