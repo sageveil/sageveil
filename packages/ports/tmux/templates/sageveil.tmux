@@ -72,6 +72,9 @@ main() {
     queue_global_option status-right-length "200"
     queue_global_option status-justify "left"
 
+    queue_global_option popup-style "fg=$sageveil_fg,bg=$sageveil_bg"
+    queue_global_option popup-border-style "fg=$sageveil_border,bg=$sageveil_bg"
+
     queue_global_option message-style "fg=$sageveil_fg,bg=$sageveil_overlay"
     queue_global_option message-command-style "fg=$sageveil_surface,bg=$sageveil_bred"
 
