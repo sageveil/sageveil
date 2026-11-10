@@ -94,7 +94,7 @@
         "color": "<%= it.ansi.bright.white %>"
       },
       "error": {
-        "color": "<%= it.ansi.bright.white %>",
+        "color": "<%= it.ansi.base.black %>",
         "background_color": "<%= it.ansi.base.red %>"
       },
       "comment": {

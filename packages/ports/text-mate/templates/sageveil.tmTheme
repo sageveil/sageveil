@@ -409,7 +409,7 @@
       <key>name</key>
       <string>Warning</string>
       <key>scope</key>
-      <string>markup.warning, invalid.illegal</string>
+      <string>markup.warning</string>
       <key>settings</key>
       <dict>
         <key>foreground</key>

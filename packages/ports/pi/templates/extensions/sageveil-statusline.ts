@@ -4,17 +4,9 @@ import {
   type ExtensionAPI,
 } from '@earendil-works/pi-coding-agent';
 import { truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
-import { sageveil } from '@sageveil/palette';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 
-const ansi = (hex: string) =>
-  hex
-    .slice(1)
-    .match(/../g)!
-    .map((part) => Number.parseInt(part, 16))
-    .join(';');
-const piIcon = `\x1b[38;2;${ansi(sageveil.ansi.base.black)};48;2;${ansi(sageveil.ansi.base.magenta)}m π \x1b[49;38;2;${ansi(sageveil.ansi.base.magenta)}m\x1b[39m`;
 const formatTokens = (tokens: number) => {
   if (tokens < 1000) return tokens.toString();
   if (tokens < 10_000) return `${(tokens / 1000).toFixed(1)}k`;
@@ -234,27 +226,28 @@ export default function (pi: ExtensionAPI) {
         const gitStatusText = [
           gitStatus.untracked && theme.fg('dim', `?${gitStatus.untracked}`),
           gitStatus.stashed && theme.fg('syntaxType', `$${gitStatus.stashed}`),
-          gitStatus.modified && theme.fg('warning', `!${gitStatus.modified}`),
+          gitStatus.modified &&
+            theme.fg('syntaxString', `!${gitStatus.modified}`),
           gitStatus.renamed &&
             theme.fg('syntaxOperator', `»${gitStatus.renamed}`),
           gitStatus.deleted && theme.fg('error', `✘${gitStatus.deleted}`),
           gitStatus.staged && theme.fg('success', `+${gitStatus.staged}`),
           gitStatus.ahead && theme.fg('syntaxOperator', `⇡${gitStatus.ahead}`),
           gitStatus.behind &&
-            theme.fg('customMessageLabel', `⇣${gitStatus.behind}`),
+            theme.fg('syntaxKeyword', `⇣${gitStatus.behind}`),
         ]
           .filter(Boolean)
           .join(' ');
         const left = [
-          config.statusline.icon && piIcon,
+          config.statusline.icon && theme.fg('syntaxKeyword', ' π'),
           config.statusline.directory &&
             theme.fg(
-              'accent',
+              'success',
               `${gitRoot ? '󰊢' : '󰝰'} ${basename(gitRoot ?? ctx.cwd)}`,
             ),
           config.statusline.gitBranch &&
             branch &&
-            theme.fg('customMessageLabel', ` ${branch}`),
+            theme.fg('syntaxKeyword', ` ${branch}`),
           config.statusline.gitStatus && gitStatusText,
         ]
           .filter(Boolean)
@@ -272,7 +265,7 @@ export default function (pi: ExtensionAPI) {
             theme.fg('muted', context),
           config.statusline.model &&
             theme.fg(
-              'dim',
+              'syntaxType',
               ctx.model?.reasoning
                 ? `${model} • ${pi.getThinkingLevel()}`
                 : model,

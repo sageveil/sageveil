@@ -57,11 +57,11 @@
   --text-selection: var(--sv-highlight);
 
   --h1-color: var(--sv-bright-green);
-  --h2-color: var(--sv-bright-green);
+  --h2-color: var(--sv-yellow);
   --h3-color: var(--sv-green);
-  --h4-color: var(--sv-green);
-  --h5-color: var(--sv-green);
-  --h6-color: var(--sv-green);
+  --h4-color: var(--sv-cyan);
+  --h5-color: var(--sv-blue);
+  --h6-color: var(--sv-muted);
 
   --link-color: var(--sv-green);
   --link-color-hover: var(--sv-bright-green);

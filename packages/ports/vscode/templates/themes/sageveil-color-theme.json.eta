@@ -234,7 +234,7 @@ const a = (hex, alpha) => hex + alpha;
     "terminal.background": "<%= bg %>",
     "terminal.foreground": "<%= fg %>",
     "terminal.selectionBackground": "<%= highlight %>",
-    "terminalCursor.background": "<%= cursor %>",
+    "terminalCursor.background": "<%= it.extras.cursor_text %>",
     "terminalCursor.foreground": "<%= cursor %>",
     "terminal.ansiBlack": "<%= it.ansi.base.black %>",
     "terminal.ansiRed": "<%= red %>",

@@ -19,7 +19,7 @@
   --sv-shadow: color-mix(in srgb, var(--sv-base-black) 55%, transparent);
   --sv-shadow-soft: color-mix(in srgb, var(--sv-base-black) 40%, transparent);
 
-  /* Accent (green-led, magenta sparing) */
+  /* Accent */
   --sv-accent: var(--sv-bright-green);
   --sv-accent-ink: color-mix(
     in srgb,
@@ -42,7 +42,7 @@
   --sv-syn-comment: var(--sv-dim);
   --sv-syn-string: var(--sv-base-yellow);
   --sv-syn-keyword: var(--sv-base-magenta);
-  --sv-syn-func: var(--sv-base-blue);
+  --sv-syn-func: var(--sv-base-green);
   --sv-syn-const: var(--sv-bright-cyan);
   --sv-syn-punc: var(--sv-muted);
   --sv-syn-text: var(--sv-bright-white);
